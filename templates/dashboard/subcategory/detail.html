@@ -1,0 +1,200 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}
+SubCategory Detail
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+
+    <div class="col-lg-4">
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body text-center">
+
+                {% if subcategory.image %}
+
+                    <img
+                        src="{{ subcategory.image.url }}"
+                        class="img-fluid rounded shadow-sm mb-3"
+                        style="max-height:300px;object-fit:cover;">
+
+                {% else %}
+
+                    <div
+                        class="bg-light rounded d-flex align-items-center justify-content-center"
+                        style="height:300px;">
+
+                        <i
+                            class="bi bi-image text-secondary"
+                            style="font-size:70px;"></i>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-8">
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-header d-flex justify-content-between align-items-center">
+
+                <h4 class="mb-0">
+
+                    {{ subcategory.name }}
+
+                </h4>
+
+                <span class="badge bg-primary">
+
+                    {{ subcategory.category.name }}
+
+                </span>
+
+            </div>
+
+            <div class="card-body">
+
+                <table class="table table-bordered align-middle">
+
+                    <tr>
+
+                        <th width="220">
+
+                            ID
+
+                        </th>
+
+                        <td>
+
+                            {{ subcategory.id }}
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>
+
+                            Category
+
+                        </th>
+
+                        <td>
+
+                            {{ subcategory.category.name }}
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>
+
+                            Name
+
+                        </th>
+
+                        <td>
+
+                            {{ subcategory.name }}
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>
+
+                            Russian Name
+
+                        </th>
+
+                        <td>
+
+                            {% if subcategory.name_ru %}
+
+                                {{ subcategory.name_ru }}
+
+                            {% else %}
+
+                                -
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>
+
+                            Products
+
+                        </th>
+
+                        <td>
+
+                            {{ subcategory.products.count }}
+
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+            <div class="card-footer">
+
+                <a
+                    href="{% url 'subcategory_edit' subcategory.id %}"
+                    class="btn btn-warning">
+
+                    <i class="bi bi-pencil"></i>
+
+                    Edit
+
+                </a>
+
+                <a
+                    href="{% url 'subcategory_delete' subcategory.id %}"
+                    class="btn btn-danger">
+
+                    <i class="bi bi-trash"></i>
+
+                    Delete
+
+                </a>
+
+                <a
+                    href="{% url 'subcategory_list' %}"
+                    class="btn btn-secondary">
+
+                    <i class="bi bi-arrow-left"></i>
+
+                    Back
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

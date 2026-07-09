@@ -1,0 +1,52 @@
+<div class="card shadow-sm border-0 rounded-4 h-100">
+
+    <div class="card-body">
+
+        <h5 class="fw-bold">
+
+            Monthly Revenue Goal
+
+        </h5>
+
+        <small class="text-muted">
+
+            Target progress
+
+        </small>
+
+        <div class="display-5 fw-bold mt-4">
+
+            {{ goal_percent }}%
+
+        </div>
+
+        <div class="progress my-4" style="height:14px">
+
+            <div
+                class="progress-bar bg-success"
+
+                style="width:{{ goal_percent }}%">
+
+            </div>
+
+        </div>
+
+        <div class="d-flex justify-content-between">
+
+            <strong>
+
+                {{ current }}
+
+            </strong>
+
+            <strong>
+
+                {{ goal }}
+
+            </strong>
+
+        </div>
+
+    </div>
+
+</div>

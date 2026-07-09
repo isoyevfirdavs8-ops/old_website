@@ -1,0 +1,81 @@
+<div class="card shadow-sm border-0 rounded-4 h-100">
+
+    <div class="card-header bg-white border-0">
+
+        <h5 class="fw-bold">
+
+            Top Customers
+
+        </h5>
+
+        <small class="text-muted">
+
+            Best customers by revenue
+
+        </small>
+
+    </div>
+
+    <div class="card-body">
+
+        {% for customer in top_customers %}
+
+            <div class="customer-row">
+
+                <div class="customer-avatar">
+
+                    {{ customer.full_name|first|upper }}
+
+                </div>
+
+                <div class="flex-grow-1 ms-3">
+
+                    <strong>
+
+                        {{ customer.full_name }}
+
+                    </strong>
+
+                    <br>
+
+                    <small class="text-muted">
+
+                        {{ customer.orders }} Orders
+
+                    </small>
+
+                </div>
+
+                <div class="text-end">
+
+                    <strong>
+
+                        {{ customer.spent }}
+
+                    </strong>
+
+                    <br>
+
+                    <small class="text-success">
+
+                        Total
+
+                    </small>
+
+                </div>
+
+            </div>
+
+        {% empty %}
+
+            <div class="text-center text-muted py-5">
+
+                No customers yet.
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>

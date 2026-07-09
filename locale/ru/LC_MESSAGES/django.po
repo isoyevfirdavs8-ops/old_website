@@ -1,0 +1,161 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2026-06-16 21:30+0000\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: templates/header.html
+msgid "Home"
+msgstr "Главная"
+
+#: templates/header.html
+msgid "Like"
+msgstr "Избранное"
+
+#: templates/header.html
+msgid "Profile"
+msgstr "Профиль"
+
+#: templates/header.html
+msgid "Search..."
+msgstr "Поиск..."
+
+#: templates/header.html
+msgid "Savatcha"
+msgstr "Корзина"
+
+#: templates/header.html
+msgid "Login"
+msgstr "Войти"
+
+#: templates/header.html
+msgid "Logout"
+msgstr "Выйти"
+
+#: templates/header.html
+msgid "Register"
+msgstr "Регистрация"
+
+#: templates/cart.html
+msgid "Total"
+msgstr "Итого"
+
+#: templates/cart.html
+msgid "Remove"
+msgstr "Удалить"
+
+msgid "Like mahsulotlar"
+msgstr "Избранные товары"
+
+msgid "Like mahsulotlari yuq"
+msgstr "Нет избранных товаров"
+
+msgid "Asosiy"
+msgstr "Главная"
+
+msgid "Do'konlar"
+msgstr "Магазины"
+
+msgid "Ish vaqti"
+msgstr "Время работы"
+
+msgid "Ko'rish"
+msgstr "Посмотреть"
+
+msgid "Sharhlar"
+msgstr "Отзывы"
+
+msgid "Hozircha sharh yo'q"
+msgstr "Пока нет отзывов"
+
+msgid "Ro'yxatdan o'tish"
+msgstr "Регистрация"
+
+msgid "Akkaunt yarating va xarid qiling"
+msgstr "Создайте аккаунт и совершайте покупки"
+
+msgid "Foydalanuvchi nomi"
+msgstr "Имя пользователя"
+
+msgid "Telefon raqam"
+msgstr "Номер телефона"
+
+msgid "Parolni tasdiqlang"
+msgstr "Подтвердите пароль"
+
+msgid "Akkountingiz bormi?"
+msgstr "У вас уже есть аккаунт?"
+
+msgid "Kirish"
+msgstr "Войти"
+
+msgid "Jami buyurtma"
+msgstr "Всего заказов"
+
+msgid "Mahsulotlar"
+msgstr "Товары"
+
+msgid "A'zo bo'lgan"
+msgstr "Дата регистрации"
+
+msgid "Mening buyurtmalarim"
+msgstr "Мои заказы"
+
+msgid "Buyurtma"
+msgstr "Заказ"
+
+msgid "Yetkazildi"
+msgstr "Доставлено"
+
+msgid "Jarayonda"
+msgstr "В обработке"
+
+msgid "Bekor qilindi"
+msgstr "Отменён"
+
+msgid "O'chirish"
+msgstr "Удалить"
+
+msgid "Jami"
+msgstr "Итого"
+
+msgid "Siz hali buyurtma bermagansiz."
+msgstr "Вы ещё не сделали ни одного заказа."
+
+msgid "Tavsif"
+msgstr "Описание"
+
+msgid "Hajmi:"
+msgstr "Размер:"
+
+msgid "Savatchaga qo‘shish"
+msgstr "Добавить в корзину"
+
+msgid "Rasmiylashtirish"
+msgstr "Оформить заказ"
+
+msgid "Umumiy summa"
+msgstr "Общая сумма"
+
+msgid "so'm"
+msgstr "сум"
+
+msgid "Buyurtma berish"
+msgstr "Оформить заказ"
+
+msgid "Ismingiz"
+msgstr "Ваше имя"
+
+msgid "Telefon"
+msgstr "Телефон"
+
+msgid "Manzil"
+msgstr "Адрес"
+

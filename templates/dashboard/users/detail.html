@@ -1,0 +1,226 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}
+User Detail
+{% endblock %}
+
+{% block content %}
+
+<div class="row g-4">
+
+    <!-- LEFT -->
+    <div class="col-lg-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-body text-center py-4">
+
+                {% if user_obj.profile.avatar %}
+                    <img
+                        src="{{ user_obj.profile.avatar.url }}"
+                        class="rounded-circle shadow border border-3 border-white"
+                        width="150"
+                        height="150"
+                        style="object-fit: cover;">
+                {% else %}
+                    <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-light shadow-sm"
+                         style="width: 150px; height: 150px;">
+                        <i class="bi bi-person-circle display-1 text-secondary mb-0"></i>
+                    </div>
+                {% endif %}
+
+                <h3 class="mt-3 mb-1">
+                    {{ user_obj.get_full_name|default:user_obj.username }}
+                </h3>
+
+                <span class="badge bg-primary-subtle text-primary-emphasis px-3 py-2 rounded-pill">
+                    <i class="bi bi-person-badge me-1"></i>
+                    {{ user_obj.profile.role|title }}
+                </span>
+
+                {% if user_obj.profile.phone %}
+                <p class="text-muted mt-3 mb-0">
+                    <i class="bi bi-phone me-1"></i>
+                    {{ user_obj.profile.phone }}
+                </p>
+                {% endif %}
+
+                <hr class="my-4">
+
+                <div class="d-flex gap-2 justify-content-center">
+                    <a href="{% url 'user_edit' user_obj.id %}"
+                       class="btn btn-warning">
+                        <i class="bi bi-pencil-square me-1"></i>
+                        Edit
+                    </a>
+
+                    <a href="{% url 'user_delete' user_obj.id %}"
+                       class="btn btn-outline-danger">
+                        <i class="bi bi-trash me-1"></i>
+                        Delete
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="col-lg-8">
+
+        <div class="row g-3">
+
+            <div class="col-md-3 col-6">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <small class="text-muted d-block">Orders</small>
+                                <h2 class="mb-0">{{ orders_count }}</h2>
+                            </div>
+                            <i class="bi bi-bag-check fs-3 text-primary"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-6">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <small class="text-muted d-block">Revenue</small>
+                                <h2 class="mb-0">${{ spent }}</h2>
+                            </div>
+                            <i class="bi bi-cash-coin fs-3 text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-6">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <small class="text-muted d-block">Pending</small>
+                                <h2 class="mb-0 text-warning">{{ pending_count }}</h2>
+                            </div>
+                            <i class="bi bi-hourglass-split fs-3 text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-6">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <small class="text-muted d-block">Delivered</small>
+                                <h2 class="mb-0 text-success">{{ delivered_count }}</h2>
+                            </div>
+                            <i class="bi bi-truck fs-3 text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card shadow-sm border-0 mt-4">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-person-lines-fill me-2 text-primary"></i>
+                    Personal Information
+                </h5>
+            </div>
+            <div class="card-body p-0">
+                <table class="table mb-0">
+                    <tbody>
+                        <tr>
+                            <th class="ps-4" style="width: 35%;">Username</th>
+                            <td>{{ user_obj.username }}</td>
+                        </tr>
+                        <tr>
+                            <th class="ps-4">First Name</th>
+                            <td>{{ user_obj.first_name|default:"—" }}</td>
+                        </tr>
+                        <tr>
+                            <th class="ps-4">Last Name</th>
+                            <td>{{ user_obj.last_name|default:"—" }}</td>
+                        </tr>
+                        <tr>
+                            <th class="ps-4">Role</th>
+                            <td>{{ user_obj.profile.role|default:"—" }}</td>
+                        </tr>
+                        <tr>
+                            <th class="ps-4">Gender</th>
+                            <td>{{ user_obj.profile.gender|default:"—" }}</td>
+                        </tr>
+                        <tr>
+                            <th class="ps-4">Birthday</th>
+                            <td>{{ user_obj.profile.date_of_birth|default:"—" }}</td>
+                        </tr>
+                        <tr>
+                            <th class="ps-4">Address</th>
+                            <td>{{ user_obj.profile.address|default:"—" }}</td>
+                        </tr>
+                        <tr>
+                            <th class="ps-4">Last Login</th>
+                            <td>{{ user_obj.last_login|default:"—" }}</td>
+                        </tr>
+                        <tr>
+                            <th class="ps-4">Joined</th>
+                            <td>{{ user_obj.date_joined }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0 mt-4">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-clock-history me-2 text-primary"></i>
+                    Recent Orders
+                </h5>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4">#</th>
+                            <th>Status</th>
+                            <th class="pe-4">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                        <tr>
+                            <td class="ps-4">
+                                #{{ order.id }}
+                            </td>
+                            <td>
+                                {% include "dashboard/includes/status_badge.html" with status=order.status %}
+                            </td>
+                            <td class="pe-4">
+                                ${{ order.total_price }}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center text-muted py-4">
+                                <i class="bi bi-inbox fs-4 d-block mb-2"></i>
+                                No orders yet
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

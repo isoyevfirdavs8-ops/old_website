@@ -1,0 +1,66 @@
+<div class="card shadow-sm border-0 rounded-4 h-100">
+
+    <div class="card-header bg-white border-0">
+
+        <h5 class="fw-bold mb-1">
+
+            Sales by Category
+
+        </h5>
+
+        <small class="text-muted">
+
+            Best performing categories
+
+        </small>
+
+    </div>
+
+    <div class="card-body">
+
+        {% for item in category_sales %}
+
+            <div class="category-item">
+
+                <div class="d-flex justify-content-between">
+
+                    <strong>
+
+                        {{ item.product__category__name }}
+
+                    </strong>
+
+                    <span class="text-primary">
+
+                        {{ item.sold }} sold
+
+                    </span>
+
+                </div>
+
+                <div class="progress mt-2">
+
+                    <div
+                        class="progress-bar"
+
+                        style="width:{% widthratio item.sold 50 100 %}%">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        {% empty %}
+
+            <div class="text-center py-5 text-muted">
+
+                No sales available.
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>

@@ -1,0 +1,304 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}
+Dashboard
+<script>
+
+const ctx = document.getElementById('salesChart');
+
+new Chart(ctx, {
+
+    type: 'line',
+
+    data: {
+
+        labels: {{ months|safe }},
+
+        datasets: [{
+
+            label: "Sales",
+
+            data: {{ sales|safe }},
+
+            borderWidth: 3,
+
+            tension: .4,
+
+            fill: false
+
+        }]
+
+    },
+
+    options: {
+
+        responsive: true
+
+    }
+
+});
+
+</script>
+{% endblock %}
+
+{% block content %}
+
+<div class="row g-4">
+
+    <div class="col-md-3">
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body">
+
+                <h6 class="text-muted">
+
+                    Products
+
+                </h6>
+
+                <h2>
+
+                    {{ products_count }}
+
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body">
+
+                <h6 class="text-muted">
+
+                    Orders
+
+                </h6>
+
+                <h2>
+
+                    {{ orders_count }}
+
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body">
+
+                <h6 class="text-muted">
+
+                    Categories
+
+                </h6>
+
+                <h2>
+
+                    {{ categories_count }}
+
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body">
+
+                <h6 class="text-muted">
+
+                    Users
+
+                </h6>
+
+                <h2>
+
+                    {{ users_count }}
+
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div class="row mt-4">
+
+    <div class="col-lg-6">
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-header">
+
+                Latest Products
+
+            </div>
+
+            <div class="card-body">
+
+                <table class="table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>Image</th>
+
+                        <th>Title</th>
+
+                        <th>Price</th>
+
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for p in latest_products %}
+
+                        <tr>
+
+                            <td>
+
+                                <img
+                                    src="{{ p.image.url }}"
+                                    width="55"
+                                    class="rounded">
+
+                            </td>
+
+                            <td>
+
+                                {{ p.title }}
+
+                            </td>
+
+                            <td>
+
+                                {{ p.price }}
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="card shadow-sm border-0 mt-4">
+
+    <div class="card-header">
+
+        Monthly Sales
+
+    </div>
+
+    <div class="card-body">
+
+        <canvas id="salesChart"></canvas>
+
+    </div>
+
+</div>
+
+
+
+    <div class="col-lg-6">
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-header">
+
+                Latest Orders
+
+            </div>
+
+            <div class="card-body">
+
+                <table class="table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>User</th>
+
+                        <th>Total</th>
+
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for order in latest_orders %}
+
+                        <tr>
+
+                            <td>
+
+                                #{{ order.id }}
+
+                            </td>
+
+                            <td>
+
+                                {{ order.user }}
+
+                            </td>
+
+                            <td>
+
+                                {{ order.total }}
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

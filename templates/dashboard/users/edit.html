@@ -1,0 +1,236 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}
+Edit User
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-header">
+
+        <h4 class="mb-0">
+
+            Edit User
+
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <form method="post" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Username
+
+                    </label>
+
+                    {{ form.username }}
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Email
+
+                    </label>
+
+                    {{ form.email }}
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        First Name
+
+                    </label>
+
+                    {{ form.first_name }}
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Last Name
+
+                    </label>
+
+                    {{ form.last_name }}
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Role
+
+                    </label>
+
+                    {{ profile_form.role }}
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Phone
+
+                    </label>
+
+                    {{ profile_form.phone }}
+
+                </div>
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Date of Birth
+
+                    </label>
+
+                    {{ profile_form.date_of_birth }}
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Gender
+
+                    </label>
+
+                    {{ profile_form.gender }}
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Telegram
+
+                    </label>
+
+                    {{ profile_form.telegram }}
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Avatar
+
+                    </label>
+
+                    {{ profile_form.avatar }}
+
+                </div>
+
+                <div class="col-md-12 mb-3">
+
+                    <label class="form-label">
+
+                        Address
+
+                    </label>
+
+                    {{ profile_form.address }}
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Avatar
+
+                    </label>
+
+                    {{ profile_form.avatar }}
+
+                </div>
+
+            </div>
+
+            <hr>
+
+            <div class="form-check mb-2">
+
+                {{ form.is_active }}
+
+                <label class="form-check-label">
+
+                    Active
+
+                </label>
+
+            </div>
+
+            <div class="form-check mb-2">
+
+                {{ form.is_staff }}
+
+                <label class="form-check-label">
+
+                    Staff
+
+                </label>
+
+            </div>
+
+            <div class="form-check mb-4">
+
+                {{ form.is_superuser }}
+
+                <label class="form-check-label">
+
+                    Superuser
+
+                </label>
+
+            </div>
+
+            <button
+                type="submit"
+                class="btn btn-primary">
+
+                <i class="bi bi-check-lg"></i>
+
+                Save Changes
+
+            </button>
+
+            <a
+                href="{% url 'user_detail' user_obj.id %}"
+                class="btn btn-secondary">
+
+                Cancel
+
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

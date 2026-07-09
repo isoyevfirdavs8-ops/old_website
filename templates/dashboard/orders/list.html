@@ -1,0 +1,281 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}
+Orders
+{% endblock %}
+
+{% block content %}
+
+<!-- Statistics -->
+<div class="row mb-4">
+
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body text-center">
+                <h6>Total Orders</h6>
+                <h2>{{ total_orders }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <a href="?status=Pending"
+           class="text-decoration-none text-dark">
+
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <h6>Pending</h6>
+                    <h2 class="text-warning">
+                        {{ pending_orders }}
+                    </h2>
+                </div>
+            </div>
+
+        </a>
+    </div>
+
+    <div class="col-md-3">
+        <a href="?status=Delivered"
+           class="text-decoration-none text-dark">
+
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <h6>Delivered</h6>
+                    <h2 class="text-success">
+                        {{ delivered_orders }}
+                    </h2>
+                </div>
+            </div>
+
+        </a>
+    </div>
+
+    <div class="col-md-3">
+        <a href="?status=Cancelled"
+           class="text-decoration-none text-dark">
+
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <h6>Cancelled</h6>
+                    <h2 class="text-danger">
+                        {{ cancelled_orders }}
+                    </h2>
+                </div>
+            </div>
+
+        </a>
+    </div>
+
+</div>
+
+<!-- Search -->
+<div class="card shadow-sm border-0 mb-4">
+
+    <div class="card-body">
+
+        <form method="get">
+
+            <div class="row g-3">
+
+                <div class="col-md-5">
+
+                    <input
+                        type="text"
+                        name="search"
+                        value="{{ search }}"
+                        class="form-control"
+                        placeholder="Search by ID, customer or phone">
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <select
+                        name="status"
+                        class="form-select">
+
+                        <option value="">All Status</option>
+
+                        <option value="Pending"
+                                {% if selected_status == "Pending" %}selected{% endif %}>
+                            Pending
+                        </option>
+
+                        <option value="Processing"
+                                {% if selected_status == "Processing" %}selected{% endif %}>
+                            Processing
+                        </option>
+
+                        <option value="Delivered"
+                                {% if selected_status == "Delivered" %}selected{% endif %}>
+                            Delivered
+                        </option>
+
+                        <option value="Cancelled"
+                                {% if selected_status == "Cancelled" %}selected{% endif %}>
+                            Cancelled
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <div class="d-flex gap-2">
+
+                        <button
+                            class="btn btn-primary flex-fill">
+
+                            <i class="bi bi-search"></i>
+
+                            Search
+
+                        </button>
+
+                        <a
+                            href="{% url 'order_list' %}"
+                            class="btn btn-outline-secondary">
+
+                            Reset
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- Orders Table -->
+<div class="card shadow-sm border-0">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+
+        <h4 class="mb-0">
+
+            Orders
+
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table
+                id="ordersTable"
+                class="table table-hover align-middle">
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Customer</th>
+
+                        <th>Phone</th>
+
+                        <th>Total</th>
+
+                        <th>Status</th>
+
+                        <th>Date</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for order in orders %}
+
+                        <tr>
+
+                            <td>
+
+                                #{{ order.id }}
+
+                            </td>
+
+                            <td>
+
+                                {{ order.full_name }}
+
+                            </td>
+
+                            <td>
+
+                                {{ order.phone }}
+
+                            </td>
+
+                            <td>
+
+                                {{ order.total_price }}
+
+                            </td>
+
+                            <td>
+
+                                {% include "dashboard/includes/status_badge.html" with status=order.status %}
+
+                            </td>
+
+                            <td>
+
+                                {{ order.created_at|date:"d M Y" }}
+
+                            </td>
+
+                            <td>
+
+                                <a
+                                    href="{% url 'order_detail' order.id %}"
+                                    class="btn btn-sm btn-primary">
+
+                                    <i class="bi bi-eye"></i>
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                    {% empty %}
+
+                        <tr>
+
+                            <td
+                                colspan="7"
+                                class="text-center">
+
+                                No Orders Found
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

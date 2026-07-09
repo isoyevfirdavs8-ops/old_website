@@ -1,0 +1,355 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}
+Order #{{ order.id }}
+{% endblock %}
+
+{% block content %}
+{% include "dashboard/includes/status_badge.html" with status=order.status %}
+<div class="row">
+
+    <!-- Customer -->
+
+    <div class="col-lg-4">
+
+        <div class="card shadow-sm border-0 mb-4">
+
+            <div class="card-header">
+
+                <h5>
+
+                    Customer Information
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <p>
+
+                    <strong>Name:</strong>
+
+                    {{ order.full_name }}
+
+                </p>
+
+                <p>
+
+                    <strong>Phone:</strong>
+
+                    {{ order.phone }}
+
+                </p>
+
+                <p>
+
+                    <strong>Address:</strong>
+
+                    {{ order.address }}
+
+                </p>
+
+                <p>
+
+                    <strong>Date:</strong>
+
+                    {{ order.created_at|date:"d M Y H:i" }}
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+<hr>
+
+<p>
+
+    <strong>User:</strong>
+
+    {{ order.user.username }}
+
+</p>
+
+<p>
+
+    <strong>Total Orders:</strong>
+
+    {{ order.user.orders.count }}
+
+</p>
+    <!-- Summary -->
+    <table class="table">
+
+<tr>
+
+    <th>
+
+        Items
+
+    </th>
+
+    <td>
+
+        {{ order.items.count }}
+
+    </td>
+
+</tr>
+
+<tr>
+
+    <th>
+
+        Subtotal
+
+    </th>
+
+    <td>
+
+        {{ order.total_price }}
+
+    </td>
+
+</tr>
+
+<tr>
+
+    <th>
+
+        Delivery
+
+    </th>
+
+    <td>
+
+        Free
+
+    </td>
+
+</tr>
+
+<tr>
+
+    <th>
+
+        Discount
+
+    </th>
+
+    <td>
+
+        0 %
+
+    </td>
+
+</tr>
+
+<tr class="table-light">
+
+    <th>
+
+        Grand Total
+
+    </th>
+
+    <th>
+
+        {{ order.total_price }}
+
+    </th>
+
+</tr>
+
+</table>
+<!-- Products -->
+
+<div class="card shadow-sm border-0 mb-4">
+
+    <div class="card-header">
+
+        <h5>
+
+            Ordered Products
+
+        </h5>
+
+    </div>
+
+    <div class="card-body">
+
+        <table class="table table-hover">
+
+            <thead>
+
+            <tr>
+
+                <th>Image</th>
+
+                <th>Product</th>
+
+                <th>Size</th>
+
+                <th>Qty</th>
+
+                <th>Price</th>
+
+                <th>Total</th>
+
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for item in order.items.all %}
+
+                <tr>
+
+                    {% if item.product.gallery.first %}
+                    <img
+                        src="{{ item.product.gallery.first.image.url }}"
+                        width="60"
+                        class="rounded">
+                    {% else %}
+                    <img
+                        src="https://placehold.co/60x60"
+                        width="60"
+                        class="rounded">
+                    {% endif %}
+
+                    <td>
+
+                        {{ item.product.title }}
+
+                    </td>
+
+                    <td>
+
+                        {{ item.size }}
+
+                    </td>
+
+                    <td>
+
+                        {{ item.quantity }}
+
+                    </td>
+
+                    <td>
+
+                        {{ item.price }} so'm
+
+                    </td>
+
+                    <td>
+
+                        {{ item.total }} so'm
+
+                </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<!-- Status -->
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-header">
+
+        <h5>
+
+            Update Status
+
+        </h5>
+
+    </div>
+
+    <div class="card-body">
+
+        <form
+            method="POST"
+            action="{% url 'order_status' order.id %}">
+
+            {% csrf_token %}
+
+            <div class="row">
+
+                <div class="col-md-4">
+
+                    {{ form.status }}
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <button
+                        class="btn btn-primary">
+
+                        Save
+
+                    </button>
+                    <a
+                        href="{% url 'order_invoice' order.id %}"
+
+                        target="_blank"
+                        class="btn btn-outline-dark">
+
+                        <i class="bi bi-printer"></i>
+
+                        Print Invoice
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+<div class="mt-4 d-flex gap-2">
+
+    <button
+        class="btn btn-primary">
+
+        <i class="bi bi-check-circle"></i>
+
+        Save
+
+    </button>
+
+    <a
+        href="#"
+        class="btn btn-outline-secondary">
+
+        <i class="bi bi-printer"></i>
+
+        Print
+
+    </a>
+
+    <a
+            href="{% url 'order_invoice_pdf' order.id %}"
+            class="btn btn-danger">
+            <i class="bi bi-file-earmark-pdf"></i>
+
+            Download PDF
+    </a>
+
+</div>
+{% endblock %}

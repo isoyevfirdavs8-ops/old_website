@@ -1,0 +1,97 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}
+Create Category
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-header">
+
+        <h4 class="mb-0">
+
+            Create Category
+
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Category Name
+
+                </label>
+
+                {{ form.name }}
+
+                {% if form.name.errors %}
+
+                    <div class="text-danger mt-1">
+
+                        {{ form.name.errors }}
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+            <div class="mb-4">
+
+                <label class="form-label">
+
+                    Russian Name
+
+                </label>
+
+                {{ form.name_ru }}
+
+                {% if form.name_ru.errors %}
+
+                    <div class="text-danger mt-1">
+
+                        {{ form.name_ru.errors }}
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+            <button
+
+                class="btn btn-primary">
+
+                <i class="bi bi-check-lg"></i>
+
+                Save
+
+            </button>
+
+            <a
+
+                href="{% url 'category_list' %}"
+
+                class="btn btn-secondary">
+
+                Cancel
+
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% if status == "Pending" %}
+
+<span class="badge bg-warning text-dark">
+
+    Pending
+
+</span>
+
+{% elif status == "Processing" %}
+
+<span class="badge bg-info">
+
+    Processing
+
+</span>
+
+{% elif status == "Shipped" %}
+
+<span class="badge bg-primary">
+
+    Shipped
+
+</span>
+
+{% elif status == "Delivered" %}
+
+<span class="badge bg-success">
+
+    Delivered
+
+</span>
+
+{% else %}
+
+<span class="badge bg-danger">
+
+    Cancelled
+
+</span>
+
+{% endif %}

@@ -1,0 +1,221 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}
+Categories
+{% endblock %}
+
+{% block content %}
+
+<div class="row mb-4">
+
+    <div class="col-md-4">
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body">
+
+                <h6>Total Categories</h6>
+
+                <h2>{{ total_categories }}</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body">
+
+                <h6>Total SubCategories</h6>
+
+                <h2>{{ total_subcategories }}</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body">
+
+                <h6>Total Products</h6>
+
+                <h2>{{ total_products }}</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+
+        <h4 class="mb-0">
+
+            Categories
+
+        </h4>
+        <form method="get" class="d-flex">
+
+            <input
+
+                type="search"
+
+                name="search"
+
+                class="form-control"
+
+                placeholder="Search Category..."
+
+                value="{{ request.GET.search }}">
+
+        </form>
+
+        <a
+
+            href="{% url 'category_create' %}"
+
+            class="btn btn-primary">
+
+            <i class="bi bi-plus-lg"></i>
+
+            Add Category
+
+        </a>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table
+
+                id="categoryTable"
+
+                class="table table-hover align-middle">
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Name</th>
+
+                        <th>Russian Name</th>
+
+                        <th>Products</th>
+
+                        <th>SubCategories</th>
+
+                        <th></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for category in categories %}
+
+                    <tr>
+
+                        <td>
+
+                            {{ category.id }}
+
+                        </td>
+
+                        <td>
+
+                            {{ category.name }}
+
+                        </td>
+
+                        <td>
+
+                            {{ category.name_ru }}
+
+                        </td>
+
+                        <td>
+
+                            {{ category.products_count }}
+
+                        </td>
+
+                        <td>
+
+                            {{ category.subcategories_count }}
+
+                        </td>
+
+                        <td>
+
+                            <<a
+                                href="{% url 'category_detail' category.id %}"
+                                class="btn btn-sm btn-outline-primary">
+
+                                <i class="bi bi-eye"></i>
+
+                            </a>
+
+                            <a
+                                href="{% url 'category_edit' category.id %}"
+                                class="btn btn-sm btn-outline-warning">
+
+                                <i class="bi bi-pencil"></i>
+
+                            </a>
+
+                            <a
+                                href="{% url 'category_delete' category.id %}"
+                                class="btn btn-sm btn-outline-danger">
+
+                                <i class="bi bi-trash"></i>
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+
+                        <td colspan="6" class="text-center">
+
+                            No Categories
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

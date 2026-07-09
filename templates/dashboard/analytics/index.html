@@ -1,0 +1,314 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}
+Analytics
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                Analytics
+            </h2>
+
+            <p class="text-muted mb-0">
+                Sales statistics and business overview
+            </p>
+
+        </div>
+
+    </div>
+
+    {% include "dashboard/analytics/includes/stats_cards.html" %}
+
+    <div class="row mt-4">
+
+        <div class="col-lg-8 mb-4">
+
+            {% include "dashboard/analytics/includes/revenue_chart.html" %}
+
+        </div>
+
+        <div class="col-lg-4 mb-4">
+
+            {% include "dashboard/analytics/includes/orders_chart.html" %}
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-6 mb-4">
+
+            {% include "dashboard/analytics/includes/top_products.html" %}
+
+        </div>
+
+        <div class="col-lg-6 mb-4">
+
+            {% include "dashboard/analytics/includes/low_stock.html" %}
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+    <div class="col-lg-6 mb-4">
+
+        {% include "dashboard/analytics/includes/top_customers.html" %}
+
+    </div>
+
+        <div class="row">
+
+    <div class="col-lg-6 mb-4">
+
+        {% include "dashboard/analytics/includes/sales_category.html" %}
+
+    </div>
+
+    <div class="col-lg-6 mb-4">
+
+        {% include "dashboard/analytics/includes/goal.html" %}
+
+    </div>
+
+    </div>
+
+    <div class="col-lg-6 mb-4">
+
+        {% include "dashboard/analytics/includes/latest_orders.html" %}
+
+    </div>
+
+</div>
+    <div class="row">
+
+    <div class="col-12">
+
+        {% include "dashboard/analytics/includes/activity.html" %}
+
+    </div>
+
+</div>
+
+
+<script>
+
+const ctx = document.getElementById("salesChart");
+
+if(ctx){
+
+    const gradient = ctx
+        .getContext("2d")
+        .createLinearGradient(
+            0,
+            0,
+            0,
+            350
+        );
+
+    gradient.addColorStop(
+        0,
+        "rgba(54,162,235,.45)"
+    );
+
+    gradient.addColorStop(
+        1,
+        "rgba(54,162,235,0)"
+    );
+
+    new Chart(ctx,{
+
+        type:"line",
+
+        data:{
+
+            labels:{{ months|safe }},
+
+            datasets:[{
+
+                label:"Revenue",
+
+                data:{{ sales|safe }},
+
+                fill:true,
+
+                backgroundColor:gradient,
+
+                borderColor:"#2563eb",
+
+                borderWidth:4,
+
+                tension:.45,
+
+                pointRadius:5,
+
+                pointHoverRadius:8,
+
+            }]
+
+        },
+
+        options:{
+
+            responsive:true,
+
+            maintainAspectRatio:false,
+
+            animation:{
+
+                duration:1800,
+
+                easing:"easeOutQuart"
+
+            },
+
+            plugins:{
+
+                legend:{
+
+                    display:false
+
+                }
+
+            },
+
+            scales:{
+
+                y:{
+
+                    beginAtZero:true,
+
+                    grid:{
+
+                        color:"#f0f0f0"
+
+                    }
+
+                },
+
+                x:{
+
+                    grid:{
+
+                        display:false
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    });
+
+}
+
+
+
+const statusCtx = document.getElementById("statusChart");
+
+if(statusCtx){
+
+    new Chart(statusCtx,{
+
+        type:"doughnut",
+
+        data:{
+
+            labels:[
+
+                "Pending",
+
+                "Processing",
+
+                "Delivered",
+
+                "Cancelled"
+
+            ],
+
+            datasets:[{
+
+                data:[
+
+                    {{ pending_count }},
+
+                    {{ processing_count }},
+
+                    {{ delivered_count }},
+
+                    {{ cancelled_count }}
+
+                ],
+
+                backgroundColor:[
+
+                    "#FFC107",
+
+                    "#0DCAF0",
+
+                    "#198754",
+
+                    "#DC3545"
+
+                ],
+
+                borderWidth:0,
+
+                hoverOffset:20
+
+            }]
+
+        },
+
+        options:{
+
+            responsive:true,
+
+            cutout:"72%",
+
+            animation:{
+
+                animateRotate:true,
+
+                duration:1800
+
+            },
+
+            plugins:{
+
+                legend:{
+
+                    position:"bottom",
+
+                    labels:{
+
+                        usePointStyle:true,
+
+                        padding:20
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    });
+
+}
+
+</script>
+
+{% endblock %}

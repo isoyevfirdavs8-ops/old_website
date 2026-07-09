@@ -1,0 +1,568 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <title>Dunyo Textile</title>
+
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+    <link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+{% load i18n %}
+
+<nav class="navbar navbar-dark bg-dark px-4">
+
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+
+        <!-- LEFT -->
+        <div class="d-flex align-items-center gap-4">
+
+            <a class="navbar-brand fw-bold fs-4" href="/">
+                Dunyo Textile
+            </a>
+
+            <div class="d-flex gap-3">
+
+                <a href="{% url 'home' %}"
+                   class="text-white text-decoration-none">
+
+                    {% trans "Home" %}
+
+                </a>
+
+                <a href="tel:+998955405535"
+                   class="text-white text-decoration-none">
+
+                    +998 95 540 55 35
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- SEARCH -->
+        <form method="get"
+              class="d-flex"
+              style="width:40%;">
+
+            <input class="form-control me-2"
+                   type="text"
+                   name="q"
+                   placeholder="{% trans 'Search...' %}">
+
+            <button class="btn btn-outline-light">
+                🔍
+            </button>
+
+        </form>
+
+        <!-- LANGUAGE -->
+        <div class="dropdown language-dropdown">
+
+            {% get_current_language as LANGUAGE_CODE %}
+
+            <button class="lang-btn dropdown-toggle"
+                    data-bs-toggle="dropdown">
+
+                {% if LANGUAGE_CODE == 'ru' %}
+                    🇷🇺 RU
+                {% else %}
+                    🇺🇿 UZ
+                {% endif %}
+
+            </button>
+
+            <ul class="dropdown-menu language-menu">
+
+                <li>
+                    <form action="{% url 'set_language' %}" method="post">
+                        {% csrf_token %}
+
+                        <input type="hidden"
+                               name="language"
+                               value="uz">
+
+                        <button type="submit"
+                                class="dropdown-item">
+
+                            🇺🇿 O'zbekcha
+
+                        </button>
+
+                    </form>
+                </li>
+
+                <li>
+                    <form action="{% url 'set_language' %}" method="post">
+                        {% csrf_token %}
+
+                        <input type="hidden"
+                               name="language"
+                               value="ru">
+
+                        <button type="submit"
+                                class="dropdown-item">
+
+                            🇷🇺 Русский
+
+                        </button>
+
+                    </form>
+                </li>
+
+            </ul>
+
+        </div>
+
+        <!-- RIGHT -->
+        <div class="d-flex align-items-center">
+
+            <!-- CART -->
+            <a href="{% url 'cart' %}"
+               class="btn btn-outline-light position-relative">
+
+                🛒
+
+                {% if cart_count > 0 %}
+                    <span class="position-absolute top-0 start-100 translate-middle badge bg-danger">
+                        {{ cart_count }}
+                    </span>
+                {% endif %}
+
+            </a>
+
+            <!-- WISHLIST -->
+            <a href="{% url 'wishlist' %}"
+               class="text-white text-decoration-none text-center"
+               style="margin-left:35px;">
+
+                <div style="font-size:20px;">
+                    ❤️
+                </div>
+
+                <small>
+                    {% trans "Like" %}
+                </small>
+
+            </a>
+
+            <!-- PROFILE -->
+            <a href="{% url 'profile' %}"
+               class="text-white text-decoration-none text-center"
+               style="margin-left:35px;">
+
+                <div style="font-size:24px;">
+                    👤
+                </div>
+
+                <small>
+                    {% trans "Profile" %}
+                </small>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+<div id="heroSlider"
+     class="carousel slide"
+     data-bs-ride="carousel"
+     data-bs-interval="3000">
+
+    <div class="carousel-inner">
+
+        {% for banner in banners %}
+
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <img src="{{ banner.image.url }}"
+                 class="d-block w-100 slider-img">
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+<!-- CATEGORY FILTER -->
+<div class="category-section">
+
+
+    <a href="{% url 'home' %}"
+       class="category-btn {% if not selected_category %}active{% endif %}">
+        All
+    </a>
+
+
+    {% for c in categories %}
+    <a href="?category={{ c.id }}"
+       class="category-btn {% if selected_category.id == c.id %}active{% endif %}">
+
+        {% if LANGUAGE_CODE == 'ru' %}
+            {{ c.name_ru|default:c.name }}
+        {% else %}
+            {{ c.name }}
+        {% endif %}
+
+    </a>
+{% endfor %}
+
+</div>
+
+{% if selected_category %}
+
+<div class="subcategory-wrapper">
+
+    {% for s in selected_category.subcategories.all %}
+
+    {% if s.name == "Manzil" %}
+
+        <a href="{% url 'branches' %}?subcategory={{ s.id }}"
+           class="subcategory-card">
+
+    {% elif s.name == "Career" %}
+
+        <a href="{% url 'career' %}"
+           class="subcategory-card">
+
+    {% else %}
+
+        <a href="?category={{ selected_category.id }}&subcategory={{ s.id }}"
+           class="subcategory-card">
+
+    {% endif %}
+
+        {% if s.image %}
+            <div class="subcategory-image">
+                <img src="{{ s.image.url }}">
+            </div>
+        {% endif %}
+
+        <div class="subcategory-name">
+
+            {% if LANGUAGE_CODE == 'ru' %}
+                {{ s.name_ru|default:s.name }}
+            {% else %}
+                {{ s.name }}
+            {% endif %}
+
+        </div>
+
+    </a>
+
+{% endfor %}
+
+
+</div>
+
+{% endif %}
+
+<!-- PRODUCTS -->
+<div class="container-fluid px-4 mt-4">
+
+    <div class="row">
+
+        {% for p in products %}
+
+        <div class="col-md-3 mb-5">
+
+            <div class="product-card position-relative">
+
+                <!-- WISHLIST -->
+
+                <a href="{% url 'toggle_wishlist' p.id %}"
+
+                   style="
+                      position:absolute;
+                      top:15px;
+                      right:15px;
+                      font-size:30px;
+                      text-decoration:none;
+                      z-index:10;
+                   ">
+
+                     {% if p.id|stringformat:"s" in wishlist_products %}
+                         ❤️
+                     {% else %}
+                         🤍
+                     {% endif %}
+                </a>
+
+                <!-- DETAIL -->
+                <a href="{% url 'product_detail' p.id %}"
+                   class="text-decoration-none text-dark">
+
+                    {% if p.image %}
+
+                        <div class="image-box">
+
+                            <img src="{{ p.image.url }}"
+                                 class="product-image">
+
+                        </div>
+
+                    {% else %}
+
+                        <div class="bg-light text-center p-5">
+                            No image
+                        </div>
+
+                    {% endif %}
+
+                    <!-- INFO -->
+                    <div class="pt-3">
+
+                        <h5 class="fw-bold product-title">
+                            {{ p.title }}
+                        </h5>
+
+                        {% if p.discount > 0 %}
+                            <h5 class="text-danger">
+                                    {{ p.final_price }} so'm
+                                </h5>
+
+                            <small class="text-decoration-line-through text-muted">
+                                {{ p.price }} so'm
+                            </small>
+
+
+
+                        {% else %}
+
+                            <p class="text-muted fs-5">
+                                {{ p.price }} so'm
+                            </p>
+
+                        {% endif %}
+
+                    </div>
+
+                </a>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+</div>
+<style>
+    .language-btn{
+    background:none;
+    border:none;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.lang-flag{
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    object-fit:cover;
+    border:1px solid #ddd;
+}
+
+.lang-flag-small{
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    object-fit:cover;
+    margin-right:8px;
+}
+
+.language-menu{
+    min-width:180px;
+}
+
+.language-menu .dropdown-item{
+    display:flex;
+    align-items:center;
+    padding:10px 15px;
+}
+    .slider-img{
+    height:700px;
+    width:100%;
+    object-fit:cover;
+}
+
+
+.carousel-caption{
+    bottom:25%;
+}
+
+.carousel-caption h1{
+    font-size:70px;
+    font-weight:700;
+    text-transform:uppercase;
+}
+
+/* CATEGORY */
+.category-section{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:12px;
+    margin:30px 0;
+}
+
+.category-btn{
+    padding:10px 22px;
+    border-radius:50px;
+    text-decoration:none;
+    background:#fff;
+    color:#222;
+    border:1px solid #ddd;
+    font-weight:500;
+    transition:all .3s ease;
+}
+
+.category-btn:hover{
+    background:#111;
+    color:#fff;
+    transform:translateY(-2px);
+}
+
+.category-btn.active{
+    background:#111;
+    color:#fff;
+    border-color:#111;
+}
+
+
+/* SUBCATEGORY */
+.subcategory-wrapper{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+    gap:20px;
+    margin-top:30px;
+}
+
+.subcategory-card{
+    text-decoration:none;
+    background:#fff;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.subcategory-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+
+.subcategory-image{
+    height:180px;
+    overflow:hidden;
+}
+
+.subcategory-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.4s;
+}
+
+.subcategory-card:hover img{
+    transform:scale(1.08);
+}
+
+.subcategory-name{
+    padding:15px;
+    text-align:center;
+    font-weight:600;
+    color:#222;
+}
+.subcategory-wrapper{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    padding:30px 0;
+    flex-wrap:wrap;
+}
+
+.subcategory-item{
+    text-decoration:none;
+    color:#222;
+    text-align:center;
+}
+
+.subcategory-image{
+    width:130px;
+    height:130px;
+    border-radius:50%;
+    overflow:hidden;
+    background:#f5f5f5;
+    transition:.3s;
+}
+
+.subcategory-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.subcategory-item:hover .subcategory-image{
+    transform:scale(1.05);
+}
+
+.subcategory-item span{
+    display:block;
+    margin-top:10px;
+    font-weight:500;
+}
+
+
+
+.product-card{
+    transition:.4s;
+}
+
+.image-box{
+    overflow:hidden;
+    border-radius:12px;
+}
+
+.product-image{
+    width:100%;
+    height:600px;
+    object-fit:cover;
+    transition:.5s;
+    display:block;
+}
+
+.product-card:hover .product-image{
+    transform:scale(1.05);
+}
+
+.product-card:hover{
+    transform:translateY(-6px);
+}
+
+.product-title{
+    transition:.3s;
+}
+
+.product-card:hover .product-title{
+    color:#555;
+}
+
+</style>
+{% include 'footer.html' %}
+</body>
+</html>

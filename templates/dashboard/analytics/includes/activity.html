@@ -1,0 +1,81 @@
+<div class="card shadow-sm border-0 rounded-4 h-100">
+
+    <div class="card-header bg-white border-0">
+
+        <h5 class="fw-bold">
+
+            Activity Timeline
+
+        </h5>
+
+        <small class="text-muted">
+
+            Latest system events
+
+        </small>
+
+    </div>
+
+    <div class="card-body">
+
+        {% for activity in activities %}
+
+            <div class="timeline-item">
+
+                <div class="timeline-dot
+
+                    {% if activity.action == 'order_created' %}
+                        bg-primary
+                    {% elif activity.action == 'order_delivered' %}
+                        bg-success
+                    {% elif activity.action == 'product_created' %}
+                        bg-info
+                    {% elif activity.action == 'product_updated' %}
+                        bg-warning
+                    {% else %}
+                        bg-secondary
+                    {% endif %}
+
+                "></div>
+
+                <div class="timeline-content">
+
+                    <strong>
+
+                        {{ activity.message }}
+
+                    </strong>
+
+                    <br>
+
+                    <small class="text-muted">
+
+                        {% if activity.user %}
+
+                            {{ activity.user.username }}
+
+                            •
+
+                        {% endif %}
+
+                        {{ activity.created_at|timesince }} ago
+
+                    </small>
+
+                </div>
+
+            </div>
+
+        {% empty %}
+
+            <div class="text-center text-muted py-5">
+
+                No activity yet.
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>

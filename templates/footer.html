@@ -1,0 +1,179 @@
+<footer class="mt-5 text-white" style="background:#1f1f25;">
+
+    <div class="container py-5">
+
+        <div class="row">
+
+            <!-- LEFT -->
+            <div class="col-md-4">
+
+                <h1 class="fw-bold"
+                    style="letter-spacing:3px;">
+
+                    DUNYO TEXTILE
+
+                </h1>
+
+                <p class="text-secondary">
+                    SIMPLE PERSONALITY
+                </p>
+
+                <!-- SOCIAL -->
+                <div class="d-flex gap-3 mt-4">
+
+                    <!-- TELEGRAM -->
+                    <a href="https://t.me/dunyotextil"
+                       target="_blank"
+                       class="social-icon">
+
+                        <i class="bi bi-telegram"></i>
+
+                    </a>
+
+                    <!-- FACEBOOK -->
+                    <a href="https://facebook.com/groups/1287759874616938/"
+                       target="_blank"
+                       class="social-icon">
+
+                        <i class="bi bi-facebook"></i>
+
+                    </a>
+
+                    <!-- INSTAGRAM -->
+                    <a href="https://instagram.com/dunyotextile"
+                       target="_blank"
+                       class="social-icon">
+
+                        <i class="bi bi-instagram"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- CENTER -->
+            <div class="col-md-4">
+
+                <h5 class="mb-4">Menu</h5>
+
+                <ul class="list-unstyled footer-links">
+
+                    <li>
+                        <a href="{% url 'home' %}">
+                            Home
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'cart' %}">
+                            Savatcha
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'profile' %}">
+                            Profile
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- RIGHT -->
+            <div class="col-md-4">
+
+                <h5 class="mb-4">Contact</h5>
+
+                <p>
+                    ☎
+                    <a href="tel:+998955405535"
+                       class="footer-contact">
+
+                        +998 95 540 55 35
+
+                    </a>
+                </p>
+
+                <p>
+                    ✉
+                    <a href="mailto:dunyotextile@gmail.com"
+                       class="footer-contact">
+
+                        dunyotextile@gmail.com
+
+                    </a>
+                </p>
+
+                <p class="text-secondary">
+                    ⏰ Du - Sh: 9:00 - 23:00
+                </p>
+
+            </div>
+
+        </div>
+
+        <hr class="border-secondary mt-5">
+
+        <div class="text-center text-secondary">
+
+            © 2026 DUNYO TEXTILE
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+
+<style>
+
+.social-icon{
+    width:45px;
+    height:45px;
+    border:1px solid #555;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    text-decoration:none;
+    font-size:20px;
+    transition:.3s;
+}
+
+.social-icon:hover{
+    background:white;
+    color:black;
+    transform:translateY(-5px);
+}
+
+.footer-links li{
+    margin-bottom:12px;
+}
+
+.footer-links a{
+    color:#ccc;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.footer-links a:hover{
+    color:white;
+    padding-left:5px;
+}
+
+.footer-contact{
+    color:#ccc;
+    text-decoration:none;
+}
+
+.footer-contact:hover{
+    color:white;
+}
+
+</style>
