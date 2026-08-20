@@ -1,0 +1,208 @@
+<div class="card shadow-sm border-0">
+
+    <div class="card-header bg-white">
+
+        <h5 class="mb-0">
+
+            <i class="bi bi-lightning-charge me-2"></i>
+
+            Quick Actions
+
+        </h5>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="d-grid gap-2">
+
+            {% if order.status == "pending" %}
+
+                <form
+                    method="post"
+                    action="{% url 'order_status' order.id %}">
+
+                    {% csrf_token %}
+
+                    <input
+                        type="hidden"
+                        name="status"
+                        value="confirmed">
+
+                    <button
+                        class="btn btn-success w-100">
+
+                        <i class="bi bi-check-circle"></i>
+
+                        Confirm Order
+
+                    </button>
+
+                </form>
+
+            {% endif %}
+
+            {% if order.status == "confirmed" %}
+
+                <form
+                    method="post"
+                    action="{% url 'order_status' order.id %}">
+
+                    {% csrf_token %}
+
+                    <input
+                        type="hidden"
+                        name="status"
+                        value="preparing">
+
+                    <button
+                        class="btn btn-primary w-100">
+
+                        <i class="bi bi-box-seam"></i>
+
+                        Start Preparing
+
+                    </button>
+
+                </form>
+
+            {% endif %}
+
+            {% if order.status == "preparing" %}
+
+                <form
+                    method="post"
+                    action="{% url 'order_status' order.id %}">
+
+                    {% csrf_token %}
+
+                    <input
+                        type="hidden"
+                        name="status"
+                        value="shipped">
+
+                    <button
+                        class="btn btn-info text-white w-100">
+
+                        <i class="bi bi-truck"></i>
+
+                        Mark As Shipped
+
+                    </button>
+
+                </form>
+
+            {% endif %}
+
+            {% if order.status == "shipped" %}
+
+                <form
+                    method="post"
+                    action="{% url 'order_status' order.id %}">
+
+                    {% csrf_token %}
+
+                    <input
+                        type="hidden"
+                        name="status"
+                        value="delivered">
+
+                    <button
+                        class="btn btn-dark w-100">
+
+                        <i class="bi bi-house-check"></i>
+
+                        Mark As Delivered
+
+                    </button>
+
+                </form>
+
+            {% endif %}
+
+            {% if order.status != "cancelled" and order.status != "delivered" %}
+
+                <form
+                    method="post"
+                    action="{% url 'order_status' order.id %}">
+
+                    {% csrf_token %}
+
+                    <input
+                        type="hidden"
+                        name="status"
+                        value="cancelled">
+
+                    <button
+                        onclick="return confirm('Cancel this order?')"
+                        class="btn btn-outline-danger w-100">
+
+                        <i class="bi bi-x-circle"></i>
+
+                        Cancel Order
+
+                    </button>
+
+                </form>
+
+            {% endif %}
+
+            {% if payment %}
+
+                {% if payment.status == "failed" or payment.status == "expired" %}
+
+                    <a
+
+                        href="{% url 'retry_payment' order.id %}"
+
+                        class="btn btn-warning">
+
+                        <i class="bi bi-arrow-repeat"></i>
+
+                        Retry Payment
+
+                    </a>
+
+                {% endif %}
+
+                {% if payment.status == "paid" %}
+
+                    <button
+                        class="btn btn-outline-success"
+                        disabled>
+
+                        <i class="bi bi-credit-card"></i>
+
+                        Payment Completed
+
+                    </button>
+
+                {% endif %}
+
+            {% endif %}
+
+            <hr>
+
+
+
+            {% if order.user %}
+
+                <a
+
+                    href="{% url 'user_detail' order.user.id %}"
+
+                    class="btn btn-outline-secondary">
+
+                    <i class="bi bi-person"></i>
+
+                    View Customer
+
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>

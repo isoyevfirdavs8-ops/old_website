@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+{{ subcategory.name }}
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{% static 'main/css/branch/list.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="branch-section py-5">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <span class="branch-badge">
+                OUR STORES
+            </span>
+
+            <h2 class="branch-heading mt-3">
+
+                Find the nearest
+                <span>Dunyo Textile</span>
+
+            </h2>
+
+            <p class="branch-subtitle">
+
+                Visit one of our branches and enjoy premium quality products.
+
+            </p>
+
+        </div>
+
+        <div class="row g-4">
+
+            <!-- MAP -->
+
+            <div class="col-xl-8">
+
+                <div class="map-wrapper">
+
+                    <div id="branch-map"></div>
+
+                </div>
+
+            </div>
+
+            <!-- BRANCHES -->
+
+            <div class="col-xl-4">
+
+                <div class="branch-list">
+
+                    {% for branch in branches %}
+
+                    <div class="branch-card">
+
+                        <div class="branch-top">
+
+                            <div class="branch-icon">
+
+                                <i class="bi bi-shop"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h5>
+
+                                    {{ branch.name }}
+
+                                </h5>
+
+                                <small>
+
+                                    Dunyo Textile Branch
+
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                        <div class="branch-info">
+
+                            <div>
+
+                                <i class="bi bi-geo-alt-fill"></i>
+
+                                <span>
+
+                                    {{ branch.address }}
+
+                                </span>
+
+                            </div>
+
+                            <div>
+
+                                <i class="bi bi-telephone-fill"></i>
+
+                                <span>
+
+                                    {{ branch.phone }}
+
+                                </span>
+
+                            </div>
+
+                            <div>
+
+                                <i class="bi bi-clock-fill"></i>
+
+                                <span>
+
+                                    {{ branch.work_time }}
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <button
+                            class="view-map-btn"
+                            data-id="{{ branch.id }}"
+                            data-lat="{{ branch.latitude }}"
+                            data-lng="{{ branch.longitude }}">
+                            <i class="bi bi-geo-alt-fill"></i>
+                            View on Map
+                        </button>
+
+                    </div>
+
+                    {% empty %}
+
+                    <div class="alert alert-light border">
+
+                        No branches found.
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script src="https://api-maps.yandex.ru/2.1/?apikey=f7bd2f5e-f113-4fab-92b1-08d773500cf8&lang=en_US"></script>
+
+<script>
+
+const branches = JSON.parse('{{ branches_json|escapejs }}');
+
+</script>
+
+<script src="{% static 'main/js/branch/list.js' %}"></script>
+
+{% endblock %}

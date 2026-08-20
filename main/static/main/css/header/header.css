@@ -1,0 +1,212 @@
+/* ==========================================
+   HEADER IMPORTS
+========================================== */
+
+@import url("top-bar.css");
+
+@import url("main-header.css");
+
+@import url("navbar.css");
+
+@import url("mega-menu.css");
+
+@import url("responsive.css");
+
+@import url("animations.css");
+
+
+/* ==========================================
+   ROOT COLORS
+========================================== */
+
+:root{
+
+    --primary:#b8923f;
+
+    --primary-dark:#9b7731;
+
+    --black:#222;
+
+    --white:#fff;
+
+    --gray:#777;
+
+    --border:#ececec;
+
+    --transition:.3s ease;
+
+}
+
+
+/* ==========================================
+   HEADER WRAPPER
+========================================== */
+
+.header{
+
+    position:relative;
+
+    width:100%;
+
+    background:#fff;
+
+    z-index:999;
+
+}
+
+.header-wrapper{
+
+    background:#fff;
+
+    position:relative;
+
+    z-index:1000;
+
+}
+
+
+/* ==========================================
+   STICKY
+========================================== */
+
+.header-wrapper.sticky-header{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    animation:headerFade .35s ease;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+}
+
+
+/* ==========================================
+   CONTAINER
+========================================== */
+
+.header .container{
+
+    max-width:1400px;
+
+    margin:auto;
+
+    padding:0 20px;
+
+}
+
+
+/* ==========================================
+   LINKS
+========================================== */
+
+.header a{
+
+    text-decoration:none;
+
+}
+
+
+/* ==========================================
+   IMAGES
+========================================== */
+
+.header img{
+
+    display:block;
+
+    max-width:100%;
+
+}
+
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.header button{
+
+    border:none;
+
+    background:none;
+
+    cursor:pointer;
+
+}
+
+
+/* ==========================================
+   ICONS
+========================================== */
+
+.header i{
+
+    transition:var(--transition);
+
+}
+
+
+/* ==========================================
+   SELECTION
+========================================== */
+
+.header ::selection{
+
+    background:var(--primary);
+
+    color:#fff;
+
+}
+
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:var(--primary);
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#f5f5f5;
+
+}
+
+
+/* ==========================================
+   ANIMATION
+========================================== */
+
+@keyframes headerFade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(-20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}

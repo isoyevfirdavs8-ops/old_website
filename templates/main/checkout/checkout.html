@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+Checkout
+{% endblock %}
+
+{% block extra_css %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'main/css/checkout/checkout.css' %}"
+>
+
+{% endblock %}
+
+{% block content %}
+
+<section class="checkout-page">
+
+    <div class="container">
+
+        <form
+            method="POST"
+            id="checkoutForm"
+            autocomplete="off"
+        >
+
+            {% csrf_token %}
+
+            <div class="row g-4">
+
+                <!-- LEFT -->
+
+                <div class="col-lg-8">
+
+                    {% include "main/checkout/_customer.html" %}
+
+                    {% include "main/checkout/_delivery.html" %}
+
+                    {% include "main/checkout/_payment.html" %}
+
+                </div>
+
+                <!-- RIGHT -->
+
+                <div class="col-lg-4">
+
+                    {% include "main/checkout/_summary.html" %}
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+<!-- OTP Modal -->
+
+{% include "main/checkout/_otp_modal.html" %}
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script>
+
+const SEND_OTP_URL = "{% url 'send_otp' %}";
+
+const VERIFY_OTP_URL = "{% url 'verify_otp' %}";
+
+const CSRF_TOKEN = "{{ csrf_token }}";
+
+</script>
+
+<script src="{% static 'main/js/checkout/checkout.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,574 @@
+{% extends "dashboard/base.html" %}
+
+{% load static %}
+
+{% block title %}
+
+System Settings
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="page-header mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+
+                <i class="bi bi-gear-fill me-2"></i>
+
+                System Settings
+
+            </h2>
+
+            <p class="text-muted mb-0">
+
+                Configure your website system preferences.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <!-- LEFT -->
+
+        <div class="col-lg-8">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-header">
+
+                    <h5 class="mb-0">
+
+                        General Configuration
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+                        <!-- Maintenance -->
+
+                        <div class="setting-item">
+
+                            <div>
+
+                                <h6 class="mb-1">
+
+                                    Maintenance Mode
+
+                                </h6>
+
+                                <small class="text-muted">
+
+                                    Website will be temporarily unavailable for visitors.
+
+                                </small>
+
+                            </div>
+
+                            <div class="form-check form-switch">
+
+                                <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    name="maintenance_mode"
+                                    {% if settings.maintenance_mode %}
+                                    checked
+                                    {% endif %}>
+
+                            </div>
+
+                        </div>
+
+                        <hr>
+
+                        <!-- Registration -->
+
+                        <div class="setting-item">
+
+                            <div>
+
+                                <h6 class="mb-1">
+
+                                    User Registration
+
+                                </h6>
+
+                                <small class="text-muted">
+
+                                    Allow new users to create an account.
+
+                                </small>
+
+                            </div>
+
+                            <div class="form-check form-switch">
+
+                                <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    name="registration_open"
+                                    {% if settings.registration_open %}
+                                    checked
+                                    {% endif %}>
+
+                            </div>
+
+                        </div>
+
+                        <hr>
+
+                        <!-- LANGUAGE -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                Default Language
+
+                            </label>
+
+                            <select
+                                class="form-select"
+                                name="default_language">
+
+                                <option
+                                    value="uz"
+                                    {% if settings.default_language == "uz" %}
+                                    selected
+                                    {% endif %}>
+
+                                    Uzbek
+
+                                </option>
+
+                                <option
+                                    value="en"
+                                    {% if settings.default_language == "en" %}
+                                    selected
+                                    {% endif %}>
+
+                                    English
+
+                                </option>
+
+                                <option
+                                    value="ru"
+                                    {% if settings.default_language == "ru" %}
+                                    selected
+                                    {% endif %}>
+
+                                    Russian
+
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <!-- CURRENCY -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                Default Currency
+
+                            </label>
+
+                            <select
+                                class="form-select"
+                                name="default_currency">
+
+                                <option
+                                    value="UZS"
+                                    {% if settings.default_currency == "UZS" %}
+                                    selected
+                                    {% endif %}>
+
+                                    UZS
+
+                                </option>
+
+                                <option
+                                    value="USD"
+                                    {% if settings.default_currency == "USD" %}
+                                    selected
+                                    {% endif %}>
+
+                                    USD
+
+                                </option>
+
+                                <option
+                                    value="EUR"
+                                    {% if settings.default_currency == "EUR" %}
+                                    selected
+                                    {% endif %}>
+
+                                    EUR
+
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <!-- TIMEZONE -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                Timezone
+
+                            </label>
+
+                            <select
+                                class="form-select"
+                                name="timezone">
+
+                                <option
+                                    value="Asia/Tashkent"
+                                    {% if settings.timezone == "Asia/Tashkent" %}
+                                    selected
+                                    {% endif %}>
+
+                                    Asia / Tashkent
+
+                                </option>
+
+                                <option
+                                    value="Europe/London"
+                                    {% if settings.timezone == "Europe/London" %}
+                                    selected
+                                    {% endif %}>
+
+                                    Europe / London
+
+                                </option>
+
+                                <option
+                                    value="America/New_York"
+                                    {% if settings.timezone == "America/New_York" %}
+                                    selected
+                                    {% endif %}>
+
+                                    America / New York
+
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <!-- PRODUCTS PER PAGE -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                Products Per Page
+
+                            </label>
+
+                            <input
+                                type="number"
+                                name="products_per_page"
+                                class="form-control"
+                                min="1"
+                                value="{{ settings.products_per_page }}">
+
+                            <div class="form-text">
+
+                                Number of products displayed on each page.
+
+                            </div>
+
+                        </div>
+
+                        <!-- ORDERS PER PAGE -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                Orders Per Page
+
+                            </label>
+
+                            <input
+                                type="number"
+                                name="orders_per_page"
+                                class="form-control"
+                                min="1"
+                                value="{{ settings.orders_per_page }}">
+
+                            <div class="form-text">
+
+                                Number of orders displayed in dashboard.
+
+                            </div>
+
+                        </div>
+
+                        <!-- DASHBOARD THEME -->
+
+                        <div class="mb-5">
+
+                            <label class="form-label fw-semibold d-block">
+
+                                Dashboard Theme
+
+                            </label>
+
+                            <div class="theme-wrapper">
+
+                                <label class="theme-card">
+
+                                    <input
+                                        type="radio"
+                                        name="dashboard_theme"
+                                        value="light"
+                                        {% if settings.dashboard_theme == "light" %}
+                                        checked
+                                        {% endif %}>
+
+                                    <span>
+
+                                        <i class="bi bi-sun-fill"></i>
+
+                                        Light
+
+                                    </span>
+
+                                </label>
+
+                                <label class="theme-card">
+
+                                    <input
+                                        type="radio"
+                                        name="dashboard_theme"
+                                        value="dark"
+                                        {% if settings.dashboard_theme == "dark" %}
+                                        checked
+                                        {% endif %}>
+
+                                    <span>
+
+                                        <i class="bi bi-moon-stars-fill"></i>
+
+                                        Dark
+
+                                    </span>
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                        <!-- SAVE -->
+
+                        <div class="text-end">
+
+                            <button
+                                type="submit"
+                                class="btn btn-dark px-5">
+
+                                <i class="bi bi-check-circle me-2"></i>
+
+                                Save Settings
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDE -->
+
+        <div class="col-lg-4">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-header">
+
+                    <h5 class="mb-0">
+
+                        <i class="bi bi-cpu"></i>
+
+                        System Information
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="system-item">
+
+                        <span>
+
+                            Django Version
+
+                        </span>
+
+                        <strong>
+
+                            6.x
+
+                        </strong>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="system-item">
+
+                        <span>
+
+                            Python
+
+                        </span>
+
+                        <strong>
+
+                            3.12
+
+                        </strong>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="system-item">
+
+                        <span>
+
+                            Database
+
+                        </span>
+
+                        <strong>
+
+                            SQLite
+
+                        </strong>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="system-item">
+
+                        <span>
+
+                            Timezone
+
+                        </span>
+
+                        <strong>
+
+                            {{ settings.timezone }}
+
+                        </strong>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="system-item">
+
+                        <span>
+
+                            Language
+
+                        </span>
+
+                        <strong>
+
+                            {{ settings.default_language|upper }}
+
+                        </strong>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="system-item">
+
+                        <span>
+
+                            Currency
+
+                        </span>
+
+                        <strong>
+
+                            {{ settings.default_currency }}
+
+                        </strong>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="system-item">
+
+                        <span>
+
+                            Last Updated
+
+                        </span>
+
+                        <strong>
+
+                            {{ settings.updated_at|date:"d.m.Y H:i" }}
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_css %}
+
+<link rel="stylesheet"
+      href="{% static 'dashboard/css/settings/system.css' %}">
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script src="{% static 'dashboard/js/settings/system.js' %}"></script>
+
+{% endblock %}

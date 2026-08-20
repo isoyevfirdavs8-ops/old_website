@@ -1,0 +1,360 @@
+
+{% extends "base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Shopping Cart" %}
+{% endblock %}
+
+{% block extra_css %}
+
+<link rel="stylesheet"
+      href="{% static 'main/css/cart/cart.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+<section class="cart-page">
+
+    <div class="container">
+
+        <!-- PAGE HEADER -->
+
+        <div class="cart-header">
+
+            <div>
+
+                <h1>
+
+                    <i class="bi bi-bag-check"></i>
+
+                    {% trans "Shopping Cart" %}
+
+                </h1>
+
+                <p>
+
+                    {{ cart|length }}
+
+                    {% trans "product in your cart" %}
+
+                </p>
+
+            </div>
+
+            <a href="{% url 'home' %}"
+               class="continue-shopping">
+
+                <i class="bi bi-arrow-left"></i>
+
+                {% trans "Continue Shopping" %}
+
+            </a>
+
+        </div>
+
+        {% if cart %}
+
+        <div class="row g-5">
+
+            <!-- PRODUCTS -->
+
+            <div class="col-lg-8">
+
+                <div class="cart-products">
+
+                    {% for key, item in cart.items %}
+
+                    <div
+                        class="cart-item"
+                        id="cart-item-{{ key }}"
+                        data-key="{{ key }}">
+
+                        <!-- IMAGE -->
+
+                        <div class="cart-image">
+
+                            <a href="{% url 'product_detail' item.product.id %}">
+
+                               {% if item.color and item.color.images.first %}
+
+                            <img src="{{ item.color.images.first.image.url }}"
+                                 alt="{{ item.product.title }}">
+
+                            {% elif item.product.image %}
+
+                            <img src="{{ item.product.image.url }}"
+                                 alt="{{ item.product.title }}">
+                            
+                            {% endif %}
+
+                            </a>
+
+                        </div>
+
+                        <!-- INFO -->
+
+                        <div class="cart-info">
+
+                            <span class="cart-category">
+
+                                {{ item.product.category }}
+
+                            </span>
+
+                            <h3>
+
+                                <a href="{% url 'product_detail' item.product.id %}">
+
+                                    {{ item.product.title }}
+
+                                </a>
+
+                            </h3>
+
+                            <div class="cart-variant">
+
+                                <span>
+
+                                    <strong>
+
+                                        {% trans "Color" %}
+
+                                    </strong>
+
+                                    {{ item.color }}
+
+                                </span>
+
+                                <span>
+
+                                    <strong>
+
+                                        {% trans "Size" %}
+
+                                    </strong>
+
+                                    {{ item.size }}
+
+                                </span>
+
+                            </div>
+
+                            <div class="cart-price">
+
+                                {{ item.product.final_price }}
+
+                                UZS
+
+                            </div>
+
+                        </div>
+
+                        <!-- QUANTITY -->
+
+                        <div class="cart-quantity">
+
+                            <button
+                                class="qty-btn decrease"
+                                data-key="{{ key }}">
+
+                                −
+
+                            </button>
+
+                            <span
+                                class="qty-number"
+                                id="qty-{{ key }}">
+
+                                {{ item.qty }}
+
+                            </span>
+
+                            <button
+                                class="qty-btn increase"
+                                data-key="{{ key }}">
+
+                                +
+
+                            </button>
+
+                        </div>
+
+                        <!-- SUBTOTAL -->
+
+                        <div class="cart-subtotal">
+
+                            <span>
+
+                                {% trans "Subtotal" %}
+
+                            </span>
+
+                            <strong
+                                id="subtotal-{{ key }}">
+
+                               {{ item.total }}
+
+                                UZS
+
+                            </strong>
+
+                        </div>
+
+                        <!-- REMOVE -->
+
+                        <button
+                            class="cart-remove"
+                            data-key="{{ key }}">
+
+                            <i class="bi bi-trash3"></i>
+
+                        </button>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+            <!-- SIDEBAR -->
+
+            <div class="col-lg-4">
+
+                <div class="cart-summary">
+
+                    <h3>
+
+                        {% trans "Order Summary" %}
+
+                    </h3>
+
+                    <div class="summary-row">
+
+                        <span>
+
+                            {% trans "Products" %}
+
+                        </span>
+
+                        <strong>
+
+                            {{ cart|length }}
+
+                        </strong>
+
+                    </div>
+
+                    <div class="summary-row">
+
+                        <span>
+
+                            {% trans "Shipping(over 500 000 so'm)" %}
+
+                        </span>
+
+                        <strong class="text-success">
+
+                            {% trans "Free" %}
+
+                        </strong>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="summary-total">
+
+                        <span>
+
+                            {% trans "Total" %}
+
+                        </span>
+
+                        <strong
+                            id="grand-total">
+
+                            {{ cart_total }}
+
+                            UZS
+
+                        </strong>
+
+                    </div>
+
+                    <a href="{% url 'checkout' %}"
+                       class="checkout-btn">
+
+                        <i class="bi bi-credit-card"></i>
+
+                        {% trans "Proceed to Checkout" %}
+
+                    </a>
+
+                    <a href="{% url 'home' %}"
+                       class="back-shopping">
+
+                        {% trans "Continue Shopping" %}
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-cart">
+
+            <i class="bi bi-bag-x"></i>
+
+            <h2>
+
+                {% trans "Your cart is empty" %}
+
+            </h2>
+
+            <p>
+
+                {% trans "Looks like you haven't added anything yet." %}
+
+            </p>
+
+            <a href="{% url 'home' %}"
+               class="continue-btn">
+
+                {% trans "Start Shopping" %}
+
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+<div id="cart-data"
+
+     data-update-url="{% url 'cart_update' %}"
+
+     data-remove-url="{% url 'cart_remove' %}">
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script src="{% static 'main/js/cart.js' %}"></script>
+
+{% endblock %}
+

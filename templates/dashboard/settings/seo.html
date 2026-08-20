@@ -1,0 +1,178 @@
+{% extends "dashboard/base.html" %}
+
+{% load static %}
+
+{% block title %}
+SEO Settings
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="row">
+
+        <div class="col-lg-7">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-header">
+
+                    <h4>
+
+                        SEO Settings
+
+                    </h4>
+
+                </div>
+
+                <div class="card-body">
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+                        <div class="mb-4">
+
+                            <label>
+
+                                Meta Title
+
+                            </label>
+
+                            <input
+
+                                id="metaTitle"
+
+                                type="text"
+
+                                name="meta_title"
+
+                                value="{{ settings.meta_title }}"
+
+                                class="form-control">
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label>
+
+                                Meta Description
+
+                            </label>
+
+                            <textarea
+
+                                id="metaDescription"
+
+                                name="meta_description"
+
+                                rows="5"
+
+                                class="form-control">{{ settings.meta_description }}</textarea>
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label>
+
+                                Meta Keywords
+
+                            </label>
+
+                            <textarea
+
+                                name="meta_keywords"
+
+                                rows="4"
+
+                                class="form-control">{{ settings.meta_keywords }}</textarea>
+
+                        </div>
+
+                        <button class="btn btn-dark">
+
+                            Save SEO
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-5">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-header">
+
+                    <h4>
+
+                        Google Preview
+
+                    </h4>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="google-preview">
+
+                        <div
+
+                            id="previewTitle"
+
+                            class="preview-title">
+
+                            {{ settings.meta_title }}
+
+                        </div>
+
+                        <div class="preview-url">
+
+                            https://example.com/
+
+                        </div>
+
+                        <div
+
+                            id="previewDescription"
+
+                            class="preview-description">
+
+                            {{ settings.meta_description }}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_css %}
+
+<link rel="stylesheet"
+href="{% static 'dashboard/css/settings/seo.css' %}">
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script src="{% static 'dashboard/js/settings/seo.js' %}"></script>
+
+{% endblock %}

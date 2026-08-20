@@ -1,3 +1,5 @@
+
+
 // ===========================
 // Sidebar
 // ===========================
@@ -44,55 +46,34 @@ if (categorySelect && subcategorySelect) {
     });
 
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    initDataTable("ordersTable");
+    initDataTable("usersTable");
+    initDataTable("productTable");
+    initDataTable("categoryTable");
+    initDataTable("subCategoryTable");
+
+});
 function initDataTable(id) {
 
     const table = document.getElementById(id);
 
     if (!table) return;
 
-    new DataTable(table, {
+    if ($.fn.DataTable.isDataTable(table)) {
+        return;
+    }
 
-        pageLength: 10,
-
-        responsive: true,
-
-        order: [[0, "desc"]],
-
-        language: {
-
-            search: "Search:",
-
-            lengthMenu: "Show _MENU_",
-
-            info: "Showing _START_ to _END_",
-
-            paginate: {
-
-                previous: "←",
-
-                next: "→"
-
-            }
-
-        }
-
+    new DataTable(table,{
+        responsive:true,
+        pageLength:10,
+        order:[[0,"desc"]],
     });
 
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-
-    initDataTable("ordersTable");
-
-    initDataTable("categoryTable");
-
-    initDataTable("subCategoryTable");
-
-    initDataTable("productTable");
-
-    initDataTable("usersTable");
-
-});
 
 // ===========================
 // Dynamic Formset
@@ -213,39 +194,7 @@ function bindRemoveButtons() {
     });
 
 }
-const ordersTable = document.getElementById("ordersTable");
 
-if (ordersTable) {
-
-    new DataTable(ordersTable, {
-
-        pageLength: 10,
-
-        responsive: true,
-
-        order: [[0, "desc"]],
-
-        language: {
-
-            search: "Search:",
-
-            lengthMenu: "Show _MENU_",
-
-            info: "Showing _START_ to _END_",
-
-            paginate: {
-
-                previous: "←",
-
-                next: "→"
-
-            }
-
-        }
-
-    });
-
-}
 
 function loadNotifications() {
 
@@ -446,20 +395,3 @@ function getCookie(name){
     return cookieValue;
 
 }
-
-const usersTable = document.getElementById("usersTable");
-
-if (usersTable) {
-
-    new DataTable(usersTable, {
-
-        responsive: true,
-
-        pageLength: 10,
-
-        order: [[0, "desc"]]
-
-    });
-
-}
-

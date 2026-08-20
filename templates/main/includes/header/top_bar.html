@@ -1,0 +1,120 @@
+
+{% load static %}
+{% load i18n %}
+
+<div class="top-bar">
+
+    <div class="container">
+
+        <div class="top-bar-wrapper">
+
+            <!-- LEFT -->
+
+            <div class="top-left">
+
+                <a href="tel:+998955405535" class="top-item">
+
+                    <i class="bi bi-telephone"></i>
+
+                    <span>+998 95 540 55 35</span>
+
+                </a>
+
+                <div class="divider"></div>
+
+                <div class="top-item shipping-text">
+
+                    <i class="bi bi-truck"></i>
+
+                    <span>
+
+                        {% trans "500 000 so'mdan yuqori buyurtmalarga bepul yetkazib berish" %}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT -->
+
+            <div class="top-right">
+
+                <span class="follow-text">
+
+                    {% trans "Bizni ijtimoiy tarmoqlarda kuzating:" %}
+
+                </span>
+
+                <div class="social-icons">
+
+                    <a href="https://t.me/dunyotextil"
+                       class="social telegram">
+
+                        <i class="bi bi-telegram"></i>
+
+                    </a>
+
+                    <a href="https://instagram.com/dunyotextile"
+                       class="social instagram">
+
+                        <i class="bi bi-instagram"></i>
+
+                    </a>
+
+                    <a href="https://facebook.com/groups/1287759874616938/"
+                       class="social facebook">
+
+                        <i class="bi bi-facebook"></i>
+
+                    </a>
+
+                </div>
+
+                <div class="language-box">
+
+                    <form action="{% url 'set_language' %}" method="post">
+
+                        {% csrf_token %}
+
+                        <input type="hidden"
+                               name="language"
+                               value="uz">
+
+                        <button class="lang-btn">
+
+                            UZ
+
+                            <i class="bi bi-chevron-down"></i>
+
+                        </button>
+
+                    </form>
+
+                    <form action="{% url 'set_language' %}" method="post">
+
+                        {% csrf_token %}
+
+                        <input type="hidden"
+                               name="language"
+                               value="ru">
+
+                        <button class="lang-btn">
+
+                            RU
+
+                            <i class="bi bi-chevron-down"></i>
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

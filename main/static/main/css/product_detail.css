@@ -1,0 +1,219 @@
+.product-section{
+
+    padding:70px 0;
+}
+
+.product-gallery{
+
+    position:sticky;
+
+    top:30px;
+}
+
+/* MAIN IMAGE */
+
+.main-image{
+
+    width:100%;
+
+    height:650px;
+
+    object-fit:cover;
+
+    border-radius:16px;
+
+    background:#fafafa;
+}
+
+/* THUMBNAILS */
+
+.thumbnail-list{
+
+    display:flex;
+
+    gap:12px;
+
+    margin-top:15px;
+
+    flex-wrap:wrap;
+}
+
+.thumbnail{
+
+    width:90px;
+
+    height:90px;
+
+    border-radius:10px;
+
+    object-fit:cover;
+
+    cursor:pointer;
+
+    border:2px solid transparent;
+
+    transition:.3s;
+}
+
+.thumbnail:hover{
+
+    border-color:#000;
+}
+
+/* INFO */
+
+.product-info{
+
+    padding-left:35px;
+}
+
+.product-title{
+
+    font-size:38px;
+
+    font-weight:700;
+
+    margin-bottom:15px;
+}
+
+.product-price{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    margin:20px 0;
+}
+
+.old-price{
+
+    color:#999;
+
+    text-decoration:line-through;
+
+    font-size:22px;
+}
+
+.new-price{
+
+    color:#d60000;
+
+    font-size:36px;
+
+    font-weight:700;
+}
+
+/* DESCRIPTION */
+
+.product-description{
+
+    margin:30px 0;
+
+    line-height:1.8;
+
+    color:#666;
+}
+
+/* SIZE */
+
+.size-wrapper{
+
+    display:flex;
+
+    gap:12px;
+
+    flex-wrap:wrap;
+
+    margin-top:12px;
+}
+
+.size-btn{
+
+    width:55px;
+
+    height:55px;
+
+    border:1px solid #ddd;
+
+    background:white;
+
+    border-radius:10px;
+
+    transition:.25s;
+
+    font-weight:600;
+}
+
+.size-btn:hover{
+
+    background:#111;
+
+    color:white;
+}
+
+.size-btn.active{
+
+    background:#111;
+
+    color:white;
+
+    border-color:#111;
+}
+
+/* QUANTITY */
+
+.qty-box{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-top:30px;
+}
+
+.qty-btn{
+
+    width:45px;
+
+    height:45px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#eee;
+
+    font-size:22px;
+}
+
+.qty-number{
+
+    width:45px;
+
+    text-align:center;
+
+    font-size:22px;
+
+    font-weight:700;
+}
+
+/* BUTTON */
+
+.cart-btn{
+
+    width:100%;
+
+    margin-top:30px;
+
+    padding:16px;
+
+    border-radius:12px;
+
+    font-size:18px;
+
+    font-weight:600;
+}

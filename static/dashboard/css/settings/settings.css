@@ -1,0 +1,312 @@
+/* ===================================================
+   SETTINGS
+=================================================== */
+
+.card{
+
+    border:none;
+    border-radius:18px;
+
+    overflow:hidden;
+
+    transition:.25s;
+
+}
+
+.card:hover{
+
+    box-shadow:0 18px 45px rgba(0,0,0,.08);
+
+}
+
+.card-header{
+
+    background:#fff;
+
+    border-bottom:1px solid #ececec;
+
+    padding:20px 28px;
+
+}
+
+.card-header h5{
+
+    margin:0;
+
+    font-size:18px;
+
+    font-weight:700;
+
+    color:#111;
+
+}
+
+.card-body{
+
+    padding:30px;
+
+}
+
+/* ===================================================
+   LABEL
+=================================================== */
+
+.form-label{
+
+    font-size:14px;
+
+    font-weight:600;
+
+    color:#444;
+
+    margin-bottom:8px;
+
+}
+
+/* ===================================================
+   INPUT
+=================================================== */
+
+.form-control{
+
+    height:52px;
+
+    border-radius:12px;
+
+    border:1px solid #ddd;
+
+    padding:0 16px;
+
+    font-size:15px;
+
+    transition:.25s;
+
+    box-shadow:none;
+
+}
+
+textarea.form-control{
+
+    height:auto;
+
+    padding:14px 16px;
+
+}
+
+.form-control:focus{
+
+    border-color:#111;
+
+    box-shadow:0 0 0 .18rem rgba(0,0,0,.08);
+
+}
+
+/* ===================================================
+   FILE INPUT
+=================================================== */
+
+input[type=file]{
+
+    padding:12px;
+
+}
+
+/* ===================================================
+   LOGO
+=================================================== */
+
+#logoPreview{
+
+    width:220px;
+
+    max-width:100%;
+
+    border-radius:14px;
+
+    border:1px solid #eee;
+
+    padding:10px;
+
+    background:#fafafa;
+
+}
+
+#faviconPreview{
+
+    width:70px;
+
+    height:70px;
+
+    object-fit:contain;
+
+    border-radius:12px;
+
+    border:1px solid #eee;
+
+    padding:8px;
+
+    background:#fafafa;
+
+}
+
+/* ===================================================
+   SAVE BUTTON
+=================================================== */
+
+.btn-dark{
+
+    height:54px;
+
+    border-radius:12px;
+
+    font-weight:600;
+
+    font-size:16px;
+
+    transition:.25s;
+
+}
+
+.btn-dark:hover{
+
+    transform:translateY(-2px);
+
+}
+
+/* ===================================================
+   STICKY
+=================================================== */
+
+.sticky-top{
+
+    top:95px;
+
+}
+
+/* ===================================================
+   SPACING
+=================================================== */
+
+.mb-4:last-child{
+
+    margin-bottom:0!important;
+
+}
+
+/* ===================================================
+   RESPONSIVE
+=================================================== */
+
+@media(max-width:991px){
+
+    .sticky-top{
+
+        position:relative;
+
+        top:0;
+
+    }
+
+    .card-body{
+
+        padding:22px;
+
+    }
+
+}
+
+@media(max-width:576px){
+
+    .card-header{
+
+        padding:16px 20px;
+
+    }
+
+    .card-body{
+
+        padding:20px;
+
+    }
+
+    .form-control{
+
+        height:48px;
+
+    }
+
+}
+
+/* ===================================
+   SETTINGS HOME
+=================================== */
+
+.settings-card{
+
+    display:block;
+
+    text-decoration:none;
+
+    background:#fff;
+
+    border-radius:20px;
+
+    padding:35px;
+
+    transition:.3s;
+
+    border:1px solid #ececec;
+
+    height:100%;
+
+}
+
+.settings-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 20px 45px rgba(0,0,0,.08);
+
+}
+
+.settings-icon{
+
+    width:72px;
+
+    height:72px;
+
+    border-radius:18px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:#fff;
+
+    font-size:30px;
+
+    margin-bottom:25px;
+
+}
+
+.settings-card h4{
+
+    color:#111;
+
+    font-weight:700;
+
+    margin-bottom:10px;
+
+}
+
+.settings-card p{
+
+    color:#777;
+
+    margin:0;
+
+    line-height:1.7;
+
+}

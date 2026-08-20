@@ -1,0 +1,34 @@
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+<nav class="main-navbar">
+    <div class="container">
+        <ul class="navbar-menu">
+
+            {% for category in categories %}
+
+                <li class="navbar-item">
+
+                    <a
+                        href="{% url 'category_products' category.slug %}"
+                        class="navbar-link"
+                        data-category="{{ category.id }}"
+                        data-mega="{{ category.use_mega_menu|yesno:'true,false' }}">
+
+                        {% if LANGUAGE_CODE == 'ru' and category.name_ru %}
+                            {{ category.name_ru }}
+                        {% else %}
+                            {{ category.name }}
+                        {% endif %}
+
+                    </a>
+
+                </li>
+
+            {% endfor %}
+
+        </ul>
+    </div>
+</nav>
+
+{% include "main/includes/header/mega_menu.html" %}

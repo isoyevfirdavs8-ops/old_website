@@ -1,0 +1,44 @@
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+<section class="subcategory-section">
+
+    <div class="container">
+
+        <div class="subcategory-list">
+
+            {% for sub in subcategories %}
+
+                <a href="{% url 'subcategory_products' sub.id %}"
+                   class="subcategory-item">
+
+                    {% if sub.image %}
+
+                        <img src="{{ sub.image.url }}"
+                             alt="{{ sub.name }}">
+
+                    {% endif %}
+
+                    <span class="subcategory-name">
+
+                        {% if LANGUAGE_CODE == "ru" and sub.name_ru %}
+
+                            {{ sub.name_ru }}
+
+                        {% else %}
+
+                            {{ sub.name }}
+
+                        {% endif %}
+
+                    </span>
+
+                </a>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>

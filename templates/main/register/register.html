@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Register" %}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/register/register.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+{% endblock %}
+
+{% block content %}
+
+<div class="register-wrapper">
+
+    <div class="register-card">
+
+        <div class="register-header">
+
+            <div class="register-icon">
+                <i class="ti ti-user-plus"></i>
+            </div>
+
+            <h1 class="register-title">
+                {% trans "Create Account" %}
+            </h1>
+
+            <p class="register-subtitle">
+                {% trans "Create your account to start shopping." %}
+            </p>
+
+        </div>
+
+        {% if form.non_field_errors %}
+        <div class="form-errors">
+            {% for error in form.non_field_errors %}
+                <p>
+                    <i class="ti ti-alert-circle"></i>
+                    {{ error }}
+                </p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form id="register-form" method="post" novalidate>
+
+            {% csrf_token %}
+
+            <!-- Username -->
+
+            <div class="field-group">
+
+                <label class="field-label">
+                    {% trans "Username" %}
+                </label>
+
+                <div class="field-wrap">
+
+                    <i class="ti ti-user"></i>
+
+                    {{ form.username }}
+
+                </div>
+
+                {% for error in form.username.errors %}
+                    <small class="field-error">{{ error }}</small>
+                {% endfor %}
+
+            </div>
+
+            <!-- Phone -->
+
+            <div class="field-group">
+
+                <label class="field-label">
+                    {% trans "Phone Number" %}
+                </label>
+
+                <div class="field-wrap">
+
+                    <i class="ti ti-phone"></i>
+
+                    {{ form.phone }}
+
+                </div>
+
+                {% for error in form.phone.errors %}
+                    <small class="field-error">{{ error }}</small>
+                {% endfor %}
+
+            </div>
+
+            <!-- Password -->
+
+            <div class="field-group">
+
+                <label class="field-label">
+                    {% trans "Password" %}
+                </label>
+
+                <div class="field-wrap">
+
+                    <i class="ti ti-lock"></i>
+
+                    {{ form.password1 }}
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        data-target="id_password1">
+
+                        <i class="ti ti-eye"></i>
+
+                    </button>
+
+                </div>
+
+                {% for error in form.password1.errors %}
+                    <small class="field-error">{{ error }}</small>
+                {% endfor %}
+
+            </div>
+
+            <!-- Confirm Password -->
+
+            <div class="field-group">
+
+                <label class="field-label">
+                    {% trans "Confirm Password" %}
+                </label>
+
+                <div class="field-wrap">
+
+                    <i class="ti ti-lock-check"></i>
+
+                    {{ form.password2 }}
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        data-target="id_password2">
+
+                        <i class="ti ti-eye"></i>
+
+                    </button>
+
+                </div>
+
+                {% for error in form.password2.errors %}
+                    <small class="field-error">{{ error }}</small>
+                {% endfor %}
+
+            </div>
+
+            <button
+                type="submit"
+                class="btn-register"
+                id="register-btn">
+
+                <i class="ti ti-user-check"></i>
+
+                {% trans "Create Account" %}
+
+            </button>
+
+        </form>
+
+        <div class="login-link">
+
+            {% trans "Already have an account?" %}
+
+            <a href="{% url 'login' %}">
+                {% trans "Login" %}
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'main/js/register/register.js' %}"></script>
+{% endblock %}

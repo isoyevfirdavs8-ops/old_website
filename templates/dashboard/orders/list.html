@@ -96,25 +96,35 @@ Orders
 
                         <option value="">All Status</option>
 
-                        <option value="Pending"
-                                {% if selected_status == "Pending" %}selected{% endif %}>
-                            Pending
-                        </option>
+                            <option value="Pending"
+                            {% if selected_status == "Pending" %}selected{% endif %}>
+                                Pending
+                            </option>
 
-                        <option value="Processing"
-                                {% if selected_status == "Processing" %}selected{% endif %}>
-                            Processing
-                        </option>
+                            <option value="Confirmed"
+                            {% if selected_status == "Confirmed" %}selected{% endif %}>
+                                Confirmed
+                            </option>
 
-                        <option value="Delivered"
-                                {% if selected_status == "Delivered" %}selected{% endif %}>
-                            Delivered
-                        </option>
+                            <option value="Preparing"
+                            {% if selected_status == "Preparing" %}selected{% endif %}>
+                                Preparing
+                            </option>
 
-                        <option value="Cancelled"
-                                {% if selected_status == "Cancelled" %}selected{% endif %}>
-                            Cancelled
-                        </option>
+                            <option value="Shipped"
+                            {% if selected_status == "Shipped" %}selected{% endif %}>
+                                Shipped
+                            </option>
+
+                            <option value="Delivered"
+                            {% if selected_status == "Delivered" %}selected{% endif %}>
+                                Delivered
+                            </option>
+
+                            <option value="Cancelled"
+                            {% if selected_status == "Cancelled" %}selected{% endif %}>
+                                Cancelled
+                            </option>
 
                     </select>
 
@@ -247,6 +257,19 @@ Orders
                                     <i class="bi bi-eye"></i>
 
                                 </a>
+
+
+
+                                <form action="{% url 'dashboard_delete_order' order.id %}" method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <button
+                                        type="submit"
+                                        class="btn btn-sm btn-outline-danger"
+                                        onclick="return confirm('Are you sure you want to delete this order?');">
+
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
 
                             </td>
 

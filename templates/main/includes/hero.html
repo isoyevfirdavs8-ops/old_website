@@ -1,0 +1,63 @@
+<section class="hero">
+
+    <div class="hero-slider">
+
+        {% for banner in banners %}
+
+        <div class="hero-slide {% if forloop.first %}active{% endif %}">
+
+            <img src="{{ banner.image.url }}"
+                 alt="{{ banner.title }}">
+
+            <div class="hero-overlay"></div>
+
+            <div class="hero-content container">
+
+                {% if banner.subtitle %}
+                <span class="hero-subtitle">
+                    {{ banner.subtitle }}
+                </span>
+                {% endif %}
+
+                <h1>
+                    {{ banner.title }}
+                </h1>
+
+                <p>
+                    {{ banner.description }}
+                </p>
+
+                {% if banner.button_text %}
+                <a href="{{ banner.button_link }}"
+                   class="hero-btn">
+
+                    {{ banner.button_text }}
+
+                </a>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <button class="hero-prev">
+        ❮
+    </button>
+
+    <button class="hero-next">
+        ❯
+    </button>
+
+    <div class="hero-dots">
+
+        {% for banner in banners %}
+        <span class="dot {% if forloop.first %}active{% endif %}"></span>
+        {% endfor %}
+
+    </div>
+
+</section>

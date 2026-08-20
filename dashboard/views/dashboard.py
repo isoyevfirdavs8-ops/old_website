@@ -18,7 +18,7 @@ class DashboardView(
 
     allowed_roles = [
         "admin",
-        "manager",
+        "managers",
     ]
 
     template_name = "dashboard/index.html"

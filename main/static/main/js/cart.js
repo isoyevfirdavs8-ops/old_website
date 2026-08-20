@@ -1,17 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const csrfToken = getCookie("csrftoken");
-
-    const updateUrl = document
-        .getElementById("cart-data")
-        .dataset.updateUrl;
-
-
     function getCookie(name) {
 
         let cookieValue = null;
 
-        if (document.cookie) {
+        if (document.cookie && document.cookie !== "") {
 
             const cookies = document.cookie.split(";");
 
@@ -37,90 +30,189 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
+    const csrftoken = getCookie("csrftoken");
 
-    function updateCart(key, action) {
+    const cartData = document.getElementById("cart-data");
 
-        fetch(updateUrl, {
+    if (!cartData) return;
+
+    const updateUrl = cartData.dataset.updateUrl;
+    const removeUrl = cartData.dataset.removeUrl;
+
+    async function post(url, body) {
+
+        const response = await fetch(url, {
 
             method: "POST",
 
             headers: {
 
-                "Content-Type": "application/x-www-form-urlencoded",
+                "Content-Type":
+                    "application/x-www-form-urlencoded",
 
-                "X-CSRFToken": csrfToken,
+                "X-CSRFToken": csrftoken,
+
+                "X-Requested-With":
+                    "XMLHttpRequest",
 
             },
 
-            body: new URLSearchParams({
+            body: new URLSearchParams(body),
 
-                key: key,
+        });
 
-                action: action,
-
-            }),
-
-        })
-
-        .then(response => response.json())
-
-        .then(data => {
-
-            if (!data.success) {
-
-                return;
-
-            }
-
-            document.getElementById(`qty-${key}`).textContent = data.qty;
-
-            document.getElementById(`subtotal-${key}`).textContent = data.subtotal;
-
-            document.getElementById("grand-total").textContent = data.total;
-
-            const stock = document.getElementById(`stock-${key}`);
-
-            if (stock) {
-
-                stock.textContent = data.stock;
-
-            }
-
-        })
-
-        .catch(error => console.error(error));
+        return await response.json();
 
     }
 
+    function updateUI(key, data) {
 
-    document.querySelectorAll(".increase").forEach(button => {
+        const qty = document.getElementById(
+            `qty-${key}`
+        );
 
-        button.addEventListener("click", () => {
+        const subtotal = document.getElementById(
+            `subtotal-${key}`
+        );
 
-            updateCart(
+        if (qty) {
 
-                button.dataset.key,
+            qty.textContent = data.qty;
 
-                "increase"
+        }
 
-            );
+        if (subtotal) {
+
+            subtotal.textContent =
+                data.subtotal + " UZS";
+
+        }
+
+        const total = document.getElementById(
+            "grand-total"
+        );
+
+        if (total) {
+
+            total.textContent =
+                data.total + " UZS";
+
+        }
+
+        const badge = document.getElementById(
+            "cart-count"
+        );
+
+        if (badge) {
+
+            badge.textContent =
+                data.cart_count;
+
+        }
+
+    }
+
+    document.querySelectorAll(".increase").forEach(btn => {
+
+        btn.addEventListener("click", async () => {
+
+            const key = btn.dataset.key;
+
+            const data = await post(updateUrl, {
+
+                key: key,
+
+                action: "increase",
+
+            });
+
+            if (!data.success) return;
+
+            updateUI(key, data);
 
         });
 
     });
 
+    document.querySelectorAll(".decrease").forEach(btn => {
 
-    document.querySelectorAll(".decrease").forEach(button => {
+        btn.addEventListener("click", async () => {
 
-        button.addEventListener("click", () => {
+            const key = btn.dataset.key;
 
-            updateCart(
+            const data = await post(updateUrl, {
 
-                button.dataset.key,
+                key: key,
 
-                "decrease"
+                action: "decrease",
 
+            });
+
+            if (!data.success) return;
+
+            updateUI(key, data);
+
+        });
+
+    });
+
+    document.querySelectorAll(".cart-remove").forEach(btn => {
+
+        btn.addEventListener("click", async () => {
+
+            const key = btn.dataset.key;
+
+            const data = await post(removeUrl, {
+
+                key: key,
+
+            });
+
+            if (!data.success) return;
+
+            const item = document.getElementById(
+                `cart-item-${key}`
             );
+
+            if (item) {
+
+                item.style.opacity = "0";
+
+                item.style.transform =
+                    "translateX(60px)";
+
+                item.style.transition =
+                    ".25s";
+
+                setTimeout(() => {
+
+                    item.remove();
+
+                }, 250);
+
+            }
+
+            const total = document.getElementById(
+                "grand-total"
+            );
+
+            if (total) {
+
+                total.textContent =
+                    data.total + " UZS";
+
+            }
+
+            const badge = document.getElementById(
+                "cart-count"
+            );
+
+            if (badge) {
+
+                badge.textContent =
+                    data.cart_count;
+
+            }
 
         });
 

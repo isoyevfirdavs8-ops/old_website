@@ -1,0 +1,158 @@
+{% load static %}
+{% load i18n %}
+
+<header class="main-header">
+
+    <div class="container">
+
+        <div class="main-header-wrapper">
+
+            <!-- =========================
+                    LOGO
+            ========================== -->
+
+           <div class="header-logo">
+
+
+
+                    <div class="logo-text">
+                        <a href="{% url 'home' %}">
+                            <h2>Dunyo <span>Textile</span></h2>
+
+                            <p>--Made in Motherland--</p>
+                        <a>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <!-- =========================
+                    SEARCH
+            ========================== -->
+
+            <div class="header-search">
+
+                <form action="{% url 'search' %}"
+                      method="GET">
+
+                    <div class="search-box">
+
+                        <i class="bi bi-search"></i>
+
+                        <input
+                                type="text"
+
+                                name="q"
+
+                                placeholder="{% trans 'Mahsulotlarni qidirish...' %}"
+
+                                autocomplete="off">
+
+                        <button type="submit">
+
+                            <i class="bi bi-arrow-right"></i>
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+            <!-- =========================
+                    ACTIONS
+            ========================== -->
+
+            <div class="header-actions">
+
+
+                <!-- Wishlist -->
+
+                <a href="{% url 'wishlist' %}"
+                   class="header-action">
+
+                    <div class="icon-box">
+
+                        <i class="bi bi-heart"></i>
+
+                        {% if wishlist_count > 0 %}
+                        <span class="count">
+
+                            {{ wishlist_count }}
+
+                        </span>
+                        {% endif %}
+
+                    </div>
+
+                    <span>
+
+                        {% trans "Like" %}
+
+                    </span>
+
+                </a>
+
+
+
+                <!-- Cart -->
+
+                <a href="{% url 'cart' %}"
+                   class="header-action">
+
+                    <div class="icon-box">
+
+                        <i class="bi bi-bag"></i>
+
+                        {% if cart_count > 0 %}
+                        <span class="count">
+
+                            {{ cart_count }}
+
+                        </span>
+                        {% endif %}
+
+                    </div>
+
+                    <span>
+
+                        {% trans "Savatcha" %}
+
+                    </span>
+
+                </a>
+
+
+
+                <!-- Profile -->
+
+                <a href="{% url 'profile' %}"
+                   class="header-action">
+
+                    <div class="icon-box">
+
+                        <i class="bi bi-person"></i>
+
+                    </div>
+
+                    <span>
+
+                        {% trans "Profile" %}
+
+                    </span>
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>

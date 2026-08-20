@@ -1,0 +1,35 @@
+.google-preview{
+
+    padding:25px;
+
+}
+
+.preview-title{
+
+    color:#1a0dab;
+
+    font-size:22px;
+
+    margin-bottom:6px;
+
+    cursor:pointer;
+
+}
+
+.preview-url{
+
+    color:#006621;
+
+    font-size:14px;
+
+    margin-bottom:10px;
+
+}
+
+.preview-description{
+
+    color:#555;
+
+    line-height:1.7;
+
+}

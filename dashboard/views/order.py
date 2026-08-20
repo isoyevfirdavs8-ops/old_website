@@ -5,11 +5,17 @@ from django.views.generic import (
     DetailView,
     UpdateView,
 )
+from django.db.models import Sum
+from main.models import (
+    Payment,
+    PaymentTransaction,
+    OrderStatusHistory, Activity,
+)
 from django.urls import reverse_lazy
 from django.contrib import messages
 
 from django import forms
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from dashboard.forms.order import OrderStatusForm
 
 
@@ -32,14 +38,16 @@ from reportlab.lib import colors
 
 from reportlab.lib.styles import getSampleStyleSheet
 
-from main.utils import create_activity, create_notification
+from main.services.order_history_service import OrderHistoryService
+from main.services.order_status_service import OrderStatusService
+from main.utils import create_notification, create_activity
 
 
 class OrderListView(LoginRequiredMixin,
     RoleRequiredMixin,ListView):
     allowed_roles = [
         "admin",
-        "manager",
+        "managers",
         "staff",
     ]
 
@@ -76,7 +84,7 @@ class OrderListView(LoginRequiredMixin,
                     items__product__owner=user
                 ).distinct()
 
-            elif role not in ["admin", "manager", "staff"]:
+            elif role not in ["admin", "managers", "staff"]:
 
                 queryset = queryset.none()
 
@@ -120,19 +128,27 @@ class OrderListView(LoginRequiredMixin,
         context["total_orders"] = Order.objects.count()
 
         context["pending_orders"] = Order.objects.filter(
-            status="Pending"
+            status="pending"
         ).count()
 
-        context["processing_orders"] = Order.objects.filter(
-            status="Processing"
+        context["confirmed_orders"] = Order.objects.filter(
+            status="confirmed"
+        ).count()
+
+        context["preparing_orders"] = Order.objects.filter(
+            status="preparing"
+        ).count()
+
+        context["shipped_orders"] = Order.objects.filter(
+            status="shipped"
         ).count()
 
         context["delivered_orders"] = Order.objects.filter(
-            status="Delivered"
+            status="delivered"
         ).count()
 
         context["cancelled_orders"] = Order.objects.filter(
-            status="Cancelled"
+            status="cancelled"
         ).count()
 
         return context
@@ -140,7 +156,7 @@ class OrderDetailView(LoginRequiredMixin,
     RoleRequiredMixin,DetailView):
     allowed_roles = [
         "admin",
-        "manager",
+        "managers",
         "staff",
     ]
 
@@ -168,7 +184,7 @@ class OrderDetailView(LoginRequiredMixin,
 
         role = user.profile.role
 
-        if role in ["admin", "manager", "staff"]:
+        if role in ["admin", "managers", "staff"]:
             return queryset
 
         if role == "seller":
@@ -188,26 +204,73 @@ class OrderDetailView(LoginRequiredMixin,
 
         user = self.request.user
 
+        # Items
         if (
                 not user.is_superuser
                 and user.profile.role == "seller"
         ):
 
-            context["items"] = self.object.items.filter(
+            items = self.object.items.filter(
                 product__owner=user
             )
 
         else:
 
-            context["items"] = self.object.items.all()
+            items = self.object.items.all()
+
+        context["items"] = items
+
+        context["total_quantity"] = (
+                items.aggregate(
+                    total=Sum("quantity")
+                )["total"] or 0
+        )
+
+        # Payment
+        payment = Payment.objects.filter(
+            order=self.object
+        ).first()
+
+        context["payment"] = payment
+
+        context["transactions"] = (
+            PaymentTransaction.objects.filter(
+                payment__order=self.object
+            ).order_by("-created_at")
+        )
+
+        context["payment_transactions"] = (
+            payment.transactions.all().order_by("-created_at")
+            if payment else []
+        )
+
+        context["payment_audits"] = (
+            payment.audits.all().order_by("-created_at")
+            if payment else []
+        )
+
+        # Status History
+        context["status_history"] = (
+            OrderStatusHistory.objects.filter(
+                order=self.object
+            ).select_related("changed_by")
+        )
+
+        # Activity
+        context["activities"] = (
+            Activity.objects.filter(
+                user=self.object.user
+            ).order_by("-created_at")[:20]
+        )
 
         return context
+
 
 class OrderStatusUpdateView(LoginRequiredMixin,
     RoleRequiredMixin,UpdateView):
     allowed_roles = [
         "admin",
-        "manager",
+        "managers",
         "staff",
     ]
 
@@ -228,42 +291,59 @@ class OrderStatusUpdateView(LoginRequiredMixin,
 
         role = user.profile.role
 
-        if role in ["admin", "manager", "staff"]:
+        if role in ["admin", "managers", "staff"]:
             return queryset
 
         return queryset.none()
 
     def form_valid(self, form):
 
+        old_status = self.get_object().status
+
         response = super().form_valid(form)
 
-        create_activity(
+        if old_status != self.object.status:
 
-            self.request.user,
+            OrderHistoryService.create(
 
-            "order_delivered",
+                order=self.object,
 
-            f"Order #{self.object.id} marked as {self.object.status}."
+                old_status=old_status,
 
-        )
+                new_status=self.object.status,
 
-        if self.object.user:
-
-            create_notification(
-
-                self.object.user,
-
-                "Order Updated",
-
-                f"Order #{self.object.id} is now {self.object.status}."
+                user=self.request.user,
 
             )
+
+            create_activity(
+
+                self.request.user,
+
+                "order_status_changed",
+
+                f"Order #{self.object.id} status changed from "
+                f"{old_status} to {self.object.status}.",
+
+            )
+
+            if self.object.user:
+                create_notification(
+
+                    self.object.user,
+
+                    "Order Updated",
+
+                    f"Your order #{self.object.id} status is now "
+                    f"{self.object.status}.",
+
+                )
 
         messages.success(
 
             self.request,
 
-            "Order status updated successfully."
+            "Order status updated successfully.",
 
         )
 
@@ -283,22 +363,7 @@ class OrderStatusUpdateView(LoginRequiredMixin,
 
         )
 
-class OrderStatusForm(forms.ModelForm):
-    class Meta:
 
-        model = Order
-
-        fields = ["status"]
-
-        widgets = {
-
-            "status": forms.Select(
-                attrs={
-                    "class": "form-select"
-                }
-            )
-
-        }
 
 class OrderInvoiceView(DetailView):
 
@@ -328,7 +393,7 @@ class OrderInvoiceView(DetailView):
 
         role = user.profile.role
 
-        if role in ["admin", "manager", "staff"]:
+        if role in ["admin", "managers", "staff"]:
             return queryset
 
         if role == "seller":
@@ -342,7 +407,7 @@ class OrderInvoicePDFView(LoginRequiredMixin,
     RoleRequiredMixin,View):
     allowed_roles = [
         "admin",
-        "manager",
+        "managers",
         "staff",
     ]
 
@@ -365,7 +430,7 @@ class OrderInvoicePDFView(LoginRequiredMixin,
                     items__product__owner=user
                 ).distinct()
 
-            elif role not in ["admin", "manager", "staff"]:
+            elif role not in ["admin", "managers", "staff"]:
 
                 queryset = queryset.none()
 
@@ -487,3 +552,16 @@ class OrderInvoicePDFView(LoginRequiredMixin,
         pdf.build(elements)
 
         return response
+
+
+def dashboard_delete_order(request, pk):
+    if request.method != "POST":
+        return redirect("order_detail", pk=pk)
+
+    order = get_object_or_404(Order, pk=pk)
+
+    order.delete()
+
+    messages.success(request, "Order deleted successfully.")
+
+    return redirect("order_list")

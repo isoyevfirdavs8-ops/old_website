@@ -1,0 +1,230 @@
+/* =========================
+   HERO
+========================= */
+
+.career-hero{
+
+    padding:90px 0;
+
+    background:
+    linear-gradient(rgba(10,10,10,.65),
+    rgba(10,10,10,.65)),
+    url("/static/main/images/career/banner.jpg");
+
+    background-size:cover;
+
+    background-position:center;
+
+    color:#fff;
+
+}
+
+.career-subtitle{
+
+    display:inline-block;
+
+    padding:8px 18px;
+
+    border-radius:30px;
+
+    background:rgba(255,255,255,.12);
+
+    backdrop-filter:blur(10px);
+
+    font-size:14px;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    margin-bottom:20px;
+
+}
+
+.career-hero h1{
+
+    font-size:52px;
+
+    font-weight:800;
+
+    margin-bottom:18px;
+
+}
+
+.career-hero p{
+
+    max-width:700px;
+
+    margin:auto;
+
+    color:#ddd;
+
+    font-size:18px;
+
+}
+
+/* =========================
+   CARD
+========================= */
+
+.career-card{
+
+    background:#fff;
+
+    border-radius:22px;
+
+    padding:35px;
+
+    height:100%;
+
+    transition:.35s;
+
+    border:1px solid #ececec;
+
+    box-shadow:0 10px 35px rgba(0,0,0,.05);
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.career-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:6px;
+
+    height:100%;
+
+    background:#111;
+
+    transition:.3s;
+
+}
+
+.career-card:hover{
+
+    transform:translateY(-10px);
+
+    box-shadow:0 25px 50px rgba(0,0,0,.12);
+
+}
+
+.career-card:hover::before{
+
+    background:#0d6efd;
+
+}
+
+.career-card h3{
+
+    font-weight:700;
+
+    margin-bottom:18px;
+
+}
+
+.career-card p{
+
+    color:#666;
+
+    line-height:1.8;
+
+    margin-bottom:30px;
+
+}
+
+/* =========================
+   FEATURES
+========================= */
+
+.career-features{
+
+    list-style:none;
+
+    padding:0;
+
+    margin:25px 0;
+
+}
+
+.career-features li{
+
+    margin-bottom:12px;
+
+    color:#444;
+
+}
+
+.career-features i{
+
+    color:#198754;
+
+    margin-right:8px;
+
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.career-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:13px 24px;
+
+    border-radius:40px;
+
+    background:#111;
+
+    color:#fff;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+    font-weight:600;
+
+}
+
+.career-btn:hover{
+
+    background:#0d6efd;
+
+    color:#fff;
+
+    transform:translateX(6px);
+
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:768px){
+
+    .career-hero{
+
+        padding:70px 0;
+
+    }
+
+    .career-hero h1{
+
+        font-size:36px;
+
+    }
+
+}

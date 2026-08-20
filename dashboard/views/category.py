@@ -135,13 +135,10 @@ class CategoryCreateView(CreateView):
 
         return response
 
-
 class CategoryDetailView(DetailView):
 
     model = Category
-
     template_name = "dashboard/category/detail.html"
-
     context_object_name = "category"
 
     def get_context_data(self, **kwargs):
@@ -150,20 +147,15 @@ class CategoryDetailView(DetailView):
 
         category = self.object
 
-        context["subcategory"] = category.subcategory.all()
+        products = Product.objects.filter(category=category)
 
-        context["products"] = Product.objects.filter(
-            category=category
-        )[:10]
+        context["products"] = products[:10]
+        context["products_count"] = products.count()
 
-        context["products_count"] = Product.objects.filter(
-            category=category
-        ).count()
-
-        context["subcategories_count"] = category.subcategories.count()
+        # Endi SubCategory yo'q
+        context["subcategories_count"] = 0
 
         return context
-
 
 
 

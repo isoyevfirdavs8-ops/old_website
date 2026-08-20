@@ -1,0 +1,74 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}
+Delete Banner
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-6">
+
+            <div class="card shadow">
+
+                <div class="card-body text-center">
+
+                    <h3 class="mb-4">
+
+                        Delete Banner
+
+                    </h3>
+
+                    {% if banner.image %}
+
+                    <img src="{{ banner.image.url }}"
+                         width="280"
+                         class="img-thumbnail mb-4">
+
+                    {% endif %}
+
+                    <h5>
+
+                        {{ banner.title }}
+
+                    </h5>
+
+                    <p class="text-muted">
+
+                        Are you sure you want to delete this banner?
+
+                    </p>
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+                        <button class="btn btn-danger">
+
+                            Yes, Delete
+
+                        </button>
+
+                        <a href="{% url 'banner_list' %}"
+                           class="btn btn-secondary">
+
+                            Cancel
+
+                        </a>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

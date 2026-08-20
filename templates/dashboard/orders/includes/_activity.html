@@ -1,0 +1,141 @@
+<div class="card shadow-sm border-0 mb-4">
+
+    <div class="card-header bg-white">
+
+        <h5 class="mb-0">
+
+            <i class="bi bi-clock-history me-2"></i>
+
+            Activity Log
+
+        </h5>
+
+    </div>
+
+    <div class="card-body p-0">
+
+        {% if activities %}
+
+            <div class="list-group list-group-flush">
+
+                {% for activity in activities %}
+
+                    <div class="list-group-item">
+
+                        <div class="d-flex justify-content-between">
+
+                            <div>
+
+                                {% if activity.action == "order_created" %}
+
+                                    <span class="badge bg-primary">
+
+                                        Order
+
+                                    </span>
+
+                                {% elif activity.action == "payment_completed" %}
+
+                                    <span class="badge bg-success">
+
+                                        Payment
+
+                                    </span>
+
+                                {% elif activity.action == "payment_failed" %}
+
+                                    <span class="badge bg-danger">
+
+                                        Payment
+
+                                    </span>
+
+                                {% elif activity.action == "order_status_changed" %}
+
+                                    <span class="badge bg-warning text-dark">
+
+                                        Status
+
+                                    </span>
+
+                                {% elif activity.action == "inventory_reserved" %}
+
+                                    <span class="badge bg-info text-dark">
+
+                                        Inventory
+
+                                    </span>
+
+                                {% elif activity.action == "inventory_released" %}
+
+                                    <span class="badge bg-secondary">
+
+                                        Inventory
+
+                                    </span>
+
+                                {% elif activity.action == "telegram_sent" %}
+
+                                    <span class="badge bg-dark">
+
+                                        Telegram
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-light text-dark">
+
+                                        Activity
+
+                                    </span>
+
+                                {% endif %}
+
+                                <div class="mt-2">
+
+                                    {{ activity.description }}
+
+                                </div>
+
+                            </div>
+
+                            <div class="text-end">
+
+                                <small class="text-muted">
+
+                                    {{ activity.created_at|date:"d M Y" }}
+
+                                </small>
+
+                                <br>
+
+                                <small class="text-muted">
+
+                                    {{ activity.created_at|time:"H:i" }}
+
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="p-4 text-center text-muted">
+
+                No activity found.
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>

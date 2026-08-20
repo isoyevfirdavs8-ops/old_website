@@ -1,0 +1,158 @@
+<div class="checkout-summary">
+
+    <div class="summary-header">
+
+        <h4>Order Summary</h4>
+
+        <span>
+            {{ cart|length }} Item{{ cart|length|pluralize }}
+        </span>
+
+    </div>
+
+    <!-- Products -->
+
+    <div class="summary-products">
+
+        {% for key, item in cart.items %}
+
+        <div class="summary-product">
+
+            <div class="summary-image">
+
+                <img
+                    src="{{ item.product.gallery.first.image.url }}"
+                    alt="{{ item.product.title }}"
+                >
+
+            </div>
+
+            <div class="summary-info">
+
+                <h6>
+                    {{ item.product.title }}
+                </h6>
+
+                <small>
+
+                    Size:
+                    {{ item.size.size }}
+
+                    × {{ item.qty }}
+
+                </small>
+
+            </div>
+
+            <div class="summary-price">
+
+                {{ item.total }} so'm
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- Totals -->
+
+    <div class="summary-total">
+
+        <div class="summary-row">
+
+            <span>Subtotal</span>
+
+            <strong>
+
+                {{ cart_total }} so'm
+
+            </strong>
+
+        </div>
+
+        <div class="summary-row">
+
+            <span>Delivery</span>
+
+            <strong id="deliveryPrice">
+
+                {{ delivery_price }} so'm
+
+            </strong>
+
+        </div>
+
+        <div class="summary-row">
+
+            <span>Discount</span>
+
+            <strong class="text-success">
+
+                - {{ discount }} so'm
+
+            </strong>
+
+        </div>
+
+        <hr>
+
+        <div class="summary-row grand-total">
+
+            <span>Total</span>
+
+            <strong id="grandTotal">
+
+                {{ total_price }} so'm
+
+            </strong>
+
+        </div>
+
+    </div>
+
+    <!-- Security -->
+
+    <div class="summary-security">
+
+        <div class="security-item">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            <span>SSL Secure Checkout</span>
+
+        </div>
+
+        <div class="security-item">
+
+            <i class="fa-solid fa-mobile-screen"></i>
+
+            <span>OTP Verified Order</span>
+
+        </div>
+
+        <div class="security-item">
+
+            <i class="fa-solid fa-truck-fast"></i>
+
+            <span>Fast Delivery</span>
+
+        </div>
+
+    </div>
+
+    <!-- Submit -->
+
+    <button
+        type="submit"
+        class="place-order-btn"
+    >
+
+        <i class="fa-solid fa-lock"></i>
+
+        Place Order
+
+    </button>
+
+</div>

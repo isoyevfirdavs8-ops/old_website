@@ -1,0 +1,128 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}
+Social Settings
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header">
+
+            <h4>
+
+                Social Media
+
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-4">
+
+                        <label>
+
+                            Telegram
+
+                        </label>
+
+                        <input
+                            type="url"
+                            name="telegram"
+                            value="{{ settings.telegram }}"
+                            class="form-control">
+
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+
+                        <label>
+
+                            Instagram
+
+                        </label>
+
+                        <input
+                            type="url"
+                            name="instagram"
+                            value="{{ settings.instagram }}"
+                            class="form-control">
+
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+
+                        <label>
+
+                            Facebook
+
+                        </label>
+
+                        <input
+                            type="url"
+                            name="facebook"
+                            value="{{ settings.facebook }}"
+                            class="form-control">
+
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+
+                        <label>
+
+                            Youtube
+
+                        </label>
+
+                        <input
+                            type="url"
+                            name="youtube"
+                            value="{{ settings.youtube }}"
+                            class="form-control">
+
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+
+                        <label>
+
+                            TikTok
+
+                        </label>
+
+                        <input
+                            type="url"
+                            name="tiktok"
+                            value="{{ settings.tiktok }}"
+                            class="form-control">
+
+                    </div>
+
+                </div>
+
+                <button
+                    class="btn btn-dark">
+
+                    Save Social Links
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

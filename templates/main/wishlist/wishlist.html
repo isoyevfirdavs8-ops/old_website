@@ -1,0 +1,248 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Wishlist" %}
+{% endblock %}
+
+{% block extra_css %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'main/css/wishlist.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+<section class="wishlist-page">
+
+    <div class="container">
+
+        <!-- HEADER -->
+
+        <div class="wishlist-header">
+
+            <div>
+
+                <h1>
+
+                    <i class="bi bi-heart-fill text-danger"></i>
+
+                    {% trans "Sevimlilar" %}
+
+                </h1>
+
+                <p>
+
+                    {{ products|length }}
+
+                    {% trans "saved products" %}
+
+                </p>
+
+            </div>
+
+            <a
+
+                href="{% url 'home' %}"
+
+                class="continue-shopping">
+
+                <i class="bi bi-arrow-left"></i>
+
+                {% trans "Continue Shopping" %}
+
+            </a>
+
+        </div>
+
+        {% if products %}
+
+        <div class="row g-4">
+
+            {% for product in products %}
+
+            <div class="col-xl-3 col-lg-4 col-md-6">
+
+                <div class="wishlist-card">
+
+                    <!-- IMAGE -->
+
+                    <div class="wishlist-image">
+
+                        <a
+
+                            href="{% url 'product_detail' product.id %}">
+
+                            {% if product.image %}
+
+                            <img
+
+                                src="{{ product.image.url }}"
+
+                                alt="{{ product.title }}">
+
+                            {% elif product.gallery.first %}
+
+                            <img
+
+                                src="{{ product.gallery.first.image.url }}"
+
+                                alt="{{ product.title }}">
+
+                            {% endif %}
+
+                        </a>
+
+                        <!-- REMOVE -->
+
+                        <button
+                            type="button"
+                            class="wishlist-btn {% if product.id|stringformat:'s' in wishlist_products %}active{% endif %}"
+                            data-url="{% url 'wishlist_toggle' product.id %}">
+
+                            {% if product.id|stringformat:"s" in wishlist_products %}
+                                <i class="bi bi-heart-fill"></i>
+                            {% else %}
+                                <i class="bi bi-heart"></i>
+                            {% endif %}
+
+                        </button>
+
+                    </div>
+
+                    <!-- BODY -->
+
+                    <div class="wishlist-body">
+
+                        <div class="wishlist-category">
+
+                            {{ product.category }}
+
+                        </div>
+
+                        <h3>
+
+                            <a
+
+                                href="{% url 'product_detail' product.id %}">
+
+                                {{ product.title }}
+
+                            </a>
+
+                        </h3>
+
+                        <div class="wishlist-rating">
+
+                            <i class="bi bi-star-fill"></i>
+
+                            <i class="bi bi-star-fill"></i>
+
+                            <i class="bi bi-star-fill"></i>
+
+                            <i class="bi bi-star-fill"></i>
+
+                            <i class="bi bi-star-fill"></i>
+
+                            <span>
+
+                                ({{ product.reviews.count }})
+
+                            </span>
+
+                        </div>
+
+                        <div class="wishlist-price">
+
+                            {% if product.discount %}
+
+                                <span class="old-price">
+
+                                    {{ product.price }}
+
+                                </span>
+
+                            {% endif %}
+
+                            <span class="new-price">
+
+                                {{ product.final_price }}
+
+                            </span>
+
+                        </div>
+
+                        <div class="wishlist-actions">
+
+                            <a
+
+                                href="{% url 'product_detail' product.id %}"
+
+                                class="view-product-btn">
+
+                                <i class="bi bi-eye"></i>
+
+                                {% trans "View Product" %}
+
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <!-- EMPTY -->
+
+        <div class="empty-wishlist">
+
+            <i class="bi bi-heart"></i>
+
+            <h2>
+
+                {% trans "Your wishlist is empty" %}
+
+            </h2>
+
+            <p>
+
+                {% trans "Save your favourite products and they will appear here." %}
+
+            </p>
+
+            <a
+
+                href="{% url 'home' %}">
+
+                <i class="bi bi-bag"></i>
+
+                {% trans "Continue Shopping" %}
+
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script src="{% static 'main/js/wishlist.js' %}"></script>
+
+{% endblock %}

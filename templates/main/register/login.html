@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Login" %}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/register/login.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+{% endblock %}
+
+{% block content %}
+
+<div class="login-wrapper">
+
+    <div class="login-card">
+
+        <div class="login-header">
+
+            <div class="login-icon">
+                <i class="ti ti-login-2"></i>
+            </div>
+
+            <h1 class="login-title">
+                {% trans "Welcome Back" %}
+            </h1>
+
+            <p class="login-subtitle">
+                {% trans "Login to continue shopping." %}
+            </p>
+
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="form-errors">
+                    <p>
+                        <i class="ti ti-alert-circle"></i>
+                        {{ message }}
+                    </p>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form id="login-form" method="post" novalidate>
+
+            {% csrf_token %}
+
+            <!-- Username -->
+
+            <div class="field-group">
+
+                <label class="field-label">
+                    {% trans "Username" %}
+                </label>
+
+                <div class="field-wrap">
+
+                    <i class="ti ti-user"></i>
+
+                    {{ form.username }}
+
+                </div>
+
+                {% for error in form.username.errors %}
+                    <small class="field-error">{{ error }}</small>
+                {% endfor %}
+
+            </div>
+
+            <!-- Password -->
+
+            <div class="field-group">
+
+                <label class="field-label">
+                    {% trans "Password" %}
+                </label>
+
+                <div class="field-wrap">
+
+                    <i class="ti ti-lock"></i>
+
+                    {{ form.password }}
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        data-target="id_password">
+
+                        <i class="ti ti-eye"></i>
+
+                    </button>
+
+                </div>
+
+                {% for error in form.password.errors %}
+                    <small class="field-error">{{ error }}</small>
+                {% endfor %}
+
+            </div>
+
+            <button
+                type="submit"
+                class="btn-login"
+                id="login-btn">
+
+                <i class="ti ti-login-2"></i>
+
+                {% trans "Login" %}
+
+            </button>
+
+        </form>
+
+        <div class="register-link">
+
+            {% trans "Don't have an account?" %}
+
+            <a href="{% url 'register' %}">
+                {% trans "Register" %}
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'main/js/register/login.js' %}"></script>
+{% endblock %}

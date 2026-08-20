@@ -1,0 +1,30 @@
+<section class="products-section py-5">
+
+    <div class="container">
+
+
+        <div class="row">
+
+            {% for product in products %}
+
+                {% include "main/includes/product_card.html" %}
+
+            {% empty %}
+
+                <div class="col-12">
+
+                    <div class="alert alert-warning">
+
+                        Mahsulot topilmadi.
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>

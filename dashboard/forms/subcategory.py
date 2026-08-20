@@ -17,6 +17,8 @@ class SubCategoryForm(forms.ModelForm):
 
             "name_ru",
 
+            "page_type",
+
             "image",
 
         ]

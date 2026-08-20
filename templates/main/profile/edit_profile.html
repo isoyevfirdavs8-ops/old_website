@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/edit_profile.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5" style="max-width: 700px;">
+
+    <div class="edit-profile-card">
+
+        <h2 class="mb-4">Profilni tahrirlash</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <div class="text-center mb-4">
+
+                {% if request.user.profile.avatar %}
+                    <img
+                        src="{{ request.user.profile.avatar.url }}"
+                        class="profile-avatar"
+                        alt="Avatar">
+                {% else %}
+                    <div class="profile-avatar-placeholder">
+                        {{ request.user.username|upper|slice:":2" }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Avatar</label>
+                {{ profile_form.avatar }}
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Ism</label>
+                    {{ user_form.first_name }}
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Familiya</label>
+                    {{ user_form.last_name }}
+                </div>
+
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                {{ user_form.email }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Telefon</label>
+                {{ profile_form.phone }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Manzil</label>
+                {{ profile_form.address }}
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Tug'ilgan sana</label>
+                    {{ profile_form.date_of_birth }}
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Jins</label>
+                    {{ profile_form.gender }}
+                </div>
+
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Telegram</label>
+                {{ profile_form.telegram }}
+            </div>
+
+            <div class="d-flex justify-content-between">
+
+                <a href="{% url 'profile' %}" class="btn btn-outline-secondary">
+                    Bekor qilish
+                </a>
+
+                <button type="submit" class="btn btn-dark">
+                    Saqlash
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script src="{% static 'main/js/profile/edit_profile.js' %}"></script>
+{% endblock %}

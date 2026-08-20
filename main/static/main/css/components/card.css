@@ -1,0 +1,107 @@
+/* ==========================
+   CARD
+========================== */
+
+.card{
+
+    position:relative;
+
+    background:var(--color-white);
+
+    border:1px solid var(--color-border);
+
+    border-radius:var(--radius-lg);
+
+    overflow:hidden;
+
+    transition:all var(--transition);
+
+}
+
+.card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:var(--shadow-lg);
+
+}
+
+/* ==========================
+   IMAGE
+========================== */
+
+.card-image{
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.card-image img{
+
+    width:100%;
+
+    aspect-ratio:1/1;
+
+    object-fit:cover;
+
+    transition:transform .45s ease;
+
+}
+
+.card:hover .card-image img{
+
+    transform:scale(1.08);
+
+}
+
+/* ==========================
+   BODY
+========================== */
+
+.card-body{
+
+    padding:22px;
+
+}
+
+/* ==========================
+   TITLE
+========================== */
+
+.card-title{
+
+    font-size:18px;
+
+    font-weight:600;
+
+    margin-bottom:10px;
+
+    color:var(--color-primary);
+
+}
+
+/* ==========================
+   TEXT
+========================== */
+
+.card-text{
+
+    color:var(--color-text-light);
+
+    font-size:15px;
+
+}
+
+/* ==========================
+   FOOTER
+========================== */
+
+.card-footer{
+
+    padding:20px 22px;
+
+    border-top:1px solid var(--color-border);
+
+}

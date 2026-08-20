@@ -65,9 +65,24 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'main.context_processors.cart_count',
+
                 "dashboard.context_processors.notifications",
                 "dashboard.context_processors.sidebar_menu",
+                'django.template.context_processors.request',
+
+                'django.contrib.auth.context_processors.auth',
+
+                'django.contrib.messages.context_processors.messages',
+
+                'main.context_processors.categories.categories',
+
+                'main.context_processors.cart.cart',
+
+                'main.context_processors.wishlist.wishlist',
+
+                'main.context_processors.profile.profile',
+
+                'main.context_processors.notifications.notifications',
 
             ],
         },
@@ -142,8 +157,25 @@ LANGUAGES = [
     ('uz', 'Uzbek'),
     ('ru', 'Russian'),
 ]
+LOGIN_URL = "login"
 
+LOGIN_REDIRECT_URL = "profile"
+
+LOGOUT_REDIRECT_URL = "login"
 
 LOCALE_PATHS = [
     BASE_DIR / 'locale',
 ]
+
+from decouple import config
+CLICK_SERVICE_ID = config("CLICK_SERVICE_ID", default="test_id")
+CLICK_MERCHANT_ID = config("CLICK_MERCHANT_ID", default="test_id")
+CLICK_SECRET_KEY = config("CLICK_SECRET_KEY", default="test_key")
+PAYME_MERCHANT_ID = config("PAYME_MERCHANT_ID", default="test_id")
+PAYME_SECRET_KEY = config("PAYME_SECRET_KEY", default="test_key")
+BASE_URL = config("BASE_URL", default="http://127.0.0.1:8000")
+CLICK_PAYMENT_URL = "https://my.click.uz/services/pay"
+PAYME_PAYMENT_URL = "https://checkout.paycom.uz"
+
+BOT_TOKEN = "8219440326:AAGlf7s0NsO4twtUDllKvGOIuErxoAFfRHQ"
+CHAT_ID = "7485489896"

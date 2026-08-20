@@ -1,32 +1,55 @@
-from django.contrib import messages
-from django.db import transaction
+
 from django.db.models import Sum
 from django.forms import inlineformset_factory
 from django.http import JsonResponse
-from django.shortcuts import redirect
+from django.views import View
+
+from dashboard.forms.product_color import ProductColorForm
 from django.urls import reverse_lazy
 from django.views.generic import (
     ListView,
-    CreateView,
     UpdateView,
     DetailView,
     DeleteView,
 )
+from dashboard.forms import (
+    ProductForm,
+
+    ProductColorFormSet,
+    ProductColorForm, ProductSizeForm,
+)
+from django.contrib import messages
+from django.db import transaction
+from django.shortcuts import redirect
+from django.urls import reverse
+from django.views.generic import CreateView
+
+from django.shortcuts import get_object_or_404
+from django.views.generic import TemplateView
+
+from main.models import (
+    Product,
+    ProductColor,
+
+)
+
+from dashboard.forms.product_review import ProductReviewForm
+from main.models import ProductReview
 
 
 from dashboard.forms.product import (
     ProductForm,
-    ProductImageForm,
-    ProductSizeForm,
+
+
 )
 from dashboard.mixins import RoleRequiredMixin
 
 from main.models import (
-    Product,
-    ProductImage,
+
     ProductSize,
     SubCategory,
 )
+
 
 from main.utils import (
     create_activity,
@@ -34,21 +57,6 @@ from main.utils import (
 )
 
 
-ProductImageFormSet = inlineformset_factory(
-    Product,
-    ProductImage,
-    form=ProductImageForm,
-    extra=1,
-    can_delete=True,
-)
-
-ProductSizeFormSet = inlineformset_factory(
-    Product,
-    ProductSize,
-    form=ProductSizeForm,
-    extra=1,
-    can_delete=True,
-)
 
 def load_subcategories(request, category_id):
 
@@ -66,7 +74,6 @@ def load_subcategories(request, category_id):
         safe=False,
     )
 
-
 class ProductListView(
     RoleRequiredMixin,
     ListView,
@@ -74,7 +81,7 @@ class ProductListView(
 
     allowed_roles = [
         "admin",
-        "manager",
+        "managers",
         "seller",
     ]
 
@@ -97,7 +104,7 @@ class ProductListView(
             )
             .prefetch_related(
                 "gallery",
-                "sizes",
+                "colors__sizes",
             )
             .order_by("-created_at")
         )
@@ -111,7 +118,7 @@ class ProductListView(
 
         if role in [
             "admin",
-            "manager",
+            "managers",
         ]:
             return queryset
 
@@ -122,42 +129,37 @@ class ProductListView(
 
         return Product.objects.none()
 
-    def get_context_data(
-            self,
-            **kwargs,
-    ):
+    def get_context_data(self, **kwargs):
 
-        context = super().get_context_data(
-            **kwargs
-        )
+        context = super().get_context_data(**kwargs)
 
         queryset = self.get_queryset()
 
         context["total_products"] = queryset.count()
 
-        context["total_stock"] = ProductSize.objects.filter(
-            product__in=queryset
-        ).aggregate(total=Sum("stock"))["total"] or 0
+        context["total_stock"] = (
+                ProductSize.objects.filter(
+                    color__product__in=queryset
+                ).aggregate(
+                    total=Sum("stock")
+                )["total"] or 0
+        )
 
         return context
+
 class ProductCreateView(
     RoleRequiredMixin,
     CreateView,
 ):
-
     allowed_roles = [
         "admin",
-        "manager",
+        "managers",
         "seller",
     ]
 
     model = Product
-
     form_class = ProductForm
-
     template_name = "dashboard/products/form.html"
-
-    success_url = reverse_lazy("product_list")
 
     def get_form(self, form_class=None):
 
@@ -169,90 +171,42 @@ class ProductCreateView(
             not user.is_superuser
             and user.profile.role == "seller"
         ):
-
             form.fields["category"].queryset = (
                 user.profile.categories.all()
             )
 
         return form
 
-    def get_context_data(self, **kwargs):
-
-        context = super().get_context_data(**kwargs)
-
-        if self.request.POST:
-
-            context["image_formset"] = ProductImageFormSet(
-                self.request.POST,
-                self.request.FILES,
-                prefix="gallery",
-            )
-
-            context["size_formset"] = ProductSizeFormSet(
-                self.request.POST,
-                prefix="sizes",
-            )
-
-        else:
-
-            context["image_formset"] = ProductImageFormSet(
-                prefix="gallery",
-            )
-
-            context["size_formset"] = ProductSizeFormSet(
-                prefix="sizes",
-            )
-
-        return context
-
     @transaction.atomic
     def form_valid(self, form):
 
-        context = self.get_context_data()
-
-        image_formset = context["image_formset"]
-
-        size_formset = context["size_formset"]
-
         form.instance.owner = self.request.user
 
-        if (
-            image_formset.is_valid()
-            and size_formset.is_valid()
-        ):
+        self.object = form.save()
 
-            self.object = form.save()
+        create_activity(
+            self.request.user,
+            "product_created",
+            f'Product "{self.object.title}" created.'
+        )
 
-            image_formset.instance = self.object
-            image_formset.save()
+        create_notification(
+            self.request.user,
+            "New Product",
+            f'"{self.object.title}" created successfully.'
+        )
 
-            size_formset.instance = self.object
-            size_formset.save()
+        messages.success(
+            self.request,
+            "Product created successfully."
+        )
 
-            create_activity(
-                self.request.user,
-                "product_created",
-                f'Product "{self.object.title}" created.',
-            )
-
-            create_notification(
-                self.request.user,
-                "New Product",
-                f'"{self.object.title}" created successfully.',
-            )
-
-            messages.success(
-                self.request,
-                "Product created successfully.",
-            )
-
-            return redirect(
-                self.success_url
-            )
-
-        return self.render_to_response(
-            self.get_context_data(
-                form=form
+        return redirect(
+            reverse(
+                "product_manage",
+                kwargs={
+                    "pk": self.object.pk
+                }
             )
         )
 
@@ -263,7 +217,7 @@ class ProductUpdateView(
 
     allowed_roles = [
         "admin",
-        "manager",
+        "managers",
         "seller",
     ]
 
@@ -286,7 +240,7 @@ class ProductUpdateView(
 
         role = user.profile.role
 
-        if role in ["admin", "manager"]:
+        if role in ["admin", "managers"]:
             return qs
 
         if role == "seller":
@@ -311,86 +265,31 @@ class ProductUpdateView(
 
         return form
 
-    def get_context_data(self, **kwargs):
-
-        context = super().get_context_data(**kwargs)
-
-        if self.request.POST:
-
-            context["image_formset"] = ProductImageFormSet(
-                self.request.POST,
-                self.request.FILES,
-                instance=self.object,
-                prefix="gallery",
-            )
-
-            context["size_formset"] = ProductSizeFormSet(
-                self.request.POST,
-                instance=self.object,
-                prefix="sizes",
-            )
-
-        else:
-
-            context["image_formset"] = ProductImageFormSet(
-                instance=self.object,
-                prefix="gallery",
-            )
-
-            context["size_formset"] = ProductSizeFormSet(
-                instance=self.object,
-                prefix="sizes",
-            )
-
-        return context
-
     @transaction.atomic
     def form_valid(self, form):
 
-        context = self.get_context_data()
+        self.object = form.save()
 
-        image_formset = context["image_formset"]
+        create_activity(
+            self.request.user,
+            "product_updated",
+            f'Product "{self.object.title}" updated.'
+        )
 
-        size_formset = context["size_formset"]
+        create_notification(
+            self.request.user,
+            "Product Updated",
+            f'"{self.object.title}" updated successfully.'
+        )
 
-        if (
-            image_formset.is_valid()
-            and size_formset.is_valid()
-        ):
+        messages.success(
+            self.request,
+            "Product updated successfully."
+        )
 
-            self.object = form.save()
-
-            image_formset.instance = self.object
-            image_formset.save()
-
-            size_formset.instance = self.object
-            size_formset.save()
-
-            create_activity(
-                self.request.user,
-                "product_updated",
-                f'Product "{self.object.title}" updated.',
-            )
-
-            create_notification(
-                self.request.user,
-                "Product Updated",
-                f'"{self.object.title}" updated successfully.',
-            )
-
-            messages.success(
-                self.request,
-                "Product updated successfully.",
-            )
-
-            return redirect(
-                self.success_url
-            )
-
-        return self.render_to_response(
-            self.get_context_data(
-                form=form
-            )
+        return redirect(
+            "product_manage",
+            pk=self.object.pk
         )
 
 class ProductDeleteView(
@@ -400,7 +299,7 @@ class ProductDeleteView(
 
     allowed_roles = [
         "admin",
-        "manager",
+        "managers",
         "seller",
     ]
 
@@ -421,7 +320,7 @@ class ProductDeleteView(
 
         role = user.profile.role
 
-        if role in ["admin", "manager"]:
+        if role in ["admin", "managers"]:
             return qs
 
         if role == "seller":
@@ -462,7 +361,7 @@ class ProductDetailView(
 
     allowed_roles = [
         "admin",
-        "manager",
+        "managers",
         "seller",
     ]
 
@@ -483,7 +382,7 @@ class ProductDetailView(
             )
             .prefetch_related(
                 "gallery",
-                "sizes",
+                "colors__sizes",
             )
         )
 
@@ -494,10 +393,108 @@ class ProductDetailView(
 
         role = user.profile.role
 
-        if role in ["admin", "manager"]:
+        if role in ["admin", "managers"]:
             return qs
 
         if role == "seller":
             return qs.filter(owner=user)
 
         return qs.none()
+
+
+
+class ProductManageView(
+    RoleRequiredMixin,
+    TemplateView,
+):
+
+    allowed_roles = [
+        "admin",
+        "managers",
+        "seller",
+    ]
+
+    template_name = "dashboard/products/manage.html"
+
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+
+        product = get_object_or_404(
+            Product,
+            pk=self.kwargs["pk"]
+        )
+
+        context["product"] = product
+
+        context["review_form"] = ProductReviewForm()
+
+        context["reviews"] = (
+            ProductReview.objects.filter(
+                product=product
+            )
+        )
+
+        context["color_form"] = ProductColorForm()
+
+        context["size_form"] = ProductSizeForm()
+
+        context["colors"] = (
+            ProductColor.objects
+            .filter(product=product)
+            .prefetch_related("images", "sizes")
+        )
+
+        return context
+class ProductSizeCreateView(
+    RoleRequiredMixin,
+    View,
+):
+    allowed_roles = [
+        "admin",
+        "managers",
+        "seller",
+    ]
+
+    def post(self, request, color_id):
+
+        color = get_object_or_404(ProductColor, pk=color_id)
+
+        form = ProductSizeForm(request.POST)
+
+        if form.is_valid():
+
+            size = form.save(commit=False)
+            size.color = color
+            size.save()
+
+            messages.success(request, "Size added successfully.")
+
+        else:
+
+            messages.error(request, "Please fix the errors below.")
+
+        return redirect("product_manage", pk=color.product.id)
+
+
+class ProductSizeDeleteView(
+    RoleRequiredMixin,
+    View,
+):
+    allowed_roles = [
+        "admin",
+        "managers",
+        "seller",
+    ]
+
+    def post(self, request, pk):
+
+        size = get_object_or_404(ProductSize, pk=pk)
+
+        product_id = size.color.product.id
+
+        size.delete()
+
+        messages.success(request, "Size deleted successfully.")
+
+        return redirect("product_manage", pk=product_id)

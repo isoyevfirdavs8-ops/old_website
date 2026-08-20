@@ -1,0 +1,305 @@
+/* ==========================================
+   GLOBAL TRANSITION
+========================================== */
+
+*{
+
+    transition:
+        color .3s ease,
+        background-color .3s ease,
+        border-color .3s ease,
+        transform .3s ease,
+        box-shadow .3s ease,
+        opacity .3s ease;
+
+}
+
+/* ==========================================
+   FADE IN
+========================================== */
+
+.fade-in{
+
+    animation:fadeIn .5s ease forwards;
+
+}
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+    }
+
+    to{
+
+        opacity:1;
+
+    }
+
+}
+
+/* ==========================================
+   SLIDE DOWN
+========================================== */
+
+.slide-down{
+
+    animation:slideDown .35s ease forwards;
+
+}
+
+@keyframes slideDown{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(-20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ==========================================
+   SLIDE UP
+========================================== */
+
+.slide-up{
+
+    animation:slideUp .35s ease forwards;
+
+}
+
+@keyframes slideUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ==========================================
+   ICON HOVER
+========================================== */
+
+.header-action:hover i{
+
+    transform:translateY(-4px) scale(1.08);
+
+}
+
+/* ==========================================
+   SOCIAL ICON
+========================================== */
+
+.social-link{
+
+    transition:all .3s ease;
+
+}
+
+.social-link:hover{
+
+    transform:translateY(-5px) scale(1.15);
+
+}
+
+/* ==========================================
+   BUTTON HOVER
+========================================== */
+
+.btn,
+
+button{
+
+    transition:all .3s ease;
+
+}
+
+.btn:hover,
+
+button:hover{
+
+    transform:translateY(-2px);
+
+}
+
+/* ==========================================
+   LOGO
+========================================== */
+
+.logo{
+
+    transition:all .35s ease;
+
+}
+
+.logo:hover{
+
+    transform:scale(1.03);
+
+}
+
+/* ==========================================
+   SEARCH
+========================================== */
+
+.search-btn:hover{
+
+    transform:translateY(-50%) scale(1.08);
+
+}
+
+/* ==========================================
+   NAVBAR LINK
+========================================== */
+
+.navbar-link{
+
+    position:relative;
+
+}
+
+.navbar-link::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+
+    bottom:-6px;
+
+    transform:translateX(-50%);
+
+    width:0;
+
+    height:2px;
+
+    background:#b8923f;
+
+    transition:.3s;
+
+}
+
+.navbar-link:hover::after,
+
+.navbar-link.active::after{
+
+    width:100%;
+
+}
+
+/* ==========================================
+   CATEGORY CARD
+========================================== */
+
+.category-card{
+
+    transition:all .35s ease;
+
+}
+
+.category-card:hover{
+
+    transform:translateY(-8px);
+
+}
+
+/* ==========================================
+   PRODUCT IMAGE
+========================================== */
+
+.product-card img{
+
+    transition:transform .4s ease;
+
+}
+
+.product-card:hover img{
+
+    transform:scale(1.08);
+
+}
+
+/* ==========================================
+   MEGA MENU
+========================================== */
+
+.mega-menu{
+
+    transition:opacity .3s ease,
+               transform .3s ease,
+               visibility .3s ease;
+
+}
+
+/* ==========================================
+   GOLD GLOW
+========================================== */
+
+.gold-hover:hover{
+
+    box-shadow:0 0 20px rgba(184,146,63,.25);
+
+}
+
+/* ==========================================
+   SHADOW
+========================================== */
+
+.shadow-hover{
+
+    transition:.3s;
+
+}
+
+.shadow-hover:hover{
+
+    box-shadow:0 15px 35px rgba(0,0,0,.1);
+
+}
+
+/* ==========================================
+   IMAGE ZOOM
+========================================== */
+
+.zoom{
+
+    overflow:hidden;
+
+}
+
+.zoom img{
+
+    transition:transform .5s ease;
+
+}
+
+.zoom:hover img{
+
+    transform:scale(1.1);
+
+}

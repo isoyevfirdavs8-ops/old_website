@@ -2,9 +2,9 @@
 
 {% block title %}
 {% if object %}
-Update Product
+    Update Product
 {% else %}
-Add Product
+    Add Product
 {% endif %}
 {% endblock %}
 
@@ -18,24 +18,12 @@ Add Product
 
         <div class="row">
 
-            <!-- ========================= -->
-            <!-- LEFT -->
-            <!-- ========================= -->
-
             <div class="col-lg-8">
-
-                <!-- General -->
 
                 <div class="card shadow-sm border-0 mb-4">
 
                     <div class="card-header">
-
-                        <h4 class="mb-0">
-
-                            General Information
-
-                        </h4>
-
+                        <h4 class="mb-0">General Information</h4>
                     </div>
 
                     <div class="card-body">
@@ -43,89 +31,33 @@ Add Product
                         <div class="row">
 
                             <div class="col-md-6 mb-3">
-
-                                <label class="form-label">
-
-                                    Title
-
-                                </label>
-
+                                <label class="form-label">Title</label>
                                 {{ form.title }}
-
                             </div>
 
                             <div class="col-md-6 mb-3">
-
-                                <label class="form-label">
-
-                                    Category
-
-                                </label>
-
+                                <label class="form-label">Category</label>
                                 {{ form.category }}
-
                             </div>
 
                             <div class="col-md-6 mb-3">
-
-                                <label class="form-label">
-
-                                    SubCategory
-
-                                </label>
-
+                                <label class="form-label">SubCategory</label>
                                 {{ form.subcategory }}
-
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-
-                                <label class="form-label">
-
-                                    Color
-
-                                </label>
-
-                                {{ form.color }}
-
                             </div>
 
                             <div class="col-md-4 mb-3">
-
-                                <label class="form-label">
-
-                                    Price
-
-                                </label>
-
+                                <label class="form-label">Price</label>
                                 {{ form.price }}
-
                             </div>
 
                             <div class="col-md-4 mb-3">
-
-                                <label class="form-label">
-
-                                    Discount %
-
-                                </label>
-
+                                <label class="form-label">Discount %</label>
                                 {{ form.discount }}
-
                             </div>
-
-
 
                             <div class="col-12">
-
-                                <label class="form-label">
-
-                                    Description
-
-                                </label>
-
+                                <label class="form-label">Description</label>
                                 {{ form.description }}
-
                             </div>
 
                         </div>
@@ -134,270 +66,10 @@ Add Product
 
                 </div>
 
-                <!-- Gallery -->
-
-<div class="card shadow-sm border-0 mb-4">
-
-    <div class="card-header">
-
-        <h4 class="mb-0">
-            Gallery
-        </h4>
-
-    </div>
-
-    <div class="card-body">
-
-        <div id="image-formset">
-
-            {{ image_formset.management_form }}
-
-            {% for image in image_formset %}
-
-                <div class="dynamic-form image-form border rounded p-3 mb-3 position-relative">
-
-                    {{ image.id }}
-
-                    <div class="mb-3">
-
-                        {{ image.image }}
-
-                    </div>
-
-                    {% if image.instance.image %}
-
-                        <img src="{{ image.instance.image.url }}"
-                             class="img-thumbnail mb-3"
-                             style="width:140px;">
-
-                    {% endif %}
-
-                    {% if image.instance.pk %}
-
-                        <div class="form-check mb-3">
-
-                            {{ image.DELETE }}
-
-                            <label class="form-check-label">
-
-                                Delete Image
-
-                            </label>
-
-                        </div>
-
-                    {% endif %}
-
-                    <button
-                        type="button"
-                        class="btn btn-danger btn-sm remove-form">
-
-                        Remove
-
-                    </button>
-
-                </div>
-
-            {% endfor %}
-
-        </div>
-
-        <!-- Hidden Template -->
-
-        <div id="empty-image-form" class="d-none">
-
-            <div class="dynamic-form image-form border rounded p-3 mb-3 position-relative">
-
-                {{ image_formset.empty_form.id }}
-
-                <div class="mb-3">
-
-                    {{ image_formset.empty_form.image }}
-
-                </div>
-
-                <button
-                    type="button"
-                    class="btn btn-danger btn-sm remove-form">
-
-                    Remove
-
-                </button>
-
-            </div>
-
-        </div>
-
-        <button
-            type="button"
-            id="add-image"
-            class="btn btn-outline-primary">
-
-            <i class="bi bi-plus-circle"></i>
-
-            Add Image
-
-        </button>
-
-    </div>
-
-</div>
-
-                <!-- Sizes -->
-<div class="card shadow-sm border-0">
-
-    <div class="card-header">
-
-        <h4 class="mb-0">
-            Sizes
-        </h4>
-
-    </div>
-
-    <div class="card-body">
-
-        <div id="size-formset">
-
-            {{ size_formset.management_form }}
-
-            {% for size in size_formset %}
-
-                <div class="dynamic-form size-form border rounded p-3 mb-3">
-
-                    {{ size.id }}
-
-                    <div class="row">
-
-                        <div class="col-md-5">
-
-                            <label class="form-label">
-
-                                Size
-
-                            </label>
-
-                            {{ size.size }}
-
-                        </div>
-
-                        <div class="col-md-5">
-
-                            <label class="form-label">
-
-                                Stock
-
-                            </label>
-
-                            {{ size.stock }}
-
-                        </div>
-
-                        <div class="col-md-2 d-flex align-items-end">
-
-                            {% if size.instance.pk %}
-
-                                <div class="form-check mb-2">
-
-                                    {{ size.DELETE }}
-
-                                    Delete
-
-                                </div>
-
-                            {% endif %}
-
-                        </div>
-
-                    </div>
-
-                    <button
-                        type="button"
-                        class="btn btn-danger btn-sm mt-3 remove-form">
-
-                        Remove
-
-                    </button>
-
-                </div>
-
-            {% endfor %}
-
-        </div>
-
-        <!-- Hidden Template -->
-
-        <div id="empty-size-form" class="d-none">
-
-            <div class="dynamic-form size-form border rounded p-3 mb-3">
-
-                {{ size_formset.empty_form.id }}
-
-                <div class="row">
-
-                    <div class="col-md-5">
-
-                        <label class="form-label">
-
-                            Size
-
-                        </label>
-
-                        {{ size_formset.empty_form.size }}
-
-                    </div>
-
-                    <div class="col-md-5">
-
-                        <label class="form-label">
-
-                            Stock
-
-                        </label>
-
-                        {{ size_formset.empty_form.stock }}
-
-                    </div>
-
-                </div>
-
-                <button
-                    type="button"
-                    class="btn btn-danger btn-sm mt-3 remove-form">
-
-                    Remove
-
-                </button>
-
-            </div>
-
-        </div>
-
-        <button
-            type="button"
-            id="add-size"
-            class="btn btn-outline-success">
-
-            <i class="bi bi-plus-circle"></i>
-
-            Add Size
-
-        </button>
-
-    </div>
-
-</div>
-
-
                 <div class="d-grid">
-
                     <button class="btn btn-primary btn-lg">
-
-                        <i class="bi bi-check-circle"></i>
-
-                        Save Product
-
+                        <i class="bi bi-check-circle"></i> Save Product
                     </button>
-
                 </div>
 
             </div>
@@ -407,6 +79,38 @@ Add Product
     </form>
 
 </div>
+<script>
 
+const categorySelect = document.getElementById("id_category");
+const subcategorySelect = document.getElementById("id_subcategory");
 
+categorySelect.addEventListener("change", function () {
+
+    subcategorySelect.innerHTML = "";
+
+    fetch(`/api/subcategories/?category=${this.value}`)
+        .then(response => response.json())
+        .then(data => {
+
+            let option = document.createElement("option");
+            option.value = "";
+            option.text = "---------";
+            subcategorySelect.appendChild(option);
+
+            data.forEach(sub => {
+
+                let option = document.createElement("option");
+
+                option.value = sub.id;
+                option.text = sub.name;
+
+                subcategorySelect.appendChild(option);
+
+            });
+
+        });
+
+});
+
+</script>
 {% endblock %}

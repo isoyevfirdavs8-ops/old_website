@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+Order Successful
+{% endblock %}
+
+{% block content %}
+
+<section class="checkout-result">
+
+    <div class="result-card success-card">
+
+        <div class="result-icon success-icon">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+        </div>
+
+        <h2>
+
+            Order Placed Successfully!
+
+        </h2>
+
+        <p class="result-text">
+
+            Thank you for your purchase.
+            Your order has been received and is now being processed.
+
+        </p>
+
+        {% if order %}
+
+        <div class="result-info">
+
+            <div class="info-row">
+
+                <span>Order ID</span>
+
+                <strong>#{{ order.id }}</strong>
+
+            </div>
+
+            <div class="info-row">
+
+                <span>Status</span>
+
+                <strong>{{ order.get_status_display }}</strong>
+
+            </div>
+
+            <div class="info-row">
+
+                <span>Payment</span>
+
+                <strong>{{ order.get_payment_method_display }}</strong>
+
+            </div>
+
+            <div class="info-row">
+
+                <span>Total</span>
+
+                <strong>{{ order.total_price }} so'm</strong>
+
+            </div>
+
+            <div class="info-row">
+
+                <span>Created</span>
+
+                <strong>{{ order.created_at|date:"d M Y H:i" }}</strong>
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+        <div class="result-message">
+
+            <i class="fa-solid fa-truck-fast"></i>
+
+            <span>
+
+                We will contact you shortly to confirm your order.
+
+            </span>
+
+        </div>
+
+        <div class="result-buttons">
+
+            <a
+                href="{% url 'profile' %}"
+                class="btn btn-primary btn-lg"
+            >
+
+                <i class="fa-solid fa-box-open"></i>
+
+                My Orders
+
+            </a>
+
+            <a
+                href="{% url 'home' %}"
+                class="btn btn-outline-dark btn-lg"
+            >
+
+                <i class="fa-solid fa-house"></i>
+
+                Continue Shopping
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

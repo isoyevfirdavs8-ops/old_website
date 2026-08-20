@@ -1,0 +1,321 @@
+/* ==============================
+   TOP BAR
+============================== */
+
+.top-bar{
+    width:100%;
+    background:linear-gradient(90deg,#272117 0%,#8d6922 50%,#272117 100%);
+    color:#f6f1e7;
+    font-size:14px;
+    font-weight:500;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    position:relative;
+    z-index:999;
+}
+
+.top-bar .container{
+    max-width:1400px;
+    margin:auto;
+    padding:0 25px;
+}
+
+.top-bar-wrapper{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    min-height:48px;
+}
+
+/* ==============================
+   LEFT
+============================== */
+
+.top-left{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.top-item{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#fff7e8;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.top-item:hover{
+    color:#f0c14b;
+}
+
+.top-item i{
+    font-size:15px;
+    color:#e4b13d;
+}
+
+.divider{
+    width:1px;
+    height:18px;
+    background:rgba(255,255,255,.18);
+}
+
+.shipping-text{
+    color:#f8f3e7;
+}
+
+/* ==============================
+   RIGHT
+============================== */
+
+.top-right{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.follow-text{
+    color:#ece5d6;
+    font-size:13px;
+}
+
+/* ==============================
+   SOCIAL
+============================== */
+
+.social-icons{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.social{
+    width:36px;
+    height:36px;
+
+    border-radius:50%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:rgba(255,255,255,.08);
+
+    color:white;
+
+    text-decoration:none;
+
+    transition:all .35s ease;
+}
+
+.social i{
+    font-size:18px;
+}
+
+/* Telegram */
+
+.social.telegram:hover{
+
+    background:#229ED9;
+
+    color:white;
+
+    transform:translateY(-5px);
+
+    box-shadow:0 10px 25px rgba(34,158,217,.45);
+
+}
+
+/* Instagram */
+
+.social.instagram:hover{
+
+    color:white;
+
+    background:linear-gradient(
+    45deg,
+    #833ab4,
+    #fd1d1d,
+    #fcb045);
+
+    transform:translateY(-5px);
+
+    box-shadow:0 10px 25px rgba(253,29,29,.35);
+
+}
+
+/* Facebook */
+
+.social.facebook:hover{
+
+    background:#1877F2;
+
+    color:white;
+
+    transform:translateY(-5px);
+
+    box-shadow:0 10px 25px rgba(24,119,242,.4);
+
+}
+
+/* ==============================
+   LANGUAGE
+============================== */
+
+.language-box{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+}
+
+.language-box form{
+    margin:0;
+}
+
+.lang-btn{
+
+    border:none;
+
+    background:transparent;
+
+    color:white;
+
+    font-weight:600;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    padding:6px 8px;
+
+}
+
+.lang-btn:hover{
+
+    color:#f0c14b;
+
+}
+
+.lang-btn i{
+
+    font-size:11px;
+
+}
+
+/* ==============================
+   HOVER
+============================== */
+
+.top-item,
+.social,
+.lang-btn{
+
+    transition:all .3s ease;
+
+}
+
+/* ==============================
+   SMALL DESKTOP
+============================== */
+
+@media(max-width:1200px){
+
+    .shipping-text{
+
+        display:none;
+
+    }
+
+}
+
+/* ==============================
+   TABLET
+============================== */
+
+@media(max-width:992px){
+
+    .follow-text{
+
+        display:none;
+
+    }
+
+}
+
+/* ==============================
+   MOBILE
+============================== */
+
+@media(max-width:768px){
+
+    .top-bar-wrapper{
+
+        flex-direction:column;
+
+        gap:10px;
+
+        padding:10px 0;
+
+    }
+
+    .top-left{
+
+        flex-direction:column;
+
+        gap:8px;
+
+    }
+
+    .divider{
+
+        display:none;
+
+    }
+
+    .top-right{
+
+        flex-wrap:wrap;
+
+        justify-content:center;
+
+    }
+
+}
+
+/* ==============================
+   EXTRA SMALL
+============================== */
+
+@media(max-width:480px){
+
+    .top-bar{
+
+        font-size:12px;
+
+    }
+
+    .social{
+
+        width:32px;
+
+        height:32px;
+
+    }
+
+    .social i{
+
+        font-size:16px;
+
+    }
+
+}

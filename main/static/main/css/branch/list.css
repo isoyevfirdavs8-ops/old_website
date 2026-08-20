@@ -1,0 +1,20 @@
+#branch-map{
+    width:100%;
+    height:650px;
+    border-radius:18px;
+    overflow:hidden;
+}
+
+.branch-card{
+    padding:18px;
+    border:1px solid #eee;
+    border-radius:12px;
+    margin-bottom:18px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.branch-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+}

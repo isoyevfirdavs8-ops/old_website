@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}Profile{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/profile/profile.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5 profile-container">
+
+    {% if request.user.is_authenticated %}
+
+    <div class="profile-card">
+
+        <div class="profile-avatar">
+
+            {% if request.user.profile.avatar %}
+                <img
+                    src="{{ request.user.profile.avatar.url }}"
+                    alt="{{ request.user.username }}">
+            {% else %}
+                <div class="avatar-placeholder">
+                    {{ request.user.username|upper|slice:":2" }}
+                </div>
+            {% endif %}
+
+        </div>
+
+        <h2 class="profile-name">
+            {{ request.user.get_full_name|default:request.user.username }}
+        </h2>
+
+        <p class="profile-email">
+            {{ request.user.email }}
+        </p>
+
+        <p class="profile-phone">
+            <i class="ti ti-phone"></i>
+            {{ request.user.profile.phone|default:"Telefon qo'shilmagan" }}
+        </p>
+
+        <div class="profile-actions">
+
+            <span class="profile-status">
+                <i class="ti ti-circle-check"></i>
+                Faol foydalanuvchi
+            </span>
+
+            <a href="{% url 'edit_profile' %}" class="btn-edit">
+                <i class="ti ti-edit"></i>
+                {% trans "Tahrirlash" %}
+            </a>
+
+            <a href="{% url 'logout' %}" class="btn-logout">
+                <i class="ti ti-logout"></i>
+                {% trans "Logout" %}
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="profile-stats">
+
+        <div class="stat-card">
+            <span>{% trans "Buyurtmalar" %}</span>
+            <h4>{{ orders|length }}</h4>
+        </div>
+
+        <div class="stat-card">
+            <span>{% trans "Mahsulotlar" %}</span>
+            <h4>{{ orders|length }}</h4>
+        </div>
+
+        <div class="stat-card">
+            <span>{% trans "A'zo bo'lgan" %}</span>
+            <h5>{{ request.user.date_joined|date:"M Y" }}</h5>
+        </div>
+
+    </div>
+
+    <div class="orders-section">
+
+        <h3>
+            <i class="ti ti-package"></i>
+            {% trans "Mening buyurtmalarim" %}
+        </h3>
+
+        {% for order in orders %}
+
+            <div class="order-card">
+
+                <div class="order-header">
+
+                    <div>
+
+                        <strong>
+                            {% trans "Buyurtma" %} #{{ order.id }}
+                        </strong>
+
+                        <small>
+                            {{ order.created_at|date:"d.m.Y H:i" }}
+                        </small>
+
+                    </div>
+
+                    <div class="order-status">
+
+                        {% if order.status == "delivered" %}
+                            <span class="status-delivered">Yetkazildi</span>
+
+                        {% elif order.status == "cancelled" %}
+                            <span class="status-cancelled">Bekor qilindi</span>
+
+                        {% else %}
+                            <span class="status-pending">{% trans "Jarayonda" %}</span>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+                {% for item in order.items.all %}
+
+                <a href="{% url 'product_detail' item.product.id %}" class="order-item">
+
+                    {% if item.product.image %}
+                        <img
+                            src="{{ item.product.image.url }}"
+                            alt="{{ item.product.title }}">
+                    {% endif %}
+
+                    <div class="item-info">
+
+                        <h5>{{ item.product.title }}</h5>
+
+                        <p>
+                            O'lcham: {{ item.size }}
+                            ·
+                            {{ item.quantity }} dona
+                        </p>
+
+                    </div>
+
+                    <strong>
+
+                        {{ item.price|floatformat:0 }} so'm
+
+                    </strong>
+
+                </a>
+
+                {% endfor %}
+
+                <div class="order-total">
+
+                    <span>{% trans "Jami" %}:</span>
+
+                    <strong>
+
+                        {{ order.calculate_total|floatformat:0 }} so'm
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+        {% empty %}
+
+        <div class="empty-orders">
+
+            <i class="ti ti-shopping-cart-off"></i>
+
+            <p>Siz hali buyurtma bermagansiz.</p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="profile-card guest-card">
+
+        <div class="avatar-placeholder">
+            <i class="ti ti-user"></i>
+        </div>
+
+        <h2>Mehmon</h2>
+
+        <p>Tizimga kirmagansiz.</p>
+
+        <a href="{% url 'login' %}" class="btn-login">
+
+            <i class="ti ti-login"></i>
+
+            {% trans "Login" %}
+
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script src="{% static 'main/js/profile/profile.js' %}"></script>
+{% endblock %}

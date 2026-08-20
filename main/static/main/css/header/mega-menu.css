@@ -1,0 +1,257 @@
+/* ===========================
+   MEGA MENU
+=========================== */
+
+.mega-menu{
+
+    position:absolute;
+
+    top:100%;
+
+    left:0;
+
+    width:100%;
+
+    background:#fff;
+
+    border-top:1px solid #ececec;
+
+    box-shadow:0 18px 60px rgba(0,0,0,.08);
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transform:translateY(15px);
+
+    transition:.30s ease;
+
+    z-index:999;
+
+}
+
+.mega-menu.show{
+
+    opacity:1;
+
+    visibility:visible;
+
+    transform:translateY(0);
+
+}
+
+.mega-wrapper{
+
+    display:grid;
+
+    grid-template-columns:
+
+    260px
+
+    1fr
+
+    320px;
+
+    gap:45px;
+
+    padding:45px 0;
+
+}
+.mega-title{
+
+    font-size:18px;
+
+    font-weight:700;
+
+    margin-bottom:25px;
+
+}
+
+.mega-links{
+
+    list-style:none;
+
+    padding:0;
+
+    margin:0;
+
+}
+
+.mega-links li{
+
+    margin-bottom:16px;
+
+}
+
+.mega-links a{
+
+    color:#444;
+
+    text-decoration:none;
+
+    transition:.25s;
+
+}
+
+.mega-links a:hover{
+
+    color:#c7a54b;
+
+    padding-left:8px;
+
+}
+
+.mega-products{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:18px;
+
+}
+.mega-product{
+
+    text-decoration:none;
+
+}
+.mega-product img{
+
+    width:100%;
+
+    aspect-ratio:1;
+
+    object-fit:cover;
+
+    border-radius:12px;
+
+    transition:.35s;
+
+}
+
+.mega-product:hover img{
+
+    transform:scale(1.05);
+
+}
+
+.mega-product h5{
+
+    margin-top:12px;
+
+    font-size:15px;
+
+    color:#222;
+
+}
+
+.mega-product span{
+
+    color:#b78b28;
+
+    font-weight:700;
+
+}
+
+.mega-banner-box{
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:16px;
+
+}
+.mega-banner{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    transition:.5s;
+
+}
+
+.mega-banner-box:hover .mega-banner{
+
+    transform:scale(1.08);
+
+}
+
+.mega-banner-overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    background:linear-gradient(
+
+        rgba(0,0,0,.15),
+
+        rgba(0,0,0,.55)
+
+    );
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:flex-end;
+
+    padding:30px;
+
+}
+
+.mega-banner-overlay h2{
+
+    color:#fff;
+
+    font-size:28px;
+
+    font-weight:700;
+
+}
+.shop-now-btn{
+
+    display:inline-block;
+
+    margin-top:18px;
+
+    padding:12px 24px;
+
+    background:#c7a54b;
+
+    color:white;
+
+    border-radius:40px;
+
+    text-decoration:none;
+
+    transition:.30s;
+
+}
+
+.shop-now-btn:hover{
+
+    background:#111;
+
+    color:#fff;
+
+}
+
+.mega-menu{
+    display:none;
+    position:absolute;
+    top:100%;
+    left:0;
+    width:100%;
+    background:#fff;
+    z-index:200;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.mega-menu.show{
+    display:block;
+}

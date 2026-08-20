@@ -85,6 +85,19 @@
 
         <li class="nav-item mb-2">
 
+            <a href="{% url 'banner_list' %}"
+               class="nav-link text-white">
+
+                <i class="bi bi-box-seam me-2"></i>
+
+                Banner
+
+            </a>
+
+        </li>
+
+        <li class="nav-item mb-2">
+
             <a href="{% url 'category_create' %}"
                class="nav-link text-white">
 
@@ -137,6 +150,32 @@
 
         <li class="nav-item mb-2">
 
+            <a href="{% url 'branch_list' %}"
+               class="nav-link text-white">
+
+                <i class="bi bi-geo-alt-fill me-2"></i>
+
+                Branches
+
+            </a>
+
+        </li>
+
+        <li class="nav-item mb-2">
+
+            <a href="{% url 'career_list' %}"
+               class="nav-link text-white">
+
+                <i class="bi bi-briefcase-fill me-2"></i>
+
+                Careers
+
+            </a>
+
+        </li>
+
+        <li class="nav-item mb-2">
+
             <a href="{% url 'analytics' %}"
                class="nav-link text-white">
 
@@ -150,7 +189,7 @@
 
         <li class="nav-item mb-2">
 
-            <a href="#"
+            <a href="{% url 'settings_home' %}"
                class="nav-link text-white">
 
                 <i class="bi bi-gear me-2"></i>

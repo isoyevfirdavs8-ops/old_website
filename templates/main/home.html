@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+Dunyo Textile
+{% endblock %}
+
+{% block extra_css %}
+
+<link
+        rel="stylesheet"
+        href="{% static 'main/css/home.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+{% include "main/includes/hero.html" %}
+
+{% include "main/includes/categories.html" %}
+
+{% include "main/includes/featured_products.html" %}
+
+{% include "main/includes/banner.html" %}
+
+{% include "main/includes/new_products.html" %}
+
+{% include "main/includes/newsletter.html" %}
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script src="{% static 'main/js/home.js' %}"></script>
+
+{% endblock %}

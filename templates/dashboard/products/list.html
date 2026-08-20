@@ -81,10 +81,18 @@ Products
 
                     <td>
 
-                        <img
-                                src="{{ product.image.url }}"
+                        {% if product.gallery.first %}
+
+                            <img
+                                src="{{ product.gallery.first.image.url }}"
                                 style="width:65px;height:65px;object-fit:cover;"
                                 class="rounded">
+
+                        {% else %}
+
+                            <span class="text-muted">No image</span>
+
+                        {% endif %}
 
                     </td>
 
@@ -124,7 +132,7 @@ Products
 
                     <td>
 
-                        {{ product.quantity }}
+                        {{ product.total_stock }}
 
                     </td>
 

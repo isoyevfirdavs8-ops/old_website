@@ -6,7 +6,7 @@ MENU_ITEMS = [
         "url": "dashboard",
         "roles": [
             "admin",
-            "manager",
+            "managers",
         ],
     },
 
@@ -16,7 +16,7 @@ MENU_ITEMS = [
         "url": "product_list",
         "roles": [
             "admin",
-            "manager",
+            "managers",
             "seller",
         ],
     },
@@ -27,7 +27,7 @@ MENU_ITEMS = [
         "url": "category_list",
         "roles": [
             "admin",
-            "manager",
+            "managers",
         ],
     },
 
@@ -37,7 +37,7 @@ MENU_ITEMS = [
         "url": "order_list",
         "roles": [
             "admin",
-            "manager",
+            "managers",
             "staff",
         ],
     },
@@ -48,7 +48,7 @@ MENU_ITEMS = [
         "url": "user_list",
         "roles": [
             "admin",
-            "manager",
+            "managers",
         ],
     },
 
@@ -58,7 +58,7 @@ MENU_ITEMS = [
         "url": "analytics",
         "roles": [
             "admin",
-            "manager",
+            "managers",
         ],
     },
 
@@ -68,7 +68,7 @@ MENU_ITEMS = [
         "url": "notifications",
         "roles": [
             "admin",
-            "manager",
+            "managers",
             "staff",
             "seller",
         ],

@@ -11,12 +11,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+msgid "500 000 so'mdan yuqori buyurtmalarga bepul yetkazib berish"
+msgstr "Бесплатная доставка при заказе от 500 000 сум"
 #: templates/header.html
 msgid "Home"
 msgstr "Главная"
 
 #: templates/header.html
-msgid "Like"
+msgid "Cart"
 msgstr "Избранное"
 
 #: templates/header.html
@@ -51,14 +53,12 @@ msgstr "Итого"
 msgid "Remove"
 msgstr "Удалить"
 
-msgid "Like mahsulotlar"
+msgid "Sevimlilar"
 msgstr "Избранные товары"
 
 msgid "Like mahsulotlari yuq"
 msgstr "Нет избранных товаров"
 
-msgid "Asosiy"
-msgstr "Главная"
 
 msgid "Do'konlar"
 msgstr "Магазины"
@@ -96,8 +96,7 @@ msgstr "У вас уже есть аккаунт?"
 msgid "Kirish"
 msgstr "Войти"
 
-msgid "Jami buyurtma"
-msgstr "Всего заказов"
+
 
 msgid "Mahsulotlar"
 msgstr "Товары"

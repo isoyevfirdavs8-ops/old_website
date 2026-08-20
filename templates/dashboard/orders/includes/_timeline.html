@@ -1,0 +1,163 @@
+<!--<div class="card shadow-sm border-0 mb-4">-->
+
+<!--    <div class="card-body">-->
+
+<!--        <h5 class="mb-4">-->
+
+<!--            Order Progress-->
+
+<!--        </h5>-->
+
+<!--        <div class="order-timeline">-->
+
+<!--            &lt;!&ndash; Pending &ndash;&gt;-->
+
+<!--            <div class="timeline-step">-->
+
+<!--                <div class="timeline-circle-->
+<!--                    {% if order.status == 'pending' %}-->
+<!--                        active-->
+<!--                    {% elif order.status != 'pending' %}-->
+<!--                        completed-->
+<!--                    {% endif %}-->
+<!--                ">-->
+<!--                    1-->
+<!--                </div>-->
+
+<!--                <div class="timeline-label">-->
+
+<!--                    Pending-->
+
+<!--                </div>-->
+
+<!--            </div>-->
+
+<!--            <div class="timeline-line-->
+<!--                {% if order.status != 'pending' %}-->
+<!--                    completed-->
+<!--                {% endif %}-->
+<!--            "></div>-->
+
+<!--            &lt;!&ndash; Confirmed &ndash;&gt;-->
+
+<!--            <div class="timeline-step">-->
+
+<!--                <div class="timeline-circle-->
+<!--                    {% if order.status == 'confirmed' %}-->
+<!--                        active-->
+<!--                    {% elif order.status == 'preparing' or order.status == 'shipped' or order.status == 'delivered' %}-->
+<!--                        completed-->
+<!--                    {% endif %}-->
+<!--                ">-->
+<!--                    2-->
+<!--                </div>-->
+
+<!--                <div class="timeline-label">-->
+
+<!--                    Confirmed-->
+
+<!--                </div>-->
+
+<!--            </div>-->
+
+<!--            <div class="timeline-line-->
+<!--                {% if order.status == 'preparing' or order.status == 'shipped' or order.status == 'delivered' %}-->
+<!--                    completed-->
+<!--                {% endif %}-->
+<!--            "></div>-->
+
+<!--            &lt;!&ndash; Preparing &ndash;&gt;-->
+
+<!--            <div class="timeline-step">-->
+
+<!--                <div class="timeline-circle-->
+<!--                    {% if order.status == 'preparing' %}-->
+<!--                        active-->
+<!--                    {% elif order.status == 'shipped' or order.status == 'delivered' %}-->
+<!--                        completed-->
+<!--                    {% endif %}-->
+<!--                ">-->
+<!--                    3-->
+<!--                </div>-->
+
+<!--                <div class="timeline-label">-->
+
+<!--                    Preparing-->
+
+<!--                </div>-->
+
+<!--            </div>-->
+
+<!--            <div class="timeline-line-->
+<!--                {% if order.status == 'shipped' or order.status == 'delivered' %}-->
+<!--                    completed-->
+<!--                {% endif %}-->
+<!--            "></div>-->
+
+<!--            &lt;!&ndash; Shipped &ndash;&gt;-->
+
+<!--            <div class="timeline-step">-->
+
+<!--                <div class="timeline-circle-->
+<!--                    {% if order.status == 'shipped' %}-->
+<!--                        active-->
+<!--                    {% elif order.status == 'delivered' %}-->
+<!--                        completed-->
+<!--                    {% endif %}-->
+<!--                ">-->
+<!--                    4-->
+<!--                </div>-->
+
+<!--                <div class="timeline-label">-->
+
+<!--                    Shipped-->
+
+<!--                </div>-->
+
+<!--            </div>-->
+
+<!--            <div class="timeline-line-->
+<!--                {% if order.status == 'delivered' %}-->
+<!--                    completed-->
+<!--                {% endif %}-->
+<!--            "></div>-->
+
+<!--            &lt;!&ndash; Delivered &ndash;&gt;-->
+
+<!--            <div class="timeline-step">-->
+
+<!--                <div class="timeline-circle-->
+<!--                    {% if order.status == 'delivered' %}-->
+<!--                        active completed-->
+<!--                    {% endif %}-->
+<!--                ">-->
+<!--                    5-->
+<!--                </div>-->
+
+<!--                <div class="timeline-label">-->
+
+<!--                    Delivered-->
+
+<!--                </div>-->
+
+<!--            </div>-->
+
+<!--        </div>-->
+
+<!--        {% if order.status == "cancelled" %}-->
+
+<!--        <div class="alert alert-danger mt-4 mb-0">-->
+
+<!--            <strong>-->
+
+<!--                This order has been cancelled.-->
+
+<!--            </strong>-->
+
+<!--        </div>-->
+
+<!--        {% endif %}-->
+
+<!--    </div>-->
+
+<!--</div>-->

@@ -1,0 +1,289 @@
+<div class="card shadow-sm border-0 mb-4">
+
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+
+        <h5 class="mb-0">
+
+            <i class="bi bi-truck me-2"></i>
+
+            Delivery Information
+
+        </h5>
+
+        {% if order.status == "delivered" %}
+
+            <span class="badge bg-success">
+
+                Delivered
+
+            </span>
+
+        {% elif order.status == "shipped" %}
+
+            <span class="badge bg-primary">
+
+                On The Way
+
+            </span>
+
+        {% elif order.status == "preparing" %}
+
+            <span class="badge bg-warning text-dark">
+
+                Preparing
+
+            </span>
+
+        {% elif order.status == "confirmed" %}
+
+            <span class="badge bg-info text-dark">
+
+                Confirmed
+
+            </span>
+
+        {% elif order.status == "pending" %}
+
+            <span class="badge bg-secondary">
+
+                Pending
+
+            </span>
+
+        {% else %}
+
+            <span class="badge bg-danger">
+
+                Cancelled
+
+            </span>
+
+        {% endif %}
+
+    </div>
+
+    <div class="card-body">
+
+        <table class="table table-borderless align-middle mb-0">
+
+            <tr>
+
+                <th width="40%">
+
+                    Delivery Method
+
+                </th>
+
+                <td>
+
+                    {{ order.delivery_method|default:"Standard Delivery" }}
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>
+
+                    Recipient
+
+                </th>
+
+                <td>
+
+                    {{ order.full_name }}
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>
+
+                    Phone
+
+                </th>
+
+                <td>
+
+                    {{ order.phone }}
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>
+
+                    Address
+
+                </th>
+
+                <td>
+
+                    {{ order.address }}
+
+                </td>
+
+            </tr>
+
+            {% if order.city %}
+
+            <tr>
+
+                <th>
+
+                    City
+
+                </th>
+
+                <td>
+
+                    {{ order.city }}
+
+                </td>
+
+            </tr>
+
+            {% endif %}
+
+            {% if order.region %}
+
+            <tr>
+
+                <th>
+
+                    Region
+
+                </th>
+
+                <td>
+
+                    {{ order.region }}
+
+                </td>
+
+            </tr>
+
+            {% endif %}
+
+            {% if order.postal_code %}
+
+            <tr>
+
+                <th>
+
+                    Postal Code
+
+                </th>
+
+                <td>
+
+                    {{ order.postal_code }}
+
+                </td>
+
+            </tr>
+
+            {% endif %}
+
+            <tr>
+
+                <th>
+
+                    Delivery Cost
+
+                </th>
+
+                <td class="fw-semibold">
+
+                    {{ order.delivery_price|default:0 }} so'm
+
+                </td>
+
+            </tr>
+
+            {% if order.note %}
+
+            <tr>
+
+                <th>
+
+                    Customer Note
+
+                </th>
+
+                <td>
+
+                    {{ order.note }}
+
+                </td>
+
+            </tr>
+
+            {% endif %}
+
+        </table>
+
+    </div>
+
+    <div class="card-footer bg-white">
+
+        <div class="row text-center">
+
+            <div class="col-4">
+
+                <div class="small text-muted">
+
+                    Ordered
+
+                </div>
+
+                <div class="fw-semibold">
+
+                    {{ order.created_at|date:"d M" }}
+
+                </div>
+
+            </div>
+
+            <div class="col-4">
+
+                <div class="small text-muted">
+
+                    Status
+
+                </div>
+
+                <div class="fw-semibold">
+
+                    {{ order.status|title }}
+
+                </div>
+
+            </div>
+
+            <div class="col-4">
+
+                <div class="small text-muted">
+
+                    Courier
+
+                </div>
+
+                <div class="fw-semibold">
+
+                    —
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

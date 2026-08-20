@@ -1,0 +1,316 @@
+<div class="card shadow-sm border-0 mb-4">
+
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+
+        <h5 class="mb-0">
+
+            <i class="bi bi-credit-card me-2"></i>
+
+            Payment Information
+
+        </h5>
+
+        {% if payment %}
+
+            {% if payment.status == "paid" %}
+
+                <span class="badge bg-success">
+
+                    Paid
+
+                </span>
+
+            {% elif payment.status == "waiting" %}
+
+                <span class="badge bg-warning text-dark">
+
+                    Waiting
+
+                </span>
+
+            {% elif payment.status == "failed" %}
+
+                <span class="badge bg-danger">
+
+                    Failed
+
+                </span>
+
+            {% elif payment.status == "expired" %}
+
+                <span class="badge bg-secondary">
+
+                    Expired
+
+                </span>
+
+            {% elif payment.status == "cancelled" %}
+
+                <span class="badge bg-dark">
+
+                    Cancelled
+
+                </span>
+
+            {% elif payment.status == "refunded" %}
+
+                <span class="badge bg-info text-dark">
+
+                    Refunded
+
+                </span>
+
+            {% else %}
+
+                <span class="badge bg-light text-dark">
+
+                    Pending
+
+                </span>
+
+            {% endif %}
+
+        {% endif %}
+
+    </div>
+
+    <div class="card-body">
+
+        {% if payment %}
+
+        <table class="table table-borderless align-middle mb-0">
+
+            <tr>
+
+                <th width="40%">
+
+                    Payment ID
+
+                </th>
+
+                <td>
+
+                    #{{ payment.id }}
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>
+
+                    Provider
+
+                </th>
+
+                <td>
+
+                    <span class="badge bg-primary">
+
+                        {{ payment.provider|upper }}
+
+                    </span>
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>
+
+                    Amount
+
+                </th>
+
+                <td class="fw-bold text-success">
+
+                    {{ payment.amount }} so'm
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>
+
+                    Status
+
+                </th>
+
+                <td>
+
+                    {{ payment.status|title }}
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>
+
+                    Created
+
+                </th>
+
+                <td>
+
+                    {{ payment.created_at|date:"d M Y H:i" }}
+
+                </td>
+
+            </tr>
+
+            {% if payment.updated_at %}
+
+            <tr>
+
+                <th>
+
+                    Last Update
+
+                </th>
+
+                <td>
+
+                    {{ payment.updated_at|date:"d M Y H:i" }}
+
+                </td>
+
+            </tr>
+
+            {% endif %}
+
+            {% if payment.failure_reason %}
+
+            <tr>
+
+                <th>
+
+                    Failure Reason
+
+                </th>
+
+                <td>
+
+                    <span class="text-danger">
+
+                        {{ payment.failure_reason }}
+
+                    </span>
+
+                </td>
+
+            </tr>
+
+            {% endif %}
+
+        </table>
+
+        {% else %}
+
+            <div class="alert alert-warning mb-0">
+
+                Payment has not been created.
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+    {% if payment %}
+
+    <div class="card-footer bg-white">
+
+        <div class="d-grid gap-2">
+
+            {% if payment.status == "failed" or payment.status == "expired" %}
+
+                <a
+
+                    href="{% url 'retry_payment' order.id %}"
+
+                    class="btn btn-warning">
+
+                    <i class="bi bi-arrow-repeat"></i>
+
+                    Retry Payment
+
+                </a>
+
+            {% endif %}
+
+            {% if payment.status == "paid" %}
+
+                <button
+
+                    class="btn btn-success"
+
+                    disabled>
+
+                    <i class="bi bi-check-circle-fill"></i>
+
+                    Payment Completed
+
+                </button>
+
+            {% endif %}
+
+            {% if payment.status == "waiting" %}
+
+                <button
+
+                    class="btn btn-outline-warning"
+
+                    disabled>
+
+                    <i class="bi bi-hourglass-split"></i>
+
+                    Waiting For Customer
+
+                </button>
+
+            {% endif %}
+
+            {% if payment.status == "cancelled" %}
+
+                <button
+
+                    class="btn btn-outline-danger"
+
+                    disabled>
+
+                    <i class="bi bi-x-circle"></i>
+
+                    Payment Cancelled
+
+                </button>
+
+            {% endif %}
+
+                        {% if payment.status == "cancelled" %}
+
+                <button
+                    class="btn btn-outline-danger"
+                    disabled>
+
+                    <i class="bi bi-x-circle"></i>
+
+                    Payment Cancelled
+
+                </button>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+

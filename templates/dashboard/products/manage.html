@@ -1,0 +1,416 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}
+Manage Product
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2>
+
+            {{ product.title }}
+
+        </h2>
+
+        <a
+            href="{% url 'product_update' product.pk %}"
+            class="btn btn-warning">
+
+            Edit Product
+
+        </a>
+
+    </div>
+
+    <div class="row">
+
+        <!-- LEFT -->
+
+        <div class="col-lg-8">
+
+            <!-- ADD COLOR -->
+
+            <div class="card mb-4 shadow-sm">
+
+                <div class="card-header">
+
+                    <h5 class="mb-0">
+
+                        Add Color
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <form
+                        method="post"
+                        action="{% url 'product_color_create' product.id %}">
+
+                        {% csrf_token %}
+
+                        {{ color_form.as_p }}
+
+                        <button
+                            class="btn btn-dark">
+
+                            Add Color
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            <!-- COLOR LIST -->
+
+
+
+            <!-- SIZES -->
+            {% for color in colors %}
+<div class="card mb-4 shadow-sm">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <div>
+            <strong>{{ color.name }}</strong>
+            <span class="badge rounded-pill ms-2" style="background:{{ color.code }}">
+                {{ color.code }}
+            </span>
+        </div>
+
+        <form method="post" action="{% url 'product_color_delete' color.id %}" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete this color?')">
+                Delete Color
+            </button>
+        </form>
+    </div>
+
+    <div class="card-body">
+
+        <!-- Upload images -->
+        <form method="post" enctype="multipart/form-data" action="{% url 'product_gallery_create' color.id %}">
+            {% csrf_token %}
+            <div class="row align-items-end">
+                <div class="col-md-9">
+                    <input type="file" name="images" multiple class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-primary w-100">Upload Images</button>
+                </div>
+            </div>
+        </form>
+
+        <hr>
+
+        <div class="row">
+            {% for image in color.images.all %}
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+                    <div class="card h-100">
+                        <img src="{{ image.image.url }}" class="card-img-top" style="height:180px;object-fit:cover;">
+                        <div class="card-body p-2">
+                            <form method="post" action="{% url 'product_gallery_delete' image.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm w-100" onclick="return confirm('Delete this image?')">
+                                    Delete Image
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <div class="alert alert-light">No images uploaded.</div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <hr>
+
+        <!-- SIZES - shu rangga tegishli -->
+        <h6 class="mb-3">Sizes for {{ color.name }}</h6>
+
+        <form method="post" action="{% url 'product_size_create' color.id %}" class="row g-2 align-items-end mb-3">
+            {% csrf_token %}
+            <div class="col-md-5">
+                <label class="form-label">Size</label>
+                {{ size_form.size }}
+            </div>
+            <div class="col-md-5">
+                <label class="form-label">Stock</label>
+                {{ size_form.stock }}
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-success w-100">Add</button>
+            </div>
+        </form>
+
+        <div>
+            {% for size in color.sizes.all %}
+                <div class="d-inline-flex align-items-center border rounded px-2 py-1 me-2 mb-2">
+                    <span class="me-2">{{ size.size }} ({{ size.stock }})</span>
+                    <form method="post" action="{% url 'product_size_delete' size.id %}" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete this size?')">
+                            &times;
+                        </button>
+                    </form>
+                </div>
+            {% empty %}
+                <p class="text-muted">No sizes added yet.</p>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+{% empty %}
+<div class="alert alert-warning">No colors created.</div>
+{% endfor %}
+
+
+
+
+            <!-- REVIEWS -->
+
+
+            <div class="card shadow-sm mb-4">
+
+                <div class="card-header">
+
+                    <h5 class="mb-0">
+
+                        Reviews
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <form
+                        method="post"
+                        enctype="multipart/form-data"
+                        action="{% url 'product_review_create' product.id %}">
+
+                        {% csrf_token %}
+
+                        {{ review_form.as_p }}
+
+                        <button
+                            class="btn btn-success">
+
+                            Add Review
+
+                        </button>
+
+                    </form>
+
+                    <hr>
+
+                    {% for review in reviews %}
+
+                        <div class="border rounded p-3 mb-3">
+
+                            <div class="d-flex justify-content-between">
+
+                                <div>
+
+                                    <strong>
+
+                                        {{ review.name }}
+
+                                    </strong>
+
+                                    <br>
+
+                                    ⭐ {{ review.rating }}/5
+
+                                </div>
+
+                                <form
+                                    method="post"
+                                    action="{% url 'product_review_delete' review.id %}"
+                                    class="d-inline">
+
+                                    {% csrf_token %}
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Delete this review?')">
+
+                                        Delete
+
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                            <p class="mt-3 mb-0">
+
+                                {{ review.comment }}
+
+                            </p>
+
+                        </div>
+
+                    {% empty %}
+
+                        <p>
+
+                            No reviews.
+
+                        </p>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+            <!-- SIZES -->
+
+            <div class="card shadow-sm">
+
+                <div class="card-header">
+
+                    <h5 class="mb-0">
+
+                        Sizes
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    {% for size in sizes %}
+
+                        <span class="badge bg-dark me-2 mb-2">
+
+                            {{ size.size }}
+
+                            ({{ size.stock }})
+
+                        </span>
+
+                    {% empty %}
+
+                        <p>
+
+                            No sizes.
+
+                        </p>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT -->
+
+        <div class="col-lg-4">
+
+            <div class="card shadow-sm sticky-top">
+
+                <div class="card-header">
+
+                    <h5>
+
+                        Product Info
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <p>
+
+                        <strong>Category:</strong>
+
+                        {{ product.category }}
+
+                    </p>
+
+                    <p>
+
+                        <strong>Subcategory:</strong>
+
+                        {{ product.subcategory }}
+
+                    </p>
+
+                    <p>
+
+                        <strong>Price:</strong>
+
+                        {{ product.price }}
+
+                    </p>
+
+                    <p>
+
+                        <strong>Discount:</strong>
+
+                        {{ product.discount }}%
+
+                    </p>
+
+                    <p>
+
+                        <strong>Final Price:</strong>
+
+                        {{ product.final_price }}
+
+                    </p>
+
+                    <p>
+
+                        <strong>Owner:</strong>
+
+                        {{ product.owner }}
+
+                    </p>
+
+                    <hr>
+
+                    <a
+                        href="{% url 'product_update' product.pk %}"
+                        class="btn btn-warning w-100 mb-2">
+
+                        Edit Product
+
+                    </a>
+
+                    <a
+                        href="{% url 'product_delete' product.pk %}"
+                        class="btn btn-danger w-100">
+
+                        Delete Product
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

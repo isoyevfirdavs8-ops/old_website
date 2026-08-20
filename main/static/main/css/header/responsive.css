@@ -1,0 +1,193 @@
+/* ==========================================
+   DESKTOP (1400px ↓)
+========================================== */
+
+@media (max-width:1400px){
+
+    .container{
+
+        max-width:1200px;
+
+    }
+
+}
+
+/* ==========================================
+   LAPTOP
+========================================== */
+
+@media (max-width:1200px){
+
+    .main-header .container{
+
+        gap:20  px;
+
+    }
+
+    .header-search{
+
+        max-width:450px;
+
+    }
+
+    .navbar-menu{
+
+        gap:20px;
+
+    }
+
+}
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media (max-width:992px){
+
+    .top-bar{
+
+        display:none;
+
+    }
+
+    .header-search{
+
+        display:none;
+
+    }
+
+    .navbar{
+
+        display:none;
+
+    }
+
+    .mobile-menu-btn{
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+    }
+
+    .header-actions{
+
+        gap:18px;
+
+    }
+
+    .logo{
+
+        font-size:28px;
+
+    }
+
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width:768px){
+
+    .main-header{
+
+        padding:14px 0;
+
+    }
+
+    .main-header .container{
+
+        gap:15px;
+
+    }
+
+    .logo{
+
+        font-size:24px;
+
+    }
+
+    .header-actions{
+
+        gap:14px;
+
+    }
+
+    .header-action small{
+
+        display:none;
+
+    }
+
+    .header-action i{
+
+        font-size:22px;
+
+    }
+
+}
+
+/* ==========================================
+   SMALL MOBILE
+========================================== */
+
+@media (max-width:576px){
+
+    .container{
+
+        padding:0 15px;
+
+    }
+
+    .logo{
+
+        font-size:22px;
+
+    }
+
+    .header-actions{
+
+        gap:10px;
+
+    }
+
+    .cart-badge{
+
+        width:18px;
+
+        height:18px;
+
+        font-size:10px;
+
+    }
+
+}
+
+/* ==========================================
+   VERY SMALL
+========================================== */
+
+@media (max-width:420px){
+
+    .logo{
+
+        font-size:20px;
+
+    }
+
+    .header-action i{
+
+        font-size:20px;
+
+    }
+
+    .header-actions{
+
+        gap:8px;
+
+    }
+
+}

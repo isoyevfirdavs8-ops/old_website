@@ -1,0 +1,159 @@
+{% load static %}
+<div class="checkout-card">
+
+    <div class="checkout-card-header">
+
+        <div class="checkout-icon">
+            <i class="fa-solid fa-credit-card"></i>
+        </div>
+
+        <div>
+            <h4>Payment Method</h4>
+            <p>Select how you would like to pay.</p>
+        </div>
+
+    </div>
+
+    <div class="payment-options">
+
+        <!-- Cash -->
+
+        <label class="payment-card">
+
+            <input
+                type="radio"
+                name="payment_method"
+                value="cash"
+                checked
+            >
+
+            <div class="payment-content">
+
+                <div class="payment-left">
+
+                    <div class="payment-icon cash">
+
+                        <i class="fa-solid fa-money-bill-wave"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h5>Cash on Delivery</h5>
+
+                        <p>
+                            Pay with cash when your order
+                            arrives.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="payment-right">
+
+                    <span class="payment-badge">
+                        Recommended
+                    </span>
+
+                </div>
+
+            </div>
+
+        </label>
+
+        <!-- Click -->
+
+        <label class="payment-card">
+
+            <input
+                type="radio"
+                name="payment_method"
+                value="click"
+            >
+
+            <div class="payment-content">
+
+                <div class="payment-left">
+
+                    <div class="payment-logo">
+
+                        <img
+                            src="{% static 'main/images/payment/click.png' %}"
+                            alt="Click"
+                        >
+
+                    </div>
+
+                    <div>
+
+                        <h5>Click</h5>
+
+                        <p>
+                            Secure online payment
+                            using Click.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="payment-right">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                </div>
+
+            </div>
+
+        </label>
+
+        <!-- Payme -->
+
+        <label class="payment-card">
+
+            <input
+                type="radio"
+                name="payment_method"
+                value="payme"
+            >
+
+            <div class="payment-content">
+
+                <div class="payment-left">
+
+                    <div class="payment-logo">
+
+                        <img
+                            src="{% static 'main/images/payment/payme.png' %}"
+                            alt="Payme"
+                        >
+
+                    </div>
+
+                    <div>
+
+                        <h5>Payme</h5>
+
+                        <p>
+                            Fast and secure online
+                            payment.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="payment-right">
+
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                </div>
+
+            </div>
+
+        </label>
+
+    </div>
+
+</div>

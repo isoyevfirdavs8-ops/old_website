@@ -1,0 +1,169 @@
+/* ==========================
+   CONTAINER
+========================== */
+
+.container{
+    width:100%;
+    max-width:var(--container-width);
+    margin-inline:auto;
+    padding-inline:20px;
+}
+
+/* ==========================
+   SECTION
+========================== */
+
+.section{
+    padding:80px 0;
+}
+
+.section-sm{
+    padding:50px 0;
+}
+
+.section-lg{
+    padding:120px 0;
+}
+
+/* ==========================
+   FLEX
+========================== */
+
+.d-flex{
+    display:flex;
+}
+
+.align-center{
+    align-items:center;
+}
+
+.justify-center{
+    justify-content:center;
+}
+
+.justify-between{
+    justify-content:space-between;
+}
+
+.flex-column{
+    flex-direction:column;
+}
+
+.flex-wrap{
+    flex-wrap:wrap;
+}
+
+.gap-sm{
+    gap:10px;
+}
+
+.gap-md{
+    gap:20px;
+}
+
+.gap-lg{
+    gap:30px;
+}
+
+/* ==========================
+   GRID
+========================== */
+
+.grid{
+    display:grid;
+}
+
+.grid-2{
+    grid-template-columns:repeat(2,1fr);
+}
+
+.grid-3{
+    grid-template-columns:repeat(3,1fr);
+}
+
+.grid-4{
+    grid-template-columns:repeat(4,1fr);
+}
+
+.grid-5{
+    grid-template-columns:repeat(5,1fr);
+}
+
+.grid-gap{
+    gap:30px;
+}
+
+/* ==========================
+   WIDTH
+========================== */
+
+.w-100{
+    width:100%;
+}
+
+/* ==========================
+   TEXT
+========================== */
+
+.text-center{
+    text-align:center;
+}
+
+.text-left{
+    text-align:left;
+}
+
+.text-right{
+    text-align:right;
+}
+
+/* ==========================
+   MARGIN
+========================== */
+
+.mt-1{margin-top:10px;}
+.mt-2{margin-top:20px;}
+.mt-3{margin-top:30px;}
+.mt-4{margin-top:40px;}
+.mt-5{margin-top:60px;}
+
+.mb-1{margin-bottom:10px;}
+.mb-2{margin-bottom:20px;}
+.mb-3{margin-bottom:30px;}
+.mb-4{margin-bottom:40px;}
+.mb-5{margin-bottom:60px;}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width:1200px){
+
+    .grid-4{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+}
+
+@media (max-width:992px){
+
+    .grid-4,
+    .grid-3{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media (max-width:576px){
+
+    .grid-4,
+    .grid-3,
+    .grid-2{
+        grid-template-columns:1fr;
+    }
+
+    .section{
+        padding:60px 0;
+    }
+
+}

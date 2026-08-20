@@ -1,0 +1,134 @@
+{% load static %}
+{% load i18n %}
+
+<footer class="footer">
+
+    <div class="container">
+
+        <div class="row gy-5">
+
+            <!-- LEFT -->
+            <div class="col-lg-4 col-md-6">
+
+                <h2 class="footer-logo">
+                    DUNYO TEXTILE
+                </h2>
+
+                <p class="footer-desc">
+                    Premium textile products with quality,
+                    comfort and modern design.
+                </p>
+
+                <div class="socials">
+
+                    <a href="https://t.me/dunyotextil"
+                       target="_blank"
+                       class="social-icon telegram">
+
+                        <i class="bi bi-telegram"></i>
+
+                    </a>
+
+                    <a href="https://facebook.com/groups/1287759874616938/"
+                       target="_blank"
+                       class="social-icon facebook">
+
+                        <i class="bi bi-facebook"></i>
+
+                    </a>
+
+                    <a href="https://instagram.com/dunyotextile"
+                       target="_blank"
+                       class="social-icon instagram">
+
+                        <i class="bi bi-instagram"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- CENTER -->
+            <div class="col-lg-4 col-md-6">
+
+                <h5 class="footer-title">
+                    Navigation
+                </h5>
+
+                <ul class="footer-links">
+
+                    <li>
+                        <a href="{% url 'home' %}">{% trans "Home" %}</a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'cart' %}">{% trans "Cart" %}</a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'profile' %}">{% trans "Profile" %}</a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <!-- RIGHT -->
+            <div class="col-lg-4">
+
+                <h5 class="footer-title">
+                    {% trans "Contact" %}
+                </h5>
+
+                <div class="contact-item">
+
+                    <i class="bi bi-telephone-fill"></i>
+
+                    <a href="tel:+998955405535">
+                        +998 95 540 55 35
+                    </a>
+
+                </div>
+
+                <div class="contact-item">
+
+                    <i class="bi bi-envelope-fill"></i>
+
+                    <a href="mailto:dunyotextile@gmail.com">
+                        dunyotextile@gmail.com
+                    </a>
+
+                </div>
+
+                <div class="contact-item">
+
+                    <i class="bi bi-clock-fill"></i>
+
+                    <span>
+                        Mon - Sun : 09:00 - 23:00
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 DUNYO TEXTILE. All rights reserved.
+            </span>
+
+            <button id="backTop" class="back-top">
+
+                <i class="bi bi-arrow-up"></i>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</footer>

@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+{{ subcategory.name }}
+{% endblock %}
+
+{% block extra_css %}
+
+<link rel="stylesheet"
+      href="{% static 'main/css/career/list.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+<section class="career-hero">
+
+    <div class="container text-center">
+
+        <span class="career-subtitle">
+
+            DUNYO TEXTILE
+
+        </span>
+
+        <h1>
+
+            Join Our Team
+
+        </h1>
+
+        <p>
+
+            Grow your career together with us.
+
+        </p>
+
+    </div>
+
+</section>
+
+<section class="container py-5">
+
+    <div class="row g-4">
+
+        {% for career in careers %}
+
+        <div class="col-lg-6">
+
+            <div class="career-card">
+
+                <h3>
+
+                    {{ career.name }}
+
+                </h3>
+
+                <p>
+
+                    {{ career.about }}
+
+                </p>
+
+                <ul class="career-features">
+
+                    <li>
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                        Competitive Salary
+
+                    </li>
+
+                    <li>
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                        Career Growth
+
+                    </li>
+
+                    <li>
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                        Friendly Team
+
+                    </li>
+
+                </ul>
+
+                <a href="#"
+                   class="career-btn">
+
+                    Apply Now
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="col-12 text-center">
+
+            <h3>
+
+                No vacancies available.
+
+            </h3>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

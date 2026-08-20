@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+
+<link rel="stylesheet"
+      href="{% static 'main/css/subcategories.css' %}">
+
+<link rel="stylesheet"
+      href="{% static 'main/css/products.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+
+
+{% include "main/includes/subcategories.html" %}
+
+{% include "main/includes/products.html" %}
+
+{% endblock %}

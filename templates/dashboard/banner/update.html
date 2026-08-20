@@ -1,0 +1,160 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block title %}
+Update Banner
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2>Edit Banner</h2>
+
+        <a href="{% url 'banner_list' %}"
+           class="btn btn-secondary">
+
+            Back
+
+        </a>
+
+    </div>
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            <form method="POST"
+                  enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Title</label>
+
+                        {{ form.title }}
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Subtitle</label>
+
+                        {{ form.subtitle }}
+
+                    </div>
+
+                    <div class="col-12 mb-3">
+
+                        <label class="form-label">Description</label>
+
+                        {{ form.description }}
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Current Image
+
+                        </label>
+
+                        <br>
+
+                        {% if banner.image %}
+
+                        <img src="{{ banner.image.url }}"
+                             width="220"
+                             class="img-thumbnail">
+
+                        {% endif %}
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Change Image
+
+                        </label>
+
+                        {{ form.image }}
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Button Text
+
+                        </label>
+
+                        {{ form.button_text }}
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Button URL
+
+                        </label>
+
+                        {{ form.button_url }}
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Order
+
+                        </label>
+
+                        {{ form.order }}
+
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+
+                        <div class="form-check mt-4">
+
+                            {{ form.is_active }}
+
+                            <label class="form-check-label">
+
+                                Active Banner
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <button class="btn btn-warning">
+
+                    Update Banner
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

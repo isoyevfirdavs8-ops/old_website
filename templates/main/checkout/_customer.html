@@ -1,0 +1,148 @@
+<div class="checkout-card">
+
+    <div class="checkout-card-header">
+
+        <div class="checkout-icon">
+            <i class="fa-solid fa-user"></i>
+        </div>
+
+        <div>
+            <h4>Customer Information</h4>
+            <p>Please enter your information to complete your order.</p>
+        </div>
+
+    </div>
+
+    <div class="checkout-card-body">
+
+        <!-- Phone -->
+
+        <div class="checkout-group">
+
+            <label class="checkout-label">
+
+                Phone Number
+                <span>*</span>
+
+            </label>
+
+            <div class="phone-wrapper">
+
+                <input
+                    type="text"
+                    id="phone"
+                    name="phone"
+                    class="checkout-input"
+                    placeholder="+998 90 123 45 67"
+                    required
+                >
+
+                <button
+                    type="button"
+                    id="sendOTP"
+                    class="verify-btn"
+                >
+                    Verify
+                </button>
+
+            </div>
+
+            <small id="phoneStatus"></small>
+
+        </div>
+
+        <!-- Name -->
+
+        <div class="checkout-group">
+
+            <label class="checkout-label">
+
+                Full Name
+                <span>*</span>
+
+            </label>
+
+            <input
+                type="text"
+                id="full_name"
+                name="full_name"
+                class="checkout-input"
+                placeholder="Your full name"
+                required
+            >
+
+        </div>
+
+        <!-- Email -->
+
+        <div class="checkout-group">
+
+            <label class="checkout-label">
+
+                Email
+
+            </label>
+
+            <input
+
+                type="email"
+
+                name="email"
+
+                class="checkout-input"
+
+                placeholder="example@gmail.com"
+
+            >
+
+        </div>
+
+        <!-- Address -->
+
+        <div class="checkout-group">
+
+            <label class="checkout-label">
+
+                Delivery Address
+                <span>*</span>
+
+            </label>
+
+            <textarea
+                id="address"
+                name="address"
+                class="checkout-input"
+                rows="4"
+                placeholder="Street, apartment, city..."
+                required
+            ></textarea>
+
+        </div>
+
+        <!-- Note -->
+
+        <div class="checkout-group">
+
+            <label class="checkout-label">
+
+                Order Note
+
+            </label>
+
+            <textarea
+
+                name="note"
+
+                class="checkout-input"
+
+                rows="3"
+
+                placeholder="Additional information..."
+
+            ></textarea>
+
+        </div>
+
+    </div>
+
+</div>

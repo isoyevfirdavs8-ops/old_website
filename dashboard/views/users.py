@@ -26,7 +26,7 @@ class UserListView(LoginRequiredMixin,
     RoleRequiredMixin,ListView):
     allowed_roles = [
         "admin",
-        "manager",
+        "managers",
     ]
 
     model = User
@@ -93,7 +93,7 @@ class UserDetailView(LoginRequiredMixin,
     RoleRequiredMixin,DetailView):
     allowed_roles = [
         "admin",
-        "manager",
+        "managers",
     ]
 
     model = User

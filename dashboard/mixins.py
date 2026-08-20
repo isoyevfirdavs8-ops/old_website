@@ -2,9 +2,7 @@ from django.core.exceptions import PermissionDenied
 
 
 class RoleRequiredMixin:
-    """
-    Class Based View uchun Role Mixin
-    """
+
 
     allowed_roles = []
 

@@ -24,9 +24,22 @@
 
                 <div class="d-flex align-items-center">
 
-                    <img src="{{ product.image.url }}"
-                         class="rounded"
-                         style="width:60px;height:60px;object-fit:cover;">
+                    <td>
+
+                        {% if product.gallery.first %}
+
+                            <img
+                                src="{{ product.gallery.first.image.url }}"
+                                style="width:65px;height:65px;object-fit:cover;"
+                                class="rounded">
+
+                        {% else %}
+
+                            <span class="text-muted">No image</span>
+
+                        {% endif %}
+
+                    </td>
 
                     <div class="ms-3">
 

@@ -1,0 +1,736 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+{{ product.title }}
+{% endblock %}
+
+{% block extra_css %}
+
+<link rel="stylesheet"
+      href="{% static 'main/css/product/detail.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+<section class="product-detail">
+
+    <div class="container">
+
+        <div class="product-wrapper">
+
+            <!-- ==========================================
+                    LEFT : GALLERY
+            =========================================== -->
+
+            <div class="product-gallery">
+
+                <div class="main-image-box">
+
+                    {% with first_color=product.colors.first %}
+
+                        {% if first_color and first_color.images.first %}
+
+                            <img
+                                id="mainImage"
+                                src="{{ first_color.images.first.image.url }}"
+                                class="main-image"
+                                alt="{{ product.title }}">
+
+                        {% endif %}
+
+                    {% endwith %}
+
+                </div>
+
+                <div
+                    class="thumbnail-list"
+                    id="thumbnailContainer">
+
+                    {% with first_color=product.colors.first %}
+
+                        {% if first_color %}
+
+                            {% for image in first_color.images.all %}
+
+                                <img
+                                    src="{{ image.image.url }}"
+                                    class="thumbnail {% if forloop.first %}active{% endif %}"
+                                    onclick="changeImage(this)">
+
+                            {% endfor %}
+
+                        {% endif %}
+
+                    {% endwith %}
+
+                </div>
+
+            </div>
+
+
+            <!-- ==========================================
+                    RIGHT : INFO
+            =========================================== -->
+
+            <div class="product-info">
+
+                <h1 class="product-title">
+
+                    {{ product.title }}
+
+                </h1>
+
+
+                <div class="product-price">
+
+                    {% if product.discount %}
+
+                        <span class="old-price">
+
+                            {{ product.price }}
+
+                            so'm
+
+                        </span>
+
+                    {% endif %}
+
+                    <span class="new-price">
+
+                        {{ product.final_price }}
+
+                        so'm
+
+                    </span>
+
+                </div>
+
+
+
+
+                <!-- ==========================
+                        COLORS
+                =========================== -->
+
+                <div class="product-block">
+
+                    <h4>Color</h4>
+
+                    <div class="color-list">
+
+                        {% for color in product.colors.all %}
+
+                            <button
+                                type="button"
+                                class="color-btn {% if forloop.first %}active{% endif %}"
+                                style="background:{{ color.code }}"
+                                data-color="{{ color.id }}"
+                                data-name="{{ color.name }}"
+                                onclick="changeColor(this)"
+                                data-images='[
+                                    {% for image in color.images.all %}
+                                    "{{ image.image.url }}"{% if not forloop.last %},{% endif %}
+                                    {% endfor %}
+                                ]'
+                                data-sizes='[
+                                    {% for size in color.sizes.all %}
+                                    {"id": {{ size.id }}, "size": "{{ size.size }}", "stock": {{ size.stock }}}{% if not forloop.last %},{% endif %}
+                                    {% endfor %}
+                                ]'>
+
+                            </button>
+
+                        {% endfor %}
+
+                    </div>
+
+                    <div class="selected-color">
+                        <span id="selectedColorName">
+                            {{ product.colors.first.name }}
+                        </span>
+                    </div>
+
+                </div>
+
+                <!-- ==========================
+                    SIZE
+                =========================== -->
+
+                <div class="product-block">
+
+                    <h4>{% trans "Size" %}</h4>
+
+                    <div class="size-list" id="sizeList">
+                        <!-- JS orqali to'ldiriladi -->
+                    </div>
+
+                    <p id="stockText" class="stock-text">
+                        {% trans "Choose a size" %}
+                    </p>
+
+                </div>
+
+
+                <!-- ==========================
+                        QUANTITY
+                =========================== -->
+
+                <div class="product-block">
+
+                    <h4>
+
+                        {% trans "Quantity" %}
+
+                    </h4>
+
+                    <div class="qty-box">
+
+                        <button
+
+                            class="qty-btn"
+
+                            type="button"
+
+                            onclick="changeQty(-1)">
+
+                            −
+
+                        </button>
+
+                        <input
+
+                            id="qty"
+
+                            type="text"
+
+                            value="1"
+
+                            readonly>
+
+                        <button
+
+                            class="qty-btn"
+
+                            type="button"
+
+                            onclick="changeQty(1)">
+
+                            +
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==========================
+                        BUTTONS
+                =========================== -->
+
+                <div class="product-buttons">
+
+                    <form
+
+                        method="post"
+
+                        action="{% url 'add_to_cart' product.id %}"
+
+                        class="cart-form">
+
+                        {% csrf_token %}
+
+                        <input
+                            type="hidden"
+                            name="size"
+                            id="selected-size">
+                        <input
+                            type="hidden"
+                            name="color"
+                            id="selected-color">
+
+                        <input
+                            type="hidden"
+                            name="qty"
+                            id="qtyInput"
+                            value="1">
+
+                        <button
+                            class="cart-btn">
+
+                            <i class="bi bi-bag"></i>
+
+                            {% trans "Add to Cart" %}
+
+                        </button>
+
+                    </form>
+
+                    <a
+                        href="#"
+                        class="wishlist-btn {% if product.id|stringformat:'s' in wishlist_products %}active{% endif %}"
+                        data-url="{% url 'wishlist_toggle' product.id %}">
+
+                        {% if product.id|stringformat:"s" in wishlist_products %}
+                            <i class="bi bi-heart-fill"></i>
+                        {% else %}
+                            <i class="bi bi-heart"></i>
+                        {% endif %}
+
+                    </a>
+
+                </div>
+
+                <!-- ==========================================
+                        PRODUCT FEATURES
+                =========================================== -->
+
+                <div class="product-features">
+
+                    <div class="feature-item">
+
+                        <div class="feature-icon">
+
+                            <i class="bi bi-truck"></i>
+
+                        </div>
+
+                        <div class="feature-content">
+
+                            <h5>{% trans "Fast Delivery" %}</h5>
+
+                            <p>{% trans "Delivery across Uzbekistan in 1–3 business days." %}</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="feature-item">
+
+                        <div class="feature-icon">
+
+                            <i class="bi bi-arrow-repeat"></i>
+
+                        </div>
+
+                        <div class="feature-content">
+
+                            <h5>{% trans "Easy Return" %}</h5>
+
+                            <p>{% trans "14-day return guarantee." %}</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="feature-item">
+
+                        <div class="feature-icon">
+
+                            <i class="bi bi-shield-check"></i>
+
+                        </div>
+
+                        <div class="feature-content">
+
+                            <h5>{% trans "Quality Guarantee" %}</h5>
+
+                            <p>{% trans "Original Dunyo Textile products." %}</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="feature-item">
+
+                        <div class="feature-icon">
+
+                            <i class="bi bi-credit-card"></i>
+
+                        </div>
+
+                        <div class="feature-content">
+
+                            <h5>{% trans "Secure Payment" %}</h5>
+
+                            <p>{% trans "Visa, MasterCard, UzCard and Humo." %}</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==========================================
+                        ACCORDION
+                =========================================== -->
+
+                <div class="product-accordion">
+
+                    <!-- DESCRIPTION -->
+
+                    <div class="accordion-item active">
+
+                        <div class="accordion-header">
+
+                            <span class="accordion-title">
+
+                                {% trans "Description" %}
+
+                            </span>
+
+                            <i class="bi bi-chevron-down accordion-icon"></i>
+
+                        </div>
+
+                        <div class="accordion-body">
+
+                            <div class="description-content">
+
+                                {{ product.description|linebreaks }}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- REVIEWS -->
+
+                    <div class="accordion-item">
+
+                        <div class="accordion-header">
+
+                            <span class="accordion-title">
+
+                                {% trans "Reviews" %}
+
+                            </span>
+
+                            <i class="bi bi-chevron-down accordion-icon"></i>
+
+                        </div>
+
+                        <div class="accordion-body">
+
+                            {% if reviews %}
+
+                                {% for review in reviews %}
+
+                                    <div class="review-card">
+
+                                        <div class="review-top">
+
+                                            <div class="review-user">
+
+                                                {% if review.avatar %}
+
+                                                    <img
+                                                        src="{{ review.avatar.url }}"
+                                                        class="review-avatar"
+                                                        alt="{{ review.name }}">
+
+                                                {% else %}
+
+                                                    <div class="review-avatar review-avatar-placeholder">
+
+                                                        {{ review.name|first|upper }}
+
+                                                    </div>
+
+                                                {% endif %}
+
+                                                <div>
+
+                                                    <div class="review-name">
+
+                                                        {{ review.name }}
+
+                                                        {% if review.verified_purchase %}
+
+                                                            <span class="verified-badge">
+
+                                                                <i class="bi bi-patch-check-fill"></i>
+
+                                                                {% trans "Verified Purchase" %}
+
+                                                            </span>
+
+                                                        {% endif %}
+
+                                                    </div>
+
+                                                    <div class="review-date">
+
+                                                        {{ review.created_at|date:"d M Y" }}
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="review-stars">
+
+                                                {% for i in "12345" %}
+
+                                                    {% if forloop.counter <= review.rating %}
+
+                                                        <i class="bi bi-star-fill"></i>
+
+                                                    {% else %}
+
+                                                        <i class="bi bi-star"></i>
+
+                                                    {% endif %}
+
+                                                {% endfor %}
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="review-comment">
+
+                                            {{ review.comment }}
+
+                                        </div>
+
+                                    </div>
+
+                                {% endfor %}
+
+                            {% else %}
+
+                                <div class="empty-review">
+
+                                    <i class="bi bi-chat-square-text"></i>
+
+                                    <h5>
+
+                                        {% trans "No reviews yet" %}
+
+                                    </h5>
+
+                                    <p>
+
+                                        {% trans "This product doesn't have any reviews yet." %}
+
+                                    </p>
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SHIPPING -->
+
+                    <div class="accordion-item">
+
+                        <div class="accordion-header">
+
+                            <span class="accordion-title">
+
+                                {% trans "Shipping" %}
+
+                            </span>
+
+                            <i class="bi bi-chevron-down accordion-icon"></i>
+
+                        </div>
+
+                        <div class="accordion-body">
+
+                            <div class="delivery-box">
+
+                                <div class="delivery-item">
+
+                                    <i class="bi bi-box-seam"></i>
+
+                                    <div>
+
+                                        <h6>
+
+                                            {% trans "Standard Delivery" %}
+
+                                        </h6>
+
+                                        <p>
+
+                                            {% trans "1–3 business days across Uzbekistan." %}
+
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="delivery-item">
+
+                                    <i class="bi bi-geo-alt"></i>
+
+                                    <div>
+
+                                        <h6>
+
+                                            {% trans "Pickup" %}
+
+                                        </h6>
+
+                                        <p>
+
+                                            {% trans "Available from our stores." %}
+
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PAYMENT -->
+
+                    <div class="accordion-item">
+
+                        <div class="accordion-header">
+
+                            <span class="accordion-title">
+
+                                {% trans "Payment" %}
+
+                            </span>
+
+                            <i class="bi bi-chevron-down accordion-icon"></i>
+
+                        </div>
+
+                        <div class="accordion-body">
+
+                            <div class="payment-list">
+
+                                <div class="payment-item">
+
+                                    <i class="bi bi-credit-card"></i>
+
+                                    <span>
+
+                                        Visa / MasterCard
+
+                                    </span>
+
+                                </div>
+
+                                <div class="payment-item">
+
+                                    <i class="bi bi-credit-card-2-front"></i>
+
+                                    <span>
+
+                                        UzCard / Humo
+
+                                    </span>
+
+                                </div>
+
+                                <div class="payment-item">
+
+                                    <i class="bi bi-cash"></i>
+
+                                    <span>
+
+                                        {% trans "Cash on delivery" %}
+
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+                <!-- ==========================================
+                RELATED PRODUCTS
+        =========================================== -->
+
+        {% if related_products %}
+
+        <section class="related-products">
+
+            <h2 class="related-products-title">
+
+                {% trans "Related Products" %}
+
+            </h2>
+
+            <div class="row g-4">
+
+                {% for product in related_products %}
+
+                    {% include "main/includes/product_card.html" %}
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+<script>
+
+const colorImages = {
+
+{% for color in product.colors.all %}
+
+"{{ color.id }}":[
+
+{% for image in color.images.all %}
+
+{
+url:"{{ image.image.url }}"
+},
+
+{% endfor %}
+
+],
+
+{% endfor %}
+
+};
+
+</script>
+{% block extra_js %}
+
+<script src="{% static 'main/js/wishlist.js' %}"></script>
+<script src="{% static 'main/js/product/detail.js' %}"></script>
+
+{% endblock %}

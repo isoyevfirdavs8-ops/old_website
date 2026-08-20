@@ -1,0 +1,351 @@
+{% extends "dashboard/base.html" %}
+
+{% load static %}
+
+{% block title %}
+General Settings
+{% endblock %}
+
+{% block extra_css %}
+
+<link rel="stylesheet"
+      href="{% static 'dashboard/css/settings/settings.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <form
+        method="POST"
+        enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        <div class="row">
+
+            <!-- LEFT -->
+
+            <div class="col-lg-8">
+
+                <!-- General -->
+
+                <div class="card shadow-sm border-0 mb-4">
+
+                    <div class="card-header bg-white">
+
+                        <h5 class="mb-0">
+
+                            General Information
+
+                        </h5>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+
+                                Website Name
+
+                            </label>
+
+                            <input
+                                type="text"
+                                name="site_name"
+                                class="form-control"
+                                value="{{ settings.site_name }}">
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+
+                                Description
+
+                            </label>
+
+                            <textarea
+                                name="site_description"
+                                rows="5"
+                                class="form-control">{{ settings.site_description }}</textarea>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Contact -->
+
+                <div class="card shadow-sm border-0 mb-4">
+
+                    <div class="card-header bg-white">
+
+                        <h5 class="mb-0">
+
+                            Contact
+
+                        </h5>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label">
+
+                                    Phone
+
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="phone"
+                                    class="form-control"
+                                    value="{{ settings.phone }}">
+
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label">
+
+                                    Email
+
+                                </label>
+
+                                <input
+                                    type="email"
+                                    name="email"
+                                    class="form-control"
+                                    value="{{ settings.email }}">
+
+                            </div>
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+
+                                Address
+
+                            </label>
+
+                            <textarea
+                                name="address"
+                                rows="3"
+                                class="form-control">{{ settings.address }}</textarea>
+
+                        </div>
+
+                        <div>
+
+                            <label class="form-label">
+
+                                Working Hours
+
+                            </label>
+
+                            <input
+                                type="text"
+                                name="working_hours"
+                                class="form-control"
+                                value="{{ settings.working_hours }}">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- SEO -->
+
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-header bg-white">
+
+                        <h5 class="mb-0">
+
+                            SEO
+
+                        </h5>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+
+                                Meta Title
+
+                            </label>
+
+                            <input
+                                type="text"
+                                name="meta_title"
+                                class="form-control"
+                                value="{{ settings.meta_title }}">
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+
+                                Meta Description
+
+                            </label>
+
+                            <textarea
+                                name="meta_description"
+                                rows="4"
+                                class="form-control">{{ settings.meta_description }}</textarea>
+
+                        </div>
+
+                        <div>
+
+                            <label class="form-label">
+
+                                Meta Keywords
+
+                            </label>
+
+                            <textarea
+                                name="meta_keywords"
+                                rows="4"
+                                class="form-control">{{ settings.meta_keywords }}</textarea>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT -->
+
+            <div class="col-lg-4">
+
+                <div class="card shadow-sm border-0 mb-4">
+
+                    <div class="card-header bg-white">
+
+                        <h5 class="mb-0">
+
+                            Logo
+
+                        </h5>
+
+                    </div>
+
+                    <div class="card-body text-center">
+
+                        {% if settings.logo %}
+
+                        <img
+                            src="{{ settings.logo.url }}"
+                            id="logoPreview"
+                            class="img-fluid rounded mb-3">
+
+                        {% else %}
+
+                        <img
+                            id="logoPreview"
+                            class="img-fluid rounded mb-3 d-none">
+
+                        {% endif %}
+
+                        <input
+                            type="file"
+                            name="logo"
+                            id="logoInput"
+                            class="form-control">
+
+                    </div>
+
+                </div>
+
+                <div class="card shadow-sm border-0 mb-4">
+
+                    <div class="card-header bg-white">
+
+                        <h5 class="mb-0">
+
+                            Favicon
+
+                        </h5>
+
+                    </div>
+
+                    <div class="card-body text-center">
+
+                        {% if settings.favicon %}
+
+                        <img
+                            src="{{ settings.favicon.url }}"
+                            id="faviconPreview"
+                            width="64"
+                            class="mb-3">
+
+                        {% else %}
+
+                        <img
+                            id="faviconPreview"
+                            width="64"
+                            class="mb-3 d-none">
+
+                        {% endif %}
+
+                        <input
+                            type="file"
+                            name="favicon"
+                            id="faviconInput"
+                            class="form-control">
+
+                    </div>
+
+                </div>
+
+                <div class="card shadow-sm border-0 sticky-top">
+
+                    <div class="card-body">
+
+                        <button
+                            class="btn btn-dark w-100 py-3">
+
+                            Save Changes
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script src="{% static 'dashboard/js/settings/settings.js' %}"></script>
+
+{% endblock %}

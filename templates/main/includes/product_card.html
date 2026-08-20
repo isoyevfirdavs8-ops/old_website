@@ -1,0 +1,108 @@
+<div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6 mb-5">
+
+    <div class="product-card">
+
+        <a href="{% url 'product_detail' product.id %}" class="product-link">
+
+            {% if product.discount %}
+                <span class="discount-badge">
+                    -{{ product.discount }}%
+                </span>
+            {% endif %}
+
+            {% with gallery=product.gallery.all %}
+
+                <div class="product-image-box">
+
+                    {% if gallery %}
+
+                        <img
+                            src="{{ gallery.0.image.url }}"
+                            class="product-image first-image"
+                            alt="{{ product.title }}">
+
+                        {% if gallery|length > 1 %}
+                            <img
+                                src="{{ gallery.1.image.url }}"
+                                class="product-image second-image"
+                                alt="{{ product.title }}">
+                        {% endif %}
+
+                    {% else %}
+
+                        <img
+                            src="{{ product.image.url }}"
+                            class="product-image first-image"
+                            alt="{{ product.title }}">
+
+                    {% endif %}
+
+                </div>
+
+            {% endwith %}
+
+            <div class="product-info">
+
+                <h6 class="product-title">
+                    {{ product.title }}
+                </h6>
+
+                <div class="product-price">
+
+                    {% if product.old_price %}
+                        <span class="old-price">
+                            {{ product.old_price }}
+                        </span>
+                    {% endif %}
+
+                    <span class="new-price">
+                        {{ product.final_price }} so'm
+                    </span>
+
+                </div>
+
+            </div>
+
+        </a>
+
+        <!-- COLORS -->
+
+        <div class="product-colors">
+
+            {% for color in product.colors.all %}
+
+                <div class="color-item">
+
+                    <span
+                        class="color-circle"
+                        style="background-color: {{ color.code }};">
+                    </span>
+
+                    <span class="color-name">
+                        {{ color.name }}
+                    </span>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+        <!-- WISHLIST -->
+
+        <a
+            href="#"
+            class="wishlist-btn {% if product.id|stringformat:'s' in wishlist_products %}active{% endif %}"
+            data-url="{% url 'wishlist_toggle' product.id %}">
+
+            {% if product.id|stringformat:'s' in wishlist_products %}
+                <i class="bi bi-heart-fill"></i>
+            {% else %}
+                <i class="bi bi-heart"></i>
+            {% endif %}
+
+        </a>
+
+    </div>
+
+</div>

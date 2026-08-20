@@ -1,0 +1,231 @@
+.products-section{
+
+    padding:90px 0;
+
+}
+
+.section-header{
+
+    text-align:center;
+    margin-bottom:50px;
+
+}
+
+.section-header h2{
+
+    font-size:42px;
+    font-weight:700;
+
+}
+
+.product-card{
+
+    position:relative;
+    transition:.35s;
+    background:#fff;
+
+}
+
+.product-card:hover{
+
+    transform:translateY(-8px);
+
+}
+
+.product-link{
+
+    display:block;
+    text-decoration:none;
+    color:inherit;
+
+}
+
+.product-image-box{
+
+    position:relative;
+    overflow:hidden;
+    border-radius:2px;
+
+}
+
+.product-image{
+
+    width:100%;
+
+    aspect-ratio:9/16;
+
+    object-fit:cover;
+
+    display:block;
+
+    transition:.45s;
+
+}
+
+.first-image{
+
+    opacity:1;
+
+}
+
+.second-image{
+
+    position:absolute;
+
+    inset:0;
+
+    opacity:0;
+
+}
+
+.product-card:hover .first-image{
+
+    opacity:0;
+
+}
+
+.product-card:hover .second-image{
+
+    opacity:1;
+
+}
+
+.discount-badge{
+
+    position:absolute;
+
+    top:15px;
+    left:15px;
+
+    background:#111;
+    color:#fff;
+
+    padding:6px 12px;
+
+    font-size:13px;
+
+    z-index:20;
+
+}
+
+.wishlist-btn{
+
+    position:absolute;
+
+    top:15px;
+    right:15px;
+
+    width:44px;
+    height:44px;
+
+    background:#fff;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:#222;
+
+    text-decoration:none;
+
+    z-index:50;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+
+    transition:.3s;
+
+}
+
+.wishlist-btn:hover{
+
+    background:#111;
+    color:#fff;
+
+}
+
+.product-info{
+
+    padding:18px 0 0;
+
+}
+
+.product-title{
+
+    font-size:17px;
+    font-weight:600;
+    color:#222;
+
+    line-height:1.5;
+
+    margin-bottom:10px;
+
+}
+
+.product-price{
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+
+}
+
+.old-price{
+
+    color:#999;
+
+    text-decoration:line-through;
+
+    font-size:15px;
+
+}
+
+.new-price{
+
+    font-size:20px;
+
+    font-weight:700;
+
+    color:#111;
+
+}
+
+@media(max-width:992px){
+
+    .product-title{
+
+        font-size:15px;
+
+    }
+
+    .new-price{
+
+        font-size:17px;
+
+    }
+
+}
+
+@media(max-width:576px){
+
+    .product-image{
+
+        aspect-ratio:1250px;
+
+    }
+
+    .product-title{
+
+        font-size:14px;
+
+    }
+
+    .new-price{
+
+        font-size:16px;
+
+    }
+
+}

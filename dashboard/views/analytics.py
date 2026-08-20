@@ -17,7 +17,7 @@ class AnalyticsView(LoginRequiredMixin,
     RoleRequiredMixin,TemplateView):
     allowed_roles = [
         "admin",
-        "manager",
+        "managers",
     ]
 
     template_name = "dashboard/analytics/index.html"

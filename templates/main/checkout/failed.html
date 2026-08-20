@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+Payment Failed
+{% endblock %}
+
+{% block content %}
+
+<section class="checkout-result">
+
+    <div class="result-card failed-card">
+
+        <div class="result-icon failed-icon">
+
+            <i class="fa-solid fa-circle-xmark"></i>
+
+        </div>
+
+        <h2>
+
+            Payment Failed
+
+        </h2>
+
+        <p class="result-text">
+
+            Unfortunately, we couldn't complete your payment.
+            Please try again or choose another payment method.
+
+        </p>
+
+        {% if order %}
+
+        <div class="result-info">
+
+            <div class="info-row">
+
+                <span>Order ID</span>
+
+                <strong>#{{ order.id }}</strong>
+
+            </div>
+
+            <div class="info-row">
+
+                <span>Status</span>
+
+                <strong>{{ order.status }}</strong>
+
+            </div>
+
+            <div class="info-row">
+
+                <span>Total</span>
+
+                <strong>{{ order.total_price }} so'm</strong>
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+        {% if error %}
+
+        <div class="alert alert-danger mt-4">
+
+            {{ error }}
+
+        </div>
+
+        {% endif %}
+
+        <div class="result-buttons">
+
+            {% if order.payment_method != "cash" %}
+
+            <a
+                href="{% url 'checkout' %}"
+                class="btn btn-danger btn-lg"
+            >
+
+                <i class="fa-solid fa-rotate-right"></i>
+
+                Try Again
+
+            </a>
+
+            {% endif %}
+
+            <a
+                href="{% url 'cart' %}"
+                class="btn btn-outline-dark btn-lg"
+            >
+
+                <i class="fa-solid fa-cart-shopping"></i>
+
+                Back to Cart
+
+            </a>
+
+            <a
+                href="{% url 'home' %}"
+                class="btn btn-outline-primary btn-lg"
+            >
+
+                Continue Shopping
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
