@@ -5,7 +5,11 @@ class TelegramService:
 
     @staticmethod
     def send_new_order(order):
+        from main.tasks import send_new_order_task
+        send_new_order_task.delay(order.id)
 
+    @staticmethod
+    def _send_new_order_sync(order):
         text = (
             "🛒 <b>Yangi buyurtma</b>\n\n"
             f"🆔 #{order.id}\n"
@@ -17,12 +21,7 @@ class TelegramService:
             f"💳 To'lov: {order.get_payment_method_display()}\n\n"
             "<b>Mahsulotlar:</b>\n"
         )
-
-        for item in order.items.select_related(
-            "product",
-            "size",
-        ):
-
+        for item in order.items.select_related("product", "size"):
             text += (
                 f"\n"
                 f"• {item.product.title}\n"
@@ -30,29 +29,23 @@ class TelegramService:
                 f"   🔢 Qty: {item.quantity}\n"
                 f"   💰 {item.price:,} so'm\n"
             )
-
         text += (
-
-            "\n"
-            "━━━━━━━━━━━━━━━━━━\n"
-
+            "\n━━━━━━━━━━━━━━━━━━\n"
             f"💵 Subtotal: {order.subtotal:,} so'm\n"
-
             f"🚚 Delivery: {order.delivery_price:,} so'm\n"
-
             f"🎁 Discount: {order.discount:,} so'm\n"
-
             f"💳 Total: {order.total_price:,} so'm"
-
         )
-
         send_telegram_message(text)
 
+    @staticmethod
+    def send_payment_success(order):
+        from main.tasks import send_payment_success_task
+        send_payment_success_task.delay(order.id)
 
-@staticmethod
-def send_payment_success(order):
-
-    text = f"""
+    @staticmethod
+    def _send_payment_success_sync(order):
+        text = f"""
 ✅ PAYMENT SUCCESS
 
 Order #{order.id}
@@ -63,5 +56,4 @@ Phone: {order.phone}
 
 Amount: {order.total_price}
 """
-
-    send_telegram_message(text)
+        send_telegram_message(text)
