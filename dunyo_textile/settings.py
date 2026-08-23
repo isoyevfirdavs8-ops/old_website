@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-j&hqely6na=s*+)l-4wh_141)0o$o$m=d10fl@wwmd8$)(niom'
+SECRET_KEY = '^xm9@(scxrhkq9snvhv%mb(#td57j_&^(!r@9=v_9gpb=2+$cc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -95,16 +95,26 @@ WSGI_APPLICATION = 'dunyo_textile.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+from decouple import config
+
+
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "dunyo_tx",
-        "USER": "postgres",
-        "PASSWORD": "05052005",
-        "HOST": "127.0.0.1",
-        "PORT": "5432",
+        "NAME": config("DB_NAME"),
+        "USER": config("DB_USER"),
+        "PASSWORD": config("DB_PASSWORD"),
+        "HOST": config("DB_HOST", default="db"),
+        "PORT": config("DB_PORT", default="5432"),
     }
 }
+
+TELEGRAM_BOT_TOKEN = config("TELEGRAM_BOT_TOKEN")
+TELEGRAM_CHAT_ID = config("TELEGRAM_CHAT_ID")
+BOT_TOKEN = TELEGRAM_BOT_TOKEN
+CHAT_ID = TELEGRAM_CHAT_ID
+
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -142,8 +152,7 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-TELEGRAM_BOT_TOKEN = "8219440326:AAGlf7s0NsO4twtUDllKvGOIuErxoAFfRHQ"
-TELEGRAM_CHAT_ID = "7485489896"
+
 LANGUAGE_CODE = 'uz'
 
 TIME_ZONE = 'UTC'
@@ -177,5 +186,18 @@ BASE_URL = config("BASE_URL", default="http://127.0.0.1:8000")
 CLICK_PAYMENT_URL = "https://my.click.uz/services/pay"
 PAYME_PAYMENT_URL = "https://checkout.paycom.uz"
 
-BOT_TOKEN = "8219440326:AAGlf7s0NsO4twtUDllKvGOIuErxoAFfRHQ"
-CHAT_ID = "7485489896"
+# --- Redis cache ---
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": config("REDIS_URL", default="redis://redis:6379/1"),
+        "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
+    }
+}
+
+# --- Celery ---
+CELERY_BROKER_URL = config("REDIS_URL", default="redis://redis:6379/0")
+CELERY_RESULT_BACKEND = config("REDIS_URL", default="redis://redis:6379/0")
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_TIMEZONE = "UTC"
